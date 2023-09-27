@@ -11,6 +11,7 @@ import { GetBranchUseCase } from '../use-cases/branch/get.branch.use-case';
 import { RegisterBranchUseCase } from '../use-cases/branch/register.branch.use-case';
 import { GetAllProductUseCase } from '../use-cases/product/get-all.product.use-case';
 import { GetProductUseCase } from '../use-cases/product/get.product.use-case';
+import { RegisterCustomerSaleUseCase } from '../use-cases/product/register-customer-sale.product.use-case';
 import { ModifyQuantityProductUseCase } from '../use-cases/product/register-quantity.product.use-case';
 import { RegisterSellerSaleUseCase } from '../use-cases/product/register-seller-sale.product.use-case';
 import { RegisterProductUseCase } from '../use-cases/product/register.product.use-case';
@@ -61,6 +62,13 @@ export class InventoryDelegate implements IUseCase {
 
   toSellerSale() {
     this.delegate = new RegisterSellerSaleUseCase(
+      this.productService,
+      this.eventService,
+    );
+  }
+
+  toCustomerSale() {
+    this.delegate = new RegisterCustomerSaleUseCase(
       this.productService,
       this.eventService,
     );

@@ -4,6 +4,7 @@ import { BranchDTO, ProductDTO, UserDTO } from '../dto';
 import { UpdateQuantityDTO } from '../dto/update-quantity.dto';
 import { IBaseEventPublisher } from '../event/publishers/interface/base.event-publisher';
 import { RegisteredBranchPublisher } from '../event/publishers/registeredBranch.publisher';
+import { RegisteredCustomerSaleEventPublisher } from '../event/publishers/registeredCustomerSale.publisher';
 import { RegisteredProductEventPublisher } from '../event/publishers/registeredProduct.publisher';
 import { RegisteredProductQuantityEventPublisher } from '../event/publishers/registeredProductQuantity.publisher';
 import { RegisteredSellerSaleEventPublisher } from '../event/publishers/registeredResellerSale.publisher';
@@ -14,12 +15,21 @@ export class InventoryController {
   constructor(private readonly useCase: InventoryDelegate) {}
 
   private publisher: IBaseEventPublisher;
-  @Post('branch')
-  registerBranch(@Body() branch: BranchDTO) {
-    this.useCase.toCreateBranch();
-    this.publisher = new RegisteredBranchPublisher();
-    return this.useCase.execute(branch, this.publisher);
+
+  //Product
+
+  @Get('product/:id')
+  getProduct(@Param('id') id: string) {
+    this.useCase.toGetProductById();
+    return this.useCase.execute(id);
   }
+
+  @Get('product')
+  getAllProducts() {
+    this.useCase.toGetAllProduct();
+    return this.useCase.execute();
+  }
+
   @Post('product')
   toCreateProduct(@Body() product: ProductDTO) {
     this.useCase.toCreateProduct();
@@ -44,18 +54,14 @@ export class InventoryController {
     return this.useCase.execute(id, quantity.quantity, this.publisher);
   }
 
-  @Post('user')
-  registerUser(@Body() user: UserDTO) {
-    this.useCase.toCreateUser();
-    this.publisher = new RegisteredUserEventPublisher();
-    return this.useCase.execute(user, this.publisher);
+  @Post('product/customer/:id')
+  toCustomerSale(@Param('id') id: string, @Body() quantity: UpdateQuantityDTO) {
+    this.useCase.toCustomerSale();
+    this.publisher = new RegisteredCustomerSaleEventPublisher();
+    return this.useCase.execute(id, quantity.quantity, this.publisher);
   }
 
-  @Get('product/:id')
-  getProduct(@Param('id') id: string) {
-    this.useCase.toGetProductById();
-    return this.useCase.execute(id);
-  }
+  //Branch
 
   @Get('branch/:id')
   getBranch(@Param('id') id: string) {
@@ -63,22 +69,32 @@ export class InventoryController {
     return this.useCase.execute(id);
   }
 
-  @Get('user/:id')
-  getUser(@Param('id') id: string) {
-    this.useCase.toGetUserById();
-    return this.useCase.execute(id);
-  }
-
-  @Get('product')
-  getAllProducts() {
-    this.useCase.toGetAllProduct();
-    return this.useCase.execute();
+  @Post('branch')
+  registerBranch(@Body() branch: BranchDTO) {
+    this.useCase.toCreateBranch();
+    this.publisher = new RegisteredBranchPublisher();
+    return this.useCase.execute(branch, this.publisher);
   }
 
   @Get('branch')
   getAllBranch() {
     this.useCase.toGetAllBranch();
     return this.useCase.execute();
+  }
+
+  //User
+
+  @Post('user')
+  registerUser(@Body() user: UserDTO) {
+    this.useCase.toCreateUser();
+    this.publisher = new RegisteredUserEventPublisher();
+    return this.useCase.execute(user, this.publisher);
+  }
+
+  @Get('user/:id')
+  getUser(@Param('id') id: string) {
+    this.useCase.toGetUserById();
+    return this.useCase.execute(id);
   }
 
   @Get('user')

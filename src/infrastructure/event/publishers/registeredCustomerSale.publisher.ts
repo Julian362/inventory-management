@@ -1,21 +1,21 @@
-import { IRegisteredProductQuantityEventPublisher } from '@domain/event/publishers/registeredProductQuantity.event-publisher';
-import { IEventService } from '@domain/services/event.service';
+import { IRegisteredCustomerEventPublisher } from '@domain/event/publishers/registeredCustomerSale.event-publisher';
 import { IEventModel } from '@domain/utils/models/interfaces/event.interface';
 import { Observable, from } from 'rxjs';
+import { EventService } from 'src/infrastructure/services/event.service';
 import { EventModel } from 'src/infrastructure/utils/models/event.model';
 
-export class RegisteredProductQuantityEventPublisher
-  implements IRegisteredProductQuantityEventPublisher
+export class RegisteredCustomerSaleEventPublisher
+  implements IRegisteredCustomerEventPublisher
 {
   emitCreate(
-    service: IEventService,
+    service: EventService,
     id: string,
     quantity: number,
   ): Observable<IEventModel> {
     const event = new EventModel();
     event.aggregateRootId = id;
     event.occurredOn = new Date();
-    event.typeName = 'product.registered.quantity';
+    event.typeName = 'product.registered.customerSale';
     event.eventBody = JSON.stringify({
       quantity,
       id,
@@ -23,7 +23,7 @@ export class RegisteredProductQuantityEventPublisher
     return from(service.create(event));
   }
 
-  emitGet(service: IEventService, id: string): Observable<IEventModel> {
+  emitGet(service: EventService, id: string): Observable<IEventModel> {
     return from(service.findById(id));
   }
 }

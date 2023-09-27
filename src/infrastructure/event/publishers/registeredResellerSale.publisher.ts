@@ -1,4 +1,4 @@
-import { IRegisteredSellerEventPublisher } from '@domain/event/publishers/registeredResellerSale.event-publisher';
+import { IRegisteredSellerEventPublisher } from '@domain/event/publishers/registeredSellerSale.event-publisher';
 import { IEventModel } from '@domain/utils/models/interfaces/event.interface';
 import { Observable, from } from 'rxjs';
 import { EventService } from 'src/infrastructure/services/event.service';
@@ -15,7 +15,7 @@ export class RegisteredSellerSaleEventPublisher
     const event = new EventModel();
     event.aggregateRootId = id;
     event.occurredOn = new Date();
-    event.typeName = 'resellerSale.registered';
+    event.typeName = 'product.registered.sellerSale';
     event.eventBody = JSON.stringify({
       quantity,
       id,

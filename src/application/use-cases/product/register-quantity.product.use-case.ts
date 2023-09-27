@@ -1,4 +1,4 @@
-import { IRegisteredProductEventPublisher } from '@domain/event/publishers/registeredProduct.event-publisher';
+import { IRegisteredProductQuantityEventPublisher } from '@domain/event/publishers/registeredProductQuantity.event-publisher';
 import { IProductDomainService } from '@domain/services';
 import { IEventService } from '@domain/services/event.service';
 import {
@@ -16,7 +16,7 @@ export class ModifyQuantityProductUseCase implements IUseCase {
   execute(
     id: string,
     quantity: number,
-    publisher: IRegisteredProductEventPublisher,
+    publisher: IRegisteredProductQuantityEventPublisher,
   ) {
     const data = {
       id: new ProductIdValueObject(id),
@@ -32,7 +32,11 @@ export class ModifyQuantityProductUseCase implements IUseCase {
           .modifyQuantity(data.id.valueOf(), product.quantity.valueOf())
           .pipe(
             map(() => {
-              publisher.emitCreate(this.eventService, product);
+              publisher.emitCreate(
+                this.eventService,
+                product.id.valueOf(),
+                product.quantity.valueOf(),
+              );
               return product;
             }),
           ),

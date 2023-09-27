@@ -1,5 +1,5 @@
 import { ProductDomainEntity } from '@domain/entities';
-import { IRegisteredSellerEventPublisher } from '@domain/event/publishers/registeredSellerSale.event-publisher';
+import { IRegisteredCustomerEventPublisher } from '@domain/event/publishers/registeredCustomerSale.event-publisher';
 import { IProductDomainService } from '@domain/services';
 import { IEventService } from '@domain/services/event.service';
 import {
@@ -8,7 +8,7 @@ import {
 } from '@domain/value-objects';
 import { iif, switchMap, throwError } from 'rxjs';
 
-export class RegisterSellerSaleUseCase {
+export class RegisterCustomerSaleUseCase {
   constructor(
     private readonly productService: IProductDomainService,
     private readonly eventService: IEventService,
@@ -17,7 +17,7 @@ export class RegisterSellerSaleUseCase {
   execute(
     id: string,
     quantity: number,
-    publisher: IRegisteredSellerEventPublisher,
+    publisher: IRegisteredCustomerEventPublisher,
   ) {
     const data = {
       id: new ProductIdValueObject(id),
