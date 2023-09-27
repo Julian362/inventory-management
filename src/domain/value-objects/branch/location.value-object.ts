@@ -1,18 +1,14 @@
 import { StringValueObjectBase } from '@ValueObjectBase';
 import { ValueObjectBase } from '@sofka';
-import { location } from '@types';
+import { LocationType } from '@types';
 
-export class BranchLocationValueObject extends ValueObjectBase<location> {
+export class BranchLocationValueObject extends ValueObjectBase<LocationType> {
   city: City;
   country: Country;
 
-  constructor(value: location) {
-    super(value);
-    this.city = new City(value.city);
-    this.country = new Country(value.country);
-  }
-
   validateData(): void {
+    this.city = new City(this.value.city);
+    this.country = new Country(this.value.country);
     if (this.value) {
       this.city.validateData();
       this.country.validateData();

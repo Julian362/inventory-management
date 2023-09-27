@@ -5,4 +5,5 @@ export interface IProductDTO {
   price: number;
   description: string;
   quantity: number;
+  branchId?: string;
 }

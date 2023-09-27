@@ -3,7 +3,6 @@ import {
   BranchLocationValueObject,
   BranchNameValueObject,
 } from '@domain/value-objects';
-import { location } from '@types';
 import { IBranchDomainEntity } from './interfaces';
 import { ProductDomainEntity } from './product.domain-entity';
 import { UserDomainEntity } from './user.domain-entity';
@@ -13,7 +12,7 @@ export class BranchDomainEntity implements IBranchDomainEntity {
   product?: ProductDomainEntity[];
   user?: UserDomainEntity[];
   name?: string | BranchNameValueObject;
-  location?: location | BranchLocationValueObject;
+  location?: string | BranchLocationValueObject;
   constructor(data: IBranchDomainEntity) {
     if (data?.product) this.product = data.product;
     if (data?.user) this.user = data.user;

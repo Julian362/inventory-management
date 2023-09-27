@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { IErrorValueObject } from '../interface';
 
 /**
@@ -22,7 +23,13 @@ export abstract class ValueObjectBase<Type> {
     this._errors = new Array<IErrorValueObject>();
     if (value) this._value = value;
     this.validateData();
-    if (this.hasErrors()) throw new Error(this.getErrors().toString());
+    if (this.hasErrors()) {
+      throw new BadRequestException(
+        this.getErrors()
+          .map((error) => error.message)
+          .join(' , '),
+      );
+    }
   }
 
   /**

@@ -16,14 +16,14 @@ import { EventService } from './services/event.service';
         branchService: BranchService,
         userService: UserService,
         eventService: EventService,
-      ) => {
-        return new InventoryDelegate(
+      ) =>
+        new InventoryDelegate(
           productService,
           branchService,
           userService,
           eventService,
-        );
-      },
+        ),
+      inject: [ProductService, BranchService, UserService, EventService],
     },
   ],
 })

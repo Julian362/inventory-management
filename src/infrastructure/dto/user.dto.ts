@@ -2,17 +2,20 @@ import { IUserDTO } from '@domain/dto';
 import {
   IsEmail,
   IsNotEmpty,
+  IsObject,
   IsString,
+  IsUUID,
   Length,
   Matches,
 } from 'class-validator';
 
 export class UserDTO implements IUserDTO {
   id?: string;
-  @IsString()
-  @IsNotEmpty()
-  @Length(3, 30)
-  name: string;
+  @IsObject()
+  name: {
+    firstName: string;
+    lastName: string;
+  };
 
   @IsString()
   @IsNotEmpty()
@@ -32,4 +35,9 @@ export class UserDTO implements IUserDTO {
   @IsNotEmpty()
   @Length(3, 30)
   role: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  branchId: string;
 }

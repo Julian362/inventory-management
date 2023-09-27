@@ -20,7 +20,7 @@ export class UserRolValueObject extends ValueObjectBase<string> {
   }
 
   private isEmpty(): void {
-    if (!IsEmpty(this.value)) {
+    if (IsEmpty(this.value)) {
       this.setError({
         field: 'rol del usuario',
         message: `El campo rol del usuario no puede estar vacío`,

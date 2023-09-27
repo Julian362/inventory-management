@@ -1,4 +1,4 @@
-export type location = {
+export type LocationType = {
   country: string;
   city: string;
 };

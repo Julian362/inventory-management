@@ -1,5 +1,12 @@
 import { IProductDTO } from '@domain/dto';
-import { IsNotEmpty, IsNumber, IsString, Length, Min } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  IsUUID,
+  Length,
+  Min,
+} from 'class-validator';
 
 export class ProductDTO implements IProductDTO {
   id?: string;
@@ -26,4 +33,9 @@ export class ProductDTO implements IProductDTO {
   @IsNumber()
   @Min(0)
   quantity: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
+  branchId: string;
 }

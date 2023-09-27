@@ -31,7 +31,7 @@ export class MongooseConfigService implements MongooseOptionsFactory {
   createMongooseOptions(): MongooseModuleOptions {
     return {
       uri: this.configService.get<string>('MONGO_URL'),
-      dbName: this.configService.get<string>('MONGO_DB_NAME'),
+      dbName: this.configService.get<string>('MONGO_NAME'),
     };
   }
 }

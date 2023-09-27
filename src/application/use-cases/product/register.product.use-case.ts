@@ -6,6 +6,7 @@ import { IEventService } from '@domain/services/event.service';
 import {
   ProductCategoryValueObject,
   ProductDescriptionValueObject,
+  ProductIdValueObject,
   ProductNameValueObject,
   ProductPriceValueObject,
   ProductQuantityValueObject,
@@ -20,11 +21,14 @@ export class RegisterProductUseCase implements IUseCase {
   ) {}
   execute(product: IProductDTO, publisher: IRegisteredProductEventPublisher) {
     const data: ProductDomainEntity = {
-      name: new ProductNameValueObject(product.name),
-      category: new ProductCategoryValueObject(product.category),
-      price: new ProductPriceValueObject(product.price),
-      description: new ProductDescriptionValueObject(product.description),
-      quantity: new ProductQuantityValueObject(product.quantity),
+      name: new ProductNameValueObject(product.name).valueOf(),
+      category: new ProductCategoryValueObject(product.category).valueOf(),
+      price: new ProductPriceValueObject(product.price).valueOf(),
+      description: new ProductDescriptionValueObject(
+        product.description,
+      ).valueOf(),
+      quantity: new ProductQuantityValueObject(product.quantity).valueOf(),
+      branchId: new ProductIdValueObject(product.branchId).valueOf(),
     };
     return this.productService.createProduct(data).pipe(
       map((product: ProductDomainEntity) => {

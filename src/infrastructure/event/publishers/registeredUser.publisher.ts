@@ -13,7 +13,7 @@ export class RegisteredUserEventPublisher
     data: UserDomainEntity,
   ): Observable<IEventModel> {
     const event = new EventModel();
-    event.aggregateRootId = data.branch.id.valueOf();
+    event.aggregateRootId = data.branchId.valueOf();
     event.occurredOn = new Date();
     event.typeName = 'user.registered';
     event.eventBody = JSON.stringify({

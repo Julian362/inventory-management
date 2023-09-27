@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { InventoryDelegate } from 'src/application/delegate/inventory.delegate';
-import { ProductDTO, UserDTO } from '../dto';
+import { BranchDTO, ProductDTO, UserDTO } from '../dto';
 import { UpdateQuantityDTO } from '../dto/update-quantity.dto';
 import { IBaseEventPublisher } from '../event/publishers/interface/base.event-publisher';
 import { RegisteredBranchPublisher } from '../event/publishers/registeredBranch.publisher';
@@ -15,10 +15,10 @@ export class InventoryController {
 
   private publisher: IBaseEventPublisher;
   @Post('branch')
-  registerBranch(@Body() user: UserDTO) {
+  registerBranch(@Body() branch: BranchDTO) {
     this.useCase.toCreateBranch();
     this.publisher = new RegisteredBranchPublisher();
-    return this.useCase.execute(user, this.publisher);
+    return this.useCase.execute(branch, this.publisher);
   }
   @Post('product')
   toCreateProduct(@Body() product: ProductDTO) {

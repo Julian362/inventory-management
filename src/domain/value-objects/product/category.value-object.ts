@@ -20,7 +20,7 @@ export class ProductCategoryValueObject extends ValueObjectBase<string> {
   }
 
   private isEmpty(): void {
-    if (!IsEmpty(this.value)) {
+    if (IsEmpty(this.value)) {
       this.setError({
         field: 'categoría del producto',
         message: `El campo categoría del producto no puede estar vacío`,

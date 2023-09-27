@@ -1,6 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Observable, from } from 'rxjs';
-import { UserDTO } from 'src/infrastructure/dto';
 import { Repository } from 'typeorm';
 import { UserPostgresEntity } from '../entities/user.postgres-entity';
 import { IBase } from './interfaces/base.interface';
@@ -12,7 +11,7 @@ export class UserRepository implements IBase<UserPostgresEntity> {
   ) {
     this.userRepository = userRepository;
   }
-  create(entity: UserDTO): Observable<UserPostgresEntity> {
+  create(entity: UserPostgresEntity): Observable<UserPostgresEntity> {
     return from(this.userRepository.save(entity));
   }
   findById(id: string): Observable<UserPostgresEntity> {

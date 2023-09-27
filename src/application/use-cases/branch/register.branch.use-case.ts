@@ -7,6 +7,7 @@ import {
   BranchLocationValueObject,
   BranchNameValueObject,
 } from '@domain/value-objects';
+import { LocationType } from '@types';
 import { map } from 'rxjs';
 import { IUseCase } from '../../interface/use-case.interface';
 
@@ -16,9 +17,13 @@ export class RegisterBranchUseCase implements IUseCase {
     private readonly eventService: IEventService,
   ) {}
   execute(branch: IBranchDTO, publisher: IRegisteredBranchEventPublisher) {
+    const location = new BranchLocationValueObject({
+      city: branch.location.city,
+      country: branch.location.country,
+    } as LocationType);
     const data: BranchDomainEntity = {
-      name: new BranchNameValueObject(branch.name),
-      location: new BranchLocationValueObject(branch.location),
+      name: new BranchNameValueObject(branch.name).valueOf(),
+      location: location.valueOf().city + ', ' + location.valueOf().country,
     };
     return this.branchService.createBranch(data).pipe(
       map((branch: BranchDomainEntity) => {

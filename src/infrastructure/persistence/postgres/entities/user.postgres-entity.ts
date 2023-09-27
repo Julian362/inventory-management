@@ -29,4 +29,7 @@ export class UserPostgresEntity extends UserDomainEntity {
     cascade: ['insert'],
   })
   branch: BranchPostgresEntity;
+
+  @Column('uuid', { name: 'branchId' })
+  branchId: string;
 }

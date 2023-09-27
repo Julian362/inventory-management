@@ -17,11 +17,8 @@ export class BranchPostgresEntity extends BranchDomainEntity {
   @Column('varchar', { length: 30, name: 'name' })
   name: string;
 
-  @Column('jsonb', { name: 'location' })
-  location: {
-    country: string;
-    city: string;
-  };
+  @Column('varchar', { length: 30, name: 'city' })
+  location: string;
 
   @OneToMany(() => ProductPostgresEntity, (product) => product.branch)
   product: ProductPostgresEntity[];
