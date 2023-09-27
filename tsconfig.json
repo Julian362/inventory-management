@@ -16,6 +16,16 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@validations": ["./src/shared/validations"],
+      "@ValueObjectBase": ["./src/shared/domain/value-object"],
+      "@domain/*": ["./src/domain/*"],
+      "@applications": ["./src//application"],
+      "@infrastructure": ["./src/infrastructure"],
+      "@sofka": ["./src/shared/sofka"],
+      "@enums": ["src/shared/enums"],
+      "@types": ["./src/shared/types"]
+    }
   }
 }
