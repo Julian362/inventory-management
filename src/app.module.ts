@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'node:path';
-import { InventoryModule } from './infastructure/inventory.module';
+import { InventoryModule } from './infrastructure/inventory.module';
 
 @Module({
   imports: [

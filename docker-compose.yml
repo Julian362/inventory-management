@@ -9,3 +9,25 @@ services:
     ports:
       - "5432:5432"
     restart: always
+    volumes:
+      - data-postgres:/data/db
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - data-mongo:/data/db
+
+volumes:
+  data-mongo:
+    name: data-mongo
+    driver: local
+  data-postgres:
+    name: data-postgres
+    driver: local

@@ -1,10 +1,11 @@
-import { IBranchDTO, ProductDTO, UserDTO } from 'src/infastructure/dto';
+import { IProductDTO } from './product.dto';
+import { IUserDTO } from './user.dto';
 
-export class BranchDTO implements IBranchDTO {
+export interface IBranchDTO {
   id?: string;
-  product: ProductDTO[];
-  user: UserDTO[];
   name: string;
+  product: IProductDTO[];
+  user: IUserDTO[];
   location: {
     city: string;
     country: string;

@@ -1,3 +1,4 @@
+import { Observable, from } from 'rxjs';
 import { IEventPublisher } from './event-publisher.interface';
 
 export abstract class EventPublisherBase<Response> implements IEventPublisher {
@@ -13,16 +14,19 @@ export abstract class EventPublisherBase<Response> implements IEventPublisher {
     this._response = value;
   }
 
-  send<Result, Input = Response>(pattern: any, data: Input): Promise<Result> {
-    return this.eventPublisher.send(pattern, data);
+  send<Result, Input = Response>(
+    pattern: any,
+    data: Input,
+  ): Observable<Result> {
+    return from(this.eventPublisher.send(pattern, data));
   }
 
   emit<Result = any, Input = Response>(
     pattern: any,
     data: Input,
-  ): Promise<Result> {
-    return this.eventPublisher.emit(pattern, data);
+  ): Observable<Result> {
+    return from(this.eventPublisher.emit(pattern, data));
   }
 
-  abstract publish<Result = any>(): Promise<Result>;
+  abstract publish<Result = any>(): Observable<Result>;
 }

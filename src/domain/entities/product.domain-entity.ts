@@ -6,6 +6,7 @@ import {
   ProductPriceValueObject,
   ProductQuantityValueObject,
 } from '@domain/value-objects';
+import { BranchDomainEntity } from './branch.domain-entity';
 import { IProductDomainEntity } from './interfaces';
 
 export class ProductDomainEntity implements IProductDomainEntity {
@@ -15,6 +16,7 @@ export class ProductDomainEntity implements IProductDomainEntity {
   price?: number | ProductPriceValueObject;
   description?: string | ProductDescriptionValueObject;
   quantity?: number | ProductQuantityValueObject;
+  branch?: BranchDomainEntity;
 
   constructor(data: IProductDomainEntity) {
     if (data?.name) this.name = data.name;

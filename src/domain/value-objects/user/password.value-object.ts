@@ -6,6 +6,9 @@ import {
 } from '@validations';
 
 export class UserPasswordValueObject extends ValueObjectBase<string> {
+  constructor(value: string) {
+    super(value);
+  }
   validateData(): void {
     if (this.value) {
       this.minLength();

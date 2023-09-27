@@ -5,6 +5,7 @@ import {
   UserPasswordValueObject,
   UserRolValueObject,
 } from '@domain/value-objects';
+import { BranchDomainEntity } from './branch.domain-entity';
 import { IUserDomainEntity } from './interfaces';
 
 export class UserDomainEntity implements IUserDomainEntity {
@@ -13,6 +14,8 @@ export class UserDomainEntity implements IUserDomainEntity {
   password?: string | UserPasswordValueObject;
   email?: string | UserEmailValueObject;
   role?: string | UserRolValueObject;
+
+  branch?: BranchDomainEntity;
 
   constructor(data: IUserDomainEntity) {
     if (data?.name) this.name = data.name;
