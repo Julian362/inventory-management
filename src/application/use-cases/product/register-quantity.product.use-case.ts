@@ -7,8 +7,6 @@ export class ModifyQuantityProductUseCase implements IUseCase {
   execute(id: string, quantity: number) {
     return this.productService.getProductById(id).pipe(
       map((product) => {
-        console.log(product.quantity.valueOf());
-        console.log('===========');
         product.quantity = product.quantity.valueOf() + quantity;
         return product;
       }),

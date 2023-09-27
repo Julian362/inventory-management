@@ -22,9 +22,6 @@ export class ProductPostgresService implements IProductDomainService {
     id: string,
     quantity: number,
   ): Observable<ProductPostgresEntity> {
-    console.log(id);
-    console.log('ModifyQuantityProductUseCase');
-    console.log(quantity);
     return this.productRepository.update(id, quantity);
   }
 }
