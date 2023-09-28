@@ -1,3 +1,3 @@
-import { EventMongo } from 'src/infrastructure/persistence/mongo';
+import { EventMongo } from '@infrastructure/persistence/mongo';
 
 export class EventModel extends EventMongo {}

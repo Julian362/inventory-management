@@ -1,11 +1,11 @@
-import { IRegisteredBranchEventPublisher } from '@domain/event/publishers/registeredBranch.event-publisher';
-import { IEventService } from '@domain/services/event.service';
-import { IEventModel } from '@domain/utils/models/interfaces/event.interface';
+import { IRegisteredBranchEventPublisher } from '@domain/event/publishers';
+import { IEventService } from '@domain/services';
+import { IEventModel } from '@domain/utils/models/interfaces';
+import { BranchEntity } from '@infrastructure/entities';
+import { EventService } from '@infrastructure/services';
+import { EventModel } from '@infrastructure/utils/models';
 import { Injectable } from '@nestjs/common';
 import { Observable, from } from 'rxjs';
-import { BranchEntity } from 'src/infrastructure/entities/branch.entity';
-import { EventService } from 'src/infrastructure/services/event.service';
-import { EventModel } from 'src/infrastructure/utils/models/event.model';
 
 @Injectable()
 export class RegisteredBranchPublisher

@@ -1,3 +1,3 @@
-import { UserPostgresEntity } from '../persistence/postgres/entities/user.postgres-entity';
+import { UserPostgresEntity } from '../persistence/postgres/entities';
 
 export class UserEntity extends UserPostgresEntity {}

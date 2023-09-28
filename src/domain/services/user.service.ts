@@ -1,4 +1,4 @@
-import { UserDomainEntity } from '@domain/entities/user.domain-entity';
+import { UserDomainEntity } from '@domain/entities';
 import { Observable } from 'rxjs';
 
 export interface IUserDomainService {

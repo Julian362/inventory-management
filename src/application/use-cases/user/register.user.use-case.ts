@@ -1,7 +1,7 @@
 import { IUserCommand } from '@domain/command';
-import { IRegisteredUserEventPublisher } from '@domain/event/publishers/registeredUser.event-publisher';
-import { IUserDomainService } from '@domain/services';
-import { IEventService } from '@domain/services/event.service';
+import { UserDomainEntity } from '@domain/entities';
+import { IRegisteredUserEventPublisher } from '@domain/event/publishers';
+import { IEventService, IUserDomainService } from '@domain/services';
 import {
   BranchIdValueObject,
   UserEmailValueObject,
@@ -11,9 +11,7 @@ import {
 } from '@domain/value-objects';
 import { FullNameType } from '@types';
 import { map } from 'rxjs';
-import { UserDomainEntity } from '../../../domain/entities/user.domain-entity';
-import { IUseCase } from '../../interface/use-case.interface';
-export class RegisterUserUseCase implements IUseCase {
+export class RegisterUserUseCase {
   constructor(
     private readonly userService: IUserDomainService,
     private readonly eventService: IEventService,

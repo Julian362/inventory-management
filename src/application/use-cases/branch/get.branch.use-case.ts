@@ -1,10 +1,9 @@
-import { BranchDomainEntity } from '@domain/entities/branch.domain-entity';
+import { BranchDomainEntity } from '@domain/entities';
 import { IBranchDomainService } from '@domain/services';
 import { BranchNameValueObject } from '@domain/value-objects';
 import { map } from 'rxjs';
-import { IUseCase } from '../../interface/use-case.interface';
 
-export class GetBranchUseCase implements IUseCase {
+export class GetBranchUseCase {
   constructor(private readonly branchService: IBranchDomainService) {}
   execute(id: string) {
     const data = {

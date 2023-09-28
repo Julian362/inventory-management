@@ -1,7 +1,7 @@
 import { IBranchDomainService } from '@domain/services';
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { BranchPostgresEntity } from '../entities/branch.postgres-entity';
+import { BranchPostgresEntity } from '../entities';
 import { BranchRepository } from '../repositories';
 
 @Injectable()

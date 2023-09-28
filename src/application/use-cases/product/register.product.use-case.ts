@@ -1,8 +1,7 @@
 import { IProductCommand } from '@domain/command';
 import { ProductDomainEntity } from '@domain/entities';
-import { IRegisteredProductEventPublisher } from '@domain/event/publishers/registeredProduct.event-publisher';
-import { IProductDomainService } from '@domain/services';
-import { IEventService } from '@domain/services/event.service';
+import { IRegisteredProductEventPublisher } from '@domain/event/publishers';
+import { IEventService, IProductDomainService } from '@domain/services';
 import {
   ProductCategoryValueObject,
   ProductDescriptionValueObject,
@@ -12,9 +11,8 @@ import {
   ProductQuantityValueObject,
 } from '@domain/value-objects';
 import { map } from 'rxjs';
-import { IUseCase } from '../../interface/use-case.interface';
 
-export class RegisterProductUseCase implements IUseCase {
+export class RegisterProductUseCase {
   constructor(
     private readonly productService: IProductDomainService,
     private readonly eventService: IEventService,

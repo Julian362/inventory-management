@@ -1,8 +1,9 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Observable, from, switchMap } from 'rxjs';
 import { Repository } from 'typeorm';
-import { ProductPostgresEntity } from '../entities/product.postgres-entity';
-import { IBase } from './interfaces/base.interface';
+import { ProductPostgresEntity } from '../entities';
+import { IBase } from './interfaces';
+
 export class ProductRepository implements IBase<ProductPostgresEntity> {
   constructor(
     @InjectRepository(ProductPostgresEntity)

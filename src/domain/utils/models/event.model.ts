@@ -1,4 +1,4 @@
-import { IEventModel } from './interfaces/event.interface';
+import { IEventModel } from './interfaces';
 
 export class EventModelDomain implements IEventModel {
   _id?: string;

@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseConfigService } from './config';
 import { EventRepository } from './repositories';
 import { EventMongo, EventSchema } from './schemas';
-import { EventMongoService } from './services/event.service';
+import { EventMongoService } from './services/';
 
 @Module({
   imports: [

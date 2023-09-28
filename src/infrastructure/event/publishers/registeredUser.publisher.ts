@@ -1,9 +1,9 @@
-import { IRegisteredUserEventPublisher } from '@domain/event/publishers/registeredUser.event-publisher';
-import { IEventModel } from '@domain/utils/models/interfaces/event.interface';
+import { IRegisteredUserEventPublisher } from '@domain/event/publishers';
+import { IEventModel } from '@domain/utils/models/interfaces';
+import { UserEntity } from '@infrastructure/entities';
+import { EventService } from '@infrastructure/services';
+import { EventModel } from '@infrastructure/utils/models';
 import { Observable, from } from 'rxjs';
-import { UserEntity } from 'src/infrastructure/entities/user.entity';
-import { EventService } from 'src/infrastructure/services/event.service';
-import { EventModel } from 'src/infrastructure/utils/models/event.model';
 
 export class RegisteredUserEventPublisher
   implements IRegisteredUserEventPublisher

@@ -1,8 +1,8 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Observable, from } from 'rxjs';
 import { Repository } from 'typeorm';
-import { UserPostgresEntity } from '../entities/user.postgres-entity';
-import { IBase } from './interfaces/base.interface';
+import { UserPostgresEntity } from '../entities';
+import { IBase } from './interfaces';
 
 export class UserRepository implements IBase<UserPostgresEntity> {
   constructor(

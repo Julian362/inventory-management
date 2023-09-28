@@ -1,5 +1,5 @@
+import { EventModel } from '@infrastructure/utils/models';
 import { Injectable } from '@nestjs/common';
-import { EventModel } from 'src/infrastructure/utils/models/event.model';
 import { EventRepository } from '../repositories';
 
 @Injectable()

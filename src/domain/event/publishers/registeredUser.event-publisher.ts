@@ -1,8 +1,8 @@
-import { UserDomainEntity } from '@domain/entities/user.domain-entity';
-import { IEventService } from '@domain/services/event.service';
-import { IEventModel } from '@domain/utils/models/interfaces/event.interface';
+import { UserDomainEntity } from '@domain/entities';
+import { IEventService } from '@domain/services';
+import { IEventModel } from '@domain/utils/models/interfaces';
 import { Observable } from 'rxjs';
-import { IBaseDomainEventPublisher } from './interface/base.event-publisher';
+import { IBaseDomainEventPublisher } from './interface';
 
 export interface IRegisteredUserEventPublisher
   extends IBaseDomainEventPublisher {

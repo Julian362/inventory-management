@@ -1,7 +1,6 @@
 import { ProductDomainEntity } from '@domain/entities';
-import { IRegisteredCustomerEventPublisher } from '@domain/event/publishers/registeredCustomerSale.event-publisher';
-import { IProductDomainService } from '@domain/services';
-import { IEventService } from '@domain/services/event.service';
+import { IRegisteredCustomerEventPublisher } from '@domain/event/publishers';
+import { IEventService, IProductDomainService } from '@domain/services';
 import {
   ProductIdValueObject,
   ProductQuantityValueObject,

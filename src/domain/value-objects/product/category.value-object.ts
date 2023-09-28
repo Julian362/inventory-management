@@ -1,6 +1,6 @@
+import { ProductCategory } from '@enums';
 import { IErrorValueObject, ValueObjectBase } from '@sofka';
 import { EnumContains, IsEmpty } from '@validations';
-import { ProductCategory } from 'src/shared/enums';
 
 export class ProductCategoryValueObject extends ValueObjectBase<string> {
   validateData(): void {

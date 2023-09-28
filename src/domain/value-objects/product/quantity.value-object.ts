@@ -1,5 +1,5 @@
 import { IErrorValueObject, ValueObjectBase } from '@sofka';
-import { IsGreaterThanZero } from 'src/shared/validations/is-grather-0';
+import { IsGreaterThanZero } from '@validations';
 
 export class ProductQuantityValueObject extends ValueObjectBase<number> {
   validateData(): void {

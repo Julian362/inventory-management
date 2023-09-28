@@ -1,7 +1,7 @@
 import { IProductDomainService } from '@domain/services';
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { ProductPostgresEntity } from '../entities/product.postgres-entity';
+import { ProductPostgresEntity } from '../entities';
 import { ProductRepository } from '../repositories';
 
 @Injectable()

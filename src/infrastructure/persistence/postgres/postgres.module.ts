@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypesOrmPostgresConfigService } from './configs';
-import { BranchPostgresEntity } from './entities/branch.postgres-entity';
-import { ProductPostgresEntity } from './entities/product.postgres-entity';
-import { UserPostgresEntity } from './entities/user.postgres-entity';
+import {
+  BranchPostgresEntity,
+  ProductPostgresEntity,
+  UserPostgresEntity,
+} from './entities';
 import {
   BranchRepository,
   ProductRepository,
   UserRepository,
 } from './repositories';
-import { BranchPostgresService } from './services/branch-postgres.service';
-import { UserPostgresService } from './services/user-postgres.service';
+import { BranchPostgresService, UserPostgresService } from './services';
 
 @Module({
   imports: [

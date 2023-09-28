@@ -1,8 +1,8 @@
-import { IRegisteredProductQuantityEventPublisher } from '@domain/event/publishers/registeredProductQuantity.event-publisher';
-import { IEventService } from '@domain/services/event.service';
-import { IEventModel } from '@domain/utils/models/interfaces/event.interface';
+import { IRegisteredProductQuantityEventPublisher } from '@domain/event/publishers';
+import { IEventService } from '@domain/services';
+import { IEventModel } from '@domain/utils/models/interfaces';
+import { EventModel } from '@infrastructure/utils/models';
 import { Observable, from } from 'rxjs';
-import { EventModel } from 'src/infrastructure/utils/models/event.model';
 
 export class RegisteredProductQuantityEventPublisher
   implements IRegisteredProductQuantityEventPublisher

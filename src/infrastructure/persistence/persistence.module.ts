@@ -1,6 +1,10 @@
+import {
+  BranchService,
+  EventService,
+  ProductService,
+  UserService,
+} from '@infrastructure/services';
 import { Module } from '@nestjs/common';
-import { BranchService, ProductService, UserService } from '../services';
-import { EventService } from '../services/event.service';
 import { MongoModule } from './mongo';
 import { PostgresModule } from './postgres/postgres.module';
 

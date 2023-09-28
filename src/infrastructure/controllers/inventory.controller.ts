@@ -1,41 +1,75 @@
+import {
+  GetAllBranchUseCase,
+  GetAllProductUseCase,
+  GetAllUserUseCase,
+  GetBranchUseCase,
+  GetProductUseCase,
+  GetUserUseCase,
+  ModifyQuantityProductUseCase,
+  RegisterBranchUseCase,
+  RegisterCustomerSaleUseCase,
+  RegisterProductUseCase,
+  RegisterSellerSaleUseCase,
+  RegisterUserUseCase,
+} from '@applications/use-cases';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
-import { InventoryDelegate } from 'src/application/delegate/inventory.delegate';
-import { BranchCommand, ProductCommand, UserCommand } from '../command';
-import { UpdateQuantityCommand } from '../command/update-quantity.command';
-import { IBaseEventPublisher } from '../event/publishers/interface/base.event-publisher';
-import { RegisteredBranchPublisher } from '../event/publishers/registeredBranch.publisher';
-import { RegisteredCustomerSaleEventPublisher } from '../event/publishers/registeredCustomerSale.publisher';
-import { RegisteredProductEventPublisher } from '../event/publishers/registeredProduct.publisher';
-import { RegisteredProductQuantityEventPublisher } from '../event/publishers/registeredProductQuantity.publisher';
-import { RegisteredSellerSaleEventPublisher } from '../event/publishers/registeredResellerSale.publisher';
-import { RegisteredUserEventPublisher } from '../event/publishers/registeredUser.publisher';
+import {
+  BranchCommand,
+  ProductCommand,
+  UpdateQuantityCommand,
+  UserCommand,
+} from '../command';
+import {
+  RegisteredBranchPublisher,
+  RegisteredCustomerSaleEventPublisher,
+  RegisteredProductEventPublisher,
+  RegisteredProductQuantityEventPublisher,
+  RegisteredSellerSaleEventPublisher,
+  RegisteredUserEventPublisher,
+} from '../event';
 
 @Controller('api/v1')
 @Controller()
 export class InventoryController {
-  constructor(private readonly useCase: InventoryDelegate) {}
-
-  private publisher: IBaseEventPublisher;
+  constructor(
+    private readonly getAllProductUseCase: GetAllProductUseCase,
+    private readonly getProductUseCase: GetProductUseCase,
+    private readonly registerUseCase: RegisterProductUseCase,
+    private readonly sellerSaleUseCase: RegisterSellerSaleUseCase,
+    private readonly customerSaleUseCase: RegisterCustomerSaleUseCase,
+    private readonly purchaseUseCase: ModifyQuantityProductUseCase,
+    private readonly getAllUserUseCase: GetAllUserUseCase,
+    private readonly getUserUseCase: GetUserUseCase,
+    private readonly registerUserUseCase: RegisterUserUseCase,
+    private readonly getAllBranchUseCase: GetAllBranchUseCase,
+    private readonly getBranchUseCase: GetBranchUseCase,
+    private readonly registerBranchUseCase: RegisterBranchUseCase,
+    private readonly registeredBranchPublisher: RegisteredBranchPublisher,
+    private readonly registeredCustomerSalePublisher: RegisteredCustomerSaleEventPublisher,
+    private readonly registeredProductPublisher: RegisteredProductEventPublisher,
+    private readonly registeredProductQuantityPublisher: RegisteredProductQuantityEventPublisher,
+    private readonly registeredSellerSalePublisher: RegisteredSellerSaleEventPublisher,
+    private readonly registeredUserPublisher: RegisteredUserEventPublisher,
+  ) {}
 
   //Product
 
   @Get('product/:id')
   getProduct(@Param('id') id: string) {
-    this.useCase.toGetProductById();
-    return this.useCase.execute(id);
+    return this.getProductUseCase.execute(id);
   }
 
   @Get('products')
   getAllProducts() {
-    this.useCase.toGetAllProduct();
-    return this.useCase.execute();
+    return this.getAllProductUseCase.execute();
   }
 
   @Post('product/register')
   toCreateProduct(@Body() product: ProductCommand) {
-    this.useCase.toCreateProduct();
-    this.publisher = new RegisteredProductEventPublisher();
-    return this.useCase.execute(product, this.publisher);
+    return this.registerUseCase.execute(
+      product,
+      this.registeredProductPublisher,
+    );
   }
 
   @Put('product/purchase/:id')
@@ -43,9 +77,11 @@ export class InventoryController {
     @Param('id') id: string,
     @Body() quantity: UpdateQuantityCommand,
   ) {
-    this.useCase.toModifyQuantity();
-    this.publisher = new RegisteredProductQuantityEventPublisher();
-    return this.useCase.execute(id, quantity.quantity, this.publisher);
+    return this.purchaseUseCase.execute(
+      id,
+      quantity.quantity,
+      this.registeredProductQuantityPublisher,
+    );
   }
 
   @Post('product/seller-sale/:id')
@@ -53,9 +89,11 @@ export class InventoryController {
     @Param('id') id: string,
     @Body() quantity: UpdateQuantityCommand,
   ) {
-    this.useCase.toSellerSale();
-    this.publisher = new RegisteredSellerSaleEventPublisher();
-    return this.useCase.execute(id, quantity.quantity, this.publisher);
+    return this.sellerSaleUseCase.execute(
+      id,
+      quantity.quantity,
+      this.registeredSellerSalePublisher,
+    );
   }
 
   @Post('product/customer-sale/:id')
@@ -63,50 +101,47 @@ export class InventoryController {
     @Param('id') id: string,
     @Body() quantity: UpdateQuantityCommand,
   ) {
-    this.useCase.toCustomerSale();
-    this.publisher = new RegisteredCustomerSaleEventPublisher();
-    return this.useCase.execute(id, quantity.quantity, this.publisher);
+    return this.customerSaleUseCase.execute(
+      id,
+      quantity.quantity,
+      this.registeredCustomerSalePublisher,
+    );
   }
 
   //Branch
 
   @Get('branch/:id')
   getBranch(@Param('id') id: string) {
-    this.useCase.toGetBranchById();
-    return this.useCase.execute(id);
+    return this.getBranchUseCase.execute(id);
   }
 
   @Post('branch/register')
   registerBranch(@Body() branch: BranchCommand) {
-    this.useCase.toCreateBranch();
-    this.publisher = new RegisteredBranchPublisher();
-    return this.useCase.execute(branch, this.publisher);
+    return this.registerBranchUseCase.execute(
+      branch,
+      this.registeredBranchPublisher,
+    );
   }
 
   @Get('branches')
   getAllBranch() {
-    this.useCase.toGetAllBranch();
-    return this.useCase.execute();
+    return this.getAllBranchUseCase.execute();
   }
 
   //User
 
   @Post('user/register')
   registerUser(@Body() user: UserCommand) {
-    this.useCase.toCreateUser();
-    this.publisher = new RegisteredUserEventPublisher();
-    return this.useCase.execute(user, this.publisher);
+    return this.registerUserUseCase.execute(user, this.registeredUserPublisher);
   }
 
   @Get('user/:id')
   getUser(@Param('id') id: string) {
-    this.useCase.toGetUserById();
-    return this.useCase.execute(id);
+    return this.getUserUseCase.execute(id);
   }
 
   @Get('users')
   getAllUser() {
-    this.useCase.toGetAllUser();
-    return this.useCase.execute();
+    return this.getAllUserUseCase.execute();
   }
 }

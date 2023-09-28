@@ -1,3 +1,3 @@
-import { BranchPostgresEntity } from '../persistence/postgres/entities/branch.postgres-entity';
+import { BranchPostgresEntity } from '../persistence/postgres/entities';
 
 export class BranchEntity extends BranchPostgresEntity {}

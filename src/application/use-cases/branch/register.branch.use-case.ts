@@ -1,17 +1,15 @@
 import { IBranchCommand } from '@domain/command';
-import { BranchDomainEntity } from '@domain/entities/branch.domain-entity';
-import { IRegisteredBranchEventPublisher } from '@domain/event/publishers/registeredBranch.event-publisher';
-import { IBranchDomainService } from '@domain/services';
-import { IEventService } from '@domain/services/event.service';
+import { BranchDomainEntity } from '@domain/entities';
+import { IRegisteredBranchEventPublisher } from '@domain/event/publishers';
+import { IBranchDomainService, IEventService } from '@domain/services';
 import {
   BranchLocationValueObject,
   BranchNameValueObject,
 } from '@domain/value-objects';
 import { LocationType } from '@types';
 import { map } from 'rxjs';
-import { IUseCase } from '../../interface/use-case.interface';
 
-export class RegisterBranchUseCase implements IUseCase {
+export class RegisterBranchUseCase {
   constructor(
     private readonly branchService: IBranchDomainService,
     private readonly eventService: IEventService,

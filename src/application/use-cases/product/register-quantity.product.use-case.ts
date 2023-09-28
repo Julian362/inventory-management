@@ -1,13 +1,11 @@
-import { IRegisteredProductQuantityEventPublisher } from '@domain/event/publishers/registeredProductQuantity.event-publisher';
-import { IProductDomainService } from '@domain/services';
-import { IEventService } from '@domain/services/event.service';
+import { IRegisteredProductQuantityEventPublisher } from '@domain/event/publishers';
+import { IEventService, IProductDomainService } from '@domain/services';
 import {
   ProductIdValueObject,
   ProductQuantityValueObject,
 } from '@domain/value-objects';
 import { map, switchMap } from 'rxjs';
-import { IUseCase } from '../../interface/use-case.interface';
-export class ModifyQuantityProductUseCase implements IUseCase {
+export class ModifyQuantityProductUseCase {
   constructor(
     private readonly productService: IProductDomainService,
     private readonly eventService: IEventService,

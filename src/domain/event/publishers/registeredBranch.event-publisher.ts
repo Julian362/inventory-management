@@ -1,8 +1,8 @@
-import { BranchDomainEntity } from '@domain/entities/branch.domain-entity';
+import { BranchDomainEntity } from '@domain/entities';
 import { IEventService } from '@domain/services/event.service';
-import { IEventModel } from '@domain/utils/models/interfaces/event.interface';
+import { IEventModel } from '@domain/utils/models/interfaces';
 import { Observable } from 'rxjs';
-import { IBaseDomainEventPublisher } from './interface/base.event-publisher';
+import { IBaseDomainEventPublisher } from './interface';
 
 export interface IRegisteredBranchEventPublisher
   extends IBaseDomainEventPublisher {

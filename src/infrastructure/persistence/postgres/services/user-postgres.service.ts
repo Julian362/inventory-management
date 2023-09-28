@@ -2,7 +2,7 @@ import { UserDomainEntity } from '@domain/entities/user.domain-entity';
 import { IUserDomainService } from '@domain/services';
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { UserPostgresEntity } from '../entities/user.postgres-entity';
+import { UserPostgresEntity } from '../entities';
 import { UserRepository } from '../repositories';
 
 @Injectable()

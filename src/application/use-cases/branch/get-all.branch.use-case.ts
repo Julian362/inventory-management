@@ -1,9 +1,8 @@
-import { BranchDomainEntity } from '@domain/entities/branch.domain-entity';
+import { BranchDomainEntity } from '@domain/entities';
 import { IBranchDomainService } from '@domain/services';
 import { map } from 'rxjs';
-import { IUseCase } from '../../interface/use-case.interface';
 
-export class GetAllBranchUseCase implements IUseCase {
+export class GetAllBranchUseCase {
   constructor(private readonly branchService: IBranchDomainService) {}
   execute() {
     return this.branchService.getAllBranches().pipe(

@@ -1,4 +1,4 @@
-import { IEventModel } from '@domain/utils/models/interfaces/event.interface';
+import { IEventModel } from '@domain/utils/models/interfaces/';
 import { Observable } from 'rxjs';
 
 export interface IBaseDomainEventPublisher {
