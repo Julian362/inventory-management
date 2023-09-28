@@ -1,4 +1,4 @@
-export interface IProductDTO {
+export interface IProductCommand {
   id?: string;
   name: string;
   category: string;

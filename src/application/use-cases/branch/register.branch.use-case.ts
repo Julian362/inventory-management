@@ -1,4 +1,4 @@
-import { IBranchDTO } from '@domain/dto';
+import { IBranchCommand } from '@domain/command';
 import { BranchDomainEntity } from '@domain/entities/branch.domain-entity';
 import { IRegisteredBranchEventPublisher } from '@domain/event/publishers/registeredBranch.event-publisher';
 import { IBranchDomainService } from '@domain/services';
@@ -16,7 +16,7 @@ export class RegisterBranchUseCase implements IUseCase {
     private readonly branchService: IBranchDomainService,
     private readonly eventService: IEventService,
   ) {}
-  execute(branch: IBranchDTO, publisher: IRegisteredBranchEventPublisher) {
+  execute(branch: IBranchCommand, publisher: IRegisteredBranchEventPublisher) {
     const location = new BranchLocationValueObject({
       city: branch.location.city,
       country: branch.location.country,

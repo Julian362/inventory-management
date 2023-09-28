@@ -1,4 +1,4 @@
-import { IProductDTO } from '@domain/dto';
+import { IProductCommand } from '@domain/command';
 import { ProductDomainEntity } from '@domain/entities';
 import { IRegisteredProductEventPublisher } from '@domain/event/publishers/registeredProduct.event-publisher';
 import { IProductDomainService } from '@domain/services';
@@ -19,7 +19,10 @@ export class RegisterProductUseCase implements IUseCase {
     private readonly productService: IProductDomainService,
     private readonly eventService: IEventService,
   ) {}
-  execute(product: IProductDTO, publisher: IRegisteredProductEventPublisher) {
+  execute(
+    product: IProductCommand,
+    publisher: IRegisteredProductEventPublisher,
+  ) {
     const data: ProductDomainEntity = {
       name: new ProductNameValueObject(product.name).valueOf(),
       category: new ProductCategoryValueObject(product.category).valueOf(),

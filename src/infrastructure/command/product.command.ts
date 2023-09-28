@@ -1,4 +1,4 @@
-import { IProductDTO } from '@domain/dto';
+import { IProductCommand } from '@domain/command';
 import {
   IsNotEmpty,
   IsNumber,
@@ -8,7 +8,7 @@ import {
   Min,
 } from 'class-validator';
 
-export class ProductDTO implements IProductDTO {
+export class ProductCommand implements IProductCommand {
   id?: string;
 
   @IsString()

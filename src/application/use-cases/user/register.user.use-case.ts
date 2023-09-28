@@ -1,4 +1,4 @@
-import { IUserDTO } from '@domain/dto';
+import { IUserCommand } from '@domain/command';
 import { IRegisteredUserEventPublisher } from '@domain/event/publishers/registeredUser.event-publisher';
 import { IUserDomainService } from '@domain/services';
 import { IEventService } from '@domain/services/event.service';
@@ -18,7 +18,7 @@ export class RegisterUserUseCase implements IUseCase {
     private readonly userService: IUserDomainService,
     private readonly eventService: IEventService,
   ) {}
-  execute(user: IUserDTO, publisher: IRegisteredUserEventPublisher) {
+  execute(user: IUserCommand, publisher: IRegisteredUserEventPublisher) {
     const name = new UserNameValueObject({
       FirstName: user.name.firstName,
       LastName: user.name.lastName,

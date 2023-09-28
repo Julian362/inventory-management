@@ -1,4 +1,4 @@
-export interface IUserDTO {
+export interface IUserCommand {
   id?: string;
   name: {
     firstName: string;

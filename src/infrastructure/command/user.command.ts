@@ -1,4 +1,4 @@
-import { IUserDTO } from '@domain/dto';
+import { IUserCommand } from '@domain/command';
 import {
   IsEmail,
   IsNotEmpty,
@@ -9,7 +9,7 @@ import {
   Matches,
 } from 'class-validator';
 
-export class UserDTO implements IUserDTO {
+export class UserCommand implements IUserCommand {
   id?: string;
   @IsObject()
   name: {
