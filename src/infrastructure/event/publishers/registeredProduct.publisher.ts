@@ -1,8 +1,8 @@
-import { ProductDomainEntity } from '@domain/entities';
 import { IRegisteredProductEventPublisher } from '@domain/event/publishers/registeredProduct.event-publisher';
 import { IEventService } from '@domain/services/event.service';
 import { IEventModel } from '@domain/utils/models/interfaces/event.interface';
 import { Observable, from } from 'rxjs';
+import { ProductEntity } from 'src/infrastructure/entities/product.entity';
 import { EventModel } from 'src/infrastructure/utils/models/event.model';
 
 export class RegisteredProductEventPublisher
@@ -10,7 +10,7 @@ export class RegisteredProductEventPublisher
 {
   emitCreate(
     service: IEventService,
-    data: ProductDomainEntity,
+    data: ProductEntity,
   ): Observable<IEventModel> {
     const event = new EventModel();
     event.aggregateRootId = data.branchId.valueOf();

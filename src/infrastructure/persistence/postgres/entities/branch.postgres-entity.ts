@@ -1,4 +1,3 @@
-import { BranchDomainEntity } from '@domain/entities/branch.domain-entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { ProductPostgresEntity } from './product.postgres-entity';
 import { UserPostgresEntity } from './user.postgres-entity';
@@ -6,7 +5,7 @@ import { UserPostgresEntity } from './user.postgres-entity';
 @Entity('branch', {
   schema: 'public',
 })
-export class BranchPostgresEntity extends BranchDomainEntity {
+export class BranchPostgresEntity {
   @Column('uuid', {
     primary: true,
     name: 'branchId',

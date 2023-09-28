@@ -8,8 +8,8 @@ import {
 
 export interface IUserDomainEntity {
   id?: string | UserIdValueObject;
-  name?: string | UserNameValueObject;
-  password?: string | UserPasswordValueObject;
-  email?: string | UserEmailValueObject;
-  role?: string | UserRolValueObject;
+  name: string | UserNameValueObject;
+  password: string | UserPasswordValueObject;
+  email: string | UserEmailValueObject;
+  role: string | UserRolValueObject;
 }

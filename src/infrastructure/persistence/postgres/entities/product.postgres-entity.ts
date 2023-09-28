@@ -1,11 +1,10 @@
-import { ProductDomainEntity } from '@domain/entities';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { BranchPostgresEntity } from './branch.postgres-entity';
 
 @Entity('product', {
   schema: 'public',
 })
-export class ProductPostgresEntity extends ProductDomainEntity {
+export class ProductPostgresEntity {
   @Column('uuid', {
     primary: true,
     name: 'productId',

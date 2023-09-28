@@ -24,6 +24,8 @@ export class RegisterBranchUseCase implements IUseCase {
     const data: BranchDomainEntity = {
       name: new BranchNameValueObject(branch.name).valueOf(),
       location: location.valueOf().city + ', ' + location.valueOf().country,
+      user: [],
+      product: [],
     };
     return this.branchService.createBranch(data).pipe(
       map((branch: BranchDomainEntity) => {
