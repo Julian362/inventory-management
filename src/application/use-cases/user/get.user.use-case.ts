@@ -1,8 +1,9 @@
+import { IUseCase } from '@applications/interface';
 import { UserDomainEntity } from '@domain/entities';
 import { IUserDomainService } from '@domain/services';
 import { UserIdValueObject } from '@domain/value-objects';
 import { map } from 'rxjs';
-export class GetUserUseCase {
+export class GetUserUseCase implements IUseCase {
   constructor(private readonly userService: IUserDomainService) {}
   execute(id: string) {
     const data = {

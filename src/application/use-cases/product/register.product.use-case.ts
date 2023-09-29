@@ -1,3 +1,4 @@
+import { IUseCase } from '@applications/interface';
 import { IProductCommand } from '@domain/command';
 import { ProductDomainEntity } from '@domain/entities';
 import { IRegisteredProductEventPublisher } from '@domain/event/publishers';
@@ -12,7 +13,7 @@ import {
 } from '@domain/value-objects';
 import { map } from 'rxjs';
 
-export class RegisterProductUseCase {
+export class RegisterProductUseCase implements IUseCase {
   constructor(
     private readonly productService: IProductDomainService,
     private readonly eventService: IEventService,

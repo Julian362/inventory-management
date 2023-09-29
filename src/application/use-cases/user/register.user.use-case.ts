@@ -1,3 +1,4 @@
+import { IUseCase } from '@applications/interface';
 import { IUserCommand } from '@domain/command';
 import { UserDomainEntity } from '@domain/entities';
 import { IRegisteredUserEventPublisher } from '@domain/event/publishers';
@@ -11,7 +12,7 @@ import {
 } from '@domain/value-objects';
 import { FullNameType } from '@types';
 import { map } from 'rxjs';
-export class RegisterUserUseCase {
+export class RegisterUserUseCase implements IUseCase {
   constructor(
     private readonly userService: IUserDomainService,
     private readonly eventService: IEventService,

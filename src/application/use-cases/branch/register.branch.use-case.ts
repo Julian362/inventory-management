@@ -1,3 +1,4 @@
+import { IUseCase } from '@applications/interface';
 import { IBranchCommand } from '@domain/command';
 import { BranchDomainEntity } from '@domain/entities';
 import { IRegisteredBranchEventPublisher } from '@domain/event/publishers';
@@ -9,7 +10,7 @@ import {
 import { LocationType } from '@types';
 import { map } from 'rxjs';
 
-export class RegisterBranchUseCase {
+export class RegisterBranchUseCase implements IUseCase {
   constructor(
     private readonly branchService: IBranchDomainService,
     private readonly eventService: IEventService,

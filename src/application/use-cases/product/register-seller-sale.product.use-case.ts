@@ -1,3 +1,4 @@
+import { IUseCase } from '@applications/interface';
 import { ProductDomainEntity } from '@domain/entities';
 import { IRegisteredSellerEventPublisher } from '@domain/event/publishers';
 import { IEventService, IProductDomainService } from '@domain/services';
@@ -7,7 +8,7 @@ import {
 } from '@domain/value-objects';
 import { iif, switchMap, throwError } from 'rxjs';
 
-export class RegisterSellerSaleUseCase {
+export class RegisterSellerSaleUseCase implements IUseCase {
   constructor(
     private readonly productService: IProductDomainService,
     private readonly eventService: IEventService,
