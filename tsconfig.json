@@ -18,15 +18,16 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@validations": ["./src/shared/validations"],
-      "@ValueObjectBase": ["./src/shared/domain/value-object"],
-      "@domain/*": ["./src/domain/*"],
-      "@applications": ["./src/application"],
-      "@applications/*": ["./src/application/*"],
-      "@infrastructure/*": ["./src/infrastructure/*"],
-      "@sofka": ["./src/shared/sofka"],
-      "@enums": ["src/shared/enums"],
-      "@types": ["./src/shared/types"]
+      "@domain/*": ["./apps/common/domain/*"],
+      "@alpha-applications/*": ["./apps/alpha/src/application/*"],
+      "@beta-applications/*": ["./apps/beta/src/application/*"],
+      "@alpha-infrastructure/*": ["./apps/alpha/src/infrastructure/*"],
+      "@beta-infrastructure/*": ["./apps/beta/src/infrastructure/*"],
+      "@validations": ["./apps/common/shared/validations"],
+      "@ValueObjectBase": ["./apps/common/shared/domain/value-object"],
+      "@sofka": ["./apps/common/shared/sofka"],
+      "@enums": ["./apps/common/shared/enums"],
+      "@types": ["./apps/common/shared/types"]
     }
   }
 }
