@@ -5,8 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "npm run start-alpha:dev",
-      "name": "Run npm start",
+      "command": "npm run start-command:dev",
+      "name": "run command",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "npm run start-querie:dev",
+      "name": "run querie",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "npm run start-gama:dev",
+      "name": "run proxy",
       "request": "launch",
       "type": "node-terminal"
     }

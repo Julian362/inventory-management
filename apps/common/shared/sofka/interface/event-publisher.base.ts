@@ -22,10 +22,11 @@ export abstract class EventPublisherBase<Response> implements IEventPublisher {
   }
 
   emit<Result = any, Input = Response>(
+    exchange: string,
     pattern: any,
     data: Input,
   ): Observable<Result> {
-    return from(this.eventPublisher.emit(pattern, data));
+    return from(this.eventPublisher.emit(exchange, pattern, data));
   }
 
   abstract publish<Result = any>(): Observable<Result>;

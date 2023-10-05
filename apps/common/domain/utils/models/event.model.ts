@@ -1,13 +1,3 @@
-import { IEventModel } from './interfaces';
+import { EventMongo } from '@infrastructure-command/persistence';
 
-export class EventModelDomain implements IEventModel {
-  _id?: string;
-
-  aggregateRootId: string;
-
-  eventBody: string;
-
-  occurredOn: Date;
-
-  typeName: string;
-}
+export class EventModel extends EventMongo {}

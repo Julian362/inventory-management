@@ -1,9 +1,8 @@
+import { FullNameType } from '@types';
+
 export interface IUserCommand {
   id?: string;
-  name: {
-    firstName: string;
-    lastName: string;
-  };
+  name: FullNameType;
   password: string;
   email: string;
   role: string;

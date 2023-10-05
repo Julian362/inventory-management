@@ -23,5 +23,5 @@
     "editor.tabSize": 2
   },
   "jest.autoRun": "off",
-  "cSpell.words": ["Locksmithing", "uuidv"]
+  "cSpell.words": ["golevelup", "Locksmithing", "querie", "rabbitmq", "uuidv"]
 }

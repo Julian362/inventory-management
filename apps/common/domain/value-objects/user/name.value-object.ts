@@ -7,8 +7,8 @@ export class UserNameValueObject extends ValueObjectBase<FullNameType> {
   lastName: LastName;
 
   validateData(): void {
-    this.firstName = new FirstName(this.value.FirstName);
-    this.lastName = new LastName(this.value.LastName);
+    this.firstName = new FirstName(this.value.firstName);
+    this.lastName = new LastName(this.value.lastName);
     if (this.value) {
       this.firstName.validateData();
       this.lastName.validateData();

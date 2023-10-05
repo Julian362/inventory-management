@@ -5,6 +5,7 @@ export interface IEventPublisher {
     data: Input,
   ): Observable<Result>;
   emit<Result = any, Input = any>(
+    exchange: string,
     pattern: any,
     data: Input,
   ): Observable<Result>;
