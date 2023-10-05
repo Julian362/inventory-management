@@ -32,7 +32,7 @@ export class EventRepository implements IBaseRepository<EventMongo> {
             $in: typesNames,
           },
         })
-        .sort({ ocurredOn: -1 })
+        .sort({ occurredOn: -1 })
         .exec(),
     );
   }

@@ -12,7 +12,8 @@ import { TypeNamesEnum } from '@enums';
 import { EventService } from '@infrastructure-command/services';
 import { BadRequestException } from '@nestjs/common';
 import { FullNameType } from '@types';
-import { Observable, map, switchMap, tap } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
+import { v4 as uuid } from 'uuid';
 export class RegisterUserUseCase {
   constructor(
     private readonly eventService: EventService,
@@ -24,6 +25,7 @@ export class RegisterUserUseCase {
       lastName: user.name.lastName,
     } as FullNameType);
     const data: UserDomainEntity = {
+      id: uuid(),
       name: name.valueOf().firstName + ' ' + name.valueOf().lastName,
       email: new UserEmailValueObject(user.email).valueOf(),
       password: new UserPasswordValueObject(user.password).valueOf(),
@@ -39,14 +41,29 @@ export class RegisterUserUseCase {
         switchMap((isValid) => {
           if (!isValid) {
             return this.eventService
-              .create(data, TypeNamesEnum.RegisteredUser)
+              .isExist(data.branchId.valueOf(), [
+                TypeNamesEnum.RegisteredBranch,
+              ])
               .pipe(
-                tap((event) => {
-                  this.publisher.response = event;
-                  this.publisher.typeName = TypeNamesEnum.RegisteredUser;
-                  this.publisher.publish();
+                switchMap((isExist) => {
+                  if (isExist) {
+                    return this.eventService
+                      .create(data, TypeNamesEnum.RegisteredUser)
+                      .pipe(
+                        map((event) => {
+                          this.publisher.response = event;
+                          this.publisher.typeName =
+                            TypeNamesEnum.RegisteredUser;
+                          this.publisher.publish();
+                          return data;
+                        }),
+                      );
+                  } else {
+                    throw new BadRequestException(
+                      'La sucursal no existe o no esta registrada',
+                    );
+                  }
                 }),
-                map(() => data),
               );
           } else {
             throw new BadRequestException('El correo del usuario ya existe');

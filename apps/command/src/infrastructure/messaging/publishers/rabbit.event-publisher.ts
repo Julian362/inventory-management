@@ -17,6 +17,7 @@ export class RabbitPublisher extends EventPublisher {
     pattern: TypeNamesEnum,
     data: Input,
   ): Observable<Result> {
+    console.log();
     return from(this.proxy.publish(exchange, pattern, data));
   }
 }

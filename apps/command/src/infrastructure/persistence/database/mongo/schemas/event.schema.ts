@@ -4,6 +4,7 @@ import {
   ProductDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
+import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 
@@ -23,7 +24,11 @@ export class EventMongo implements IEventModel {
   aggregateRootId: string;
 
   @Prop({ type: Object, required: true })
-  eventBody: ProductDomainEntity | UserDomainEntity | BranchDomainEntity;
+  eventBody:
+    | ProductDomainEntity
+    | UserDomainEntity
+    | BranchDomainEntity
+    | SaleDomainEntity;
 
   @Prop({ type: Date, required: true })
   occurredOn: Date;

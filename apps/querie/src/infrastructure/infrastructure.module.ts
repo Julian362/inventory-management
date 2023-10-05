@@ -61,14 +61,14 @@ import { BranchService, ProductService, UserService } from './services';
       useFactory: (service: UserService) => {
         return new GetAllUserUseCase(service);
       },
-      inject: [ProductService],
+      inject: [UserService],
     },
     {
       provide: GetUserUseCase,
       useFactory: (service: UserService) => {
         return new GetUserUseCase(service);
       },
-      inject: [ProductService],
+      inject: [UserService],
     },
     {
       provide: RegisterUserUseCase,

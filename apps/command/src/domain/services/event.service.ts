@@ -4,12 +4,17 @@ import {
   ProductDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
+import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
 import { TypeNamesEnum } from '@enums';
 import { Observable } from 'rxjs';
 
 export interface IEventService {
   create(
-    data: UserDomainEntity | ProductDomainEntity | BranchDomainEntity,
+    data:
+      | UserDomainEntity
+      | ProductDomainEntity
+      | BranchDomainEntity
+      | SaleDomainEntity,
     typeName: TypeNamesEnum,
   ): Observable<IEventModel>;
 
@@ -26,5 +31,8 @@ export interface IEventService {
     typesNames: TypeNamesEnum[],
   ): Observable<IEventModel>;
 
+  isExistArray(id: string[]): Observable<boolean>;
+
   findById(id: string): Observable<IEventModel>;
+  isExist(id: string, typeName: TypeNamesEnum[]): Observable<boolean>;
 }

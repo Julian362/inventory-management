@@ -38,6 +38,7 @@ export class ModifyQuantityProductUseCase {
                 this.publisher.response = event;
                 this.publisher.typeName =
                   TypeNamesEnum.RegisteredProductQuantity;
+                console.log('publicando evento');
                 this.publisher.publish();
               }),
               map(() => product),

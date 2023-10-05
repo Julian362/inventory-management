@@ -24,7 +24,7 @@ export class UserPostgresEntity {
   @Column('varchar', { length: 30, name: 'role' })
   role: string;
 
-  @ManyToOne(() => BranchPostgresEntity, (branch) => branch.user, {
+  @ManyToOne(() => BranchPostgresEntity, (branch) => branch.users, {
     cascade: ['insert'],
   })
   branch: BranchPostgresEntity;

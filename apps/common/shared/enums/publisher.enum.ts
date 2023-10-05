@@ -4,5 +4,6 @@ export enum TypeNamesEnum {
   RegisteredCustomerSale = 'registered.product.quantity.customer.sale',
   RegisteredSellerSale = 'registered.product.quantity.seller.sale',
   RegisteredUser = 'registered.user',
-  registeredBranch = 'registered.branch',
+  RegisteredBranch = 'registered.branch',
+  RegisteredSale = 'registered.sale',
 }

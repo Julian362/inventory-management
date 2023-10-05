@@ -19,8 +19,8 @@ export class RegisterBranchUseCase {
       id: branch.id,
       name: new BranchNameValueObject(branch.name).valueOf(),
       location: location.valueOf().city + ', ' + location.valueOf().country,
-      user: [],
-      product: [],
+      users: [],
+      products: [],
     };
     return this.branchService.createBranch(data);
   }

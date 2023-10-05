@@ -19,8 +19,8 @@ export class BranchPostgresEntity {
   location: string;
 
   @OneToMany(() => ProductPostgresEntity, (product) => product.branch)
-  product: ProductPostgresEntity[];
+  products: ProductPostgresEntity[];
 
   @OneToMany(() => UserPostgresEntity, (user) => user.branch)
-  user: UserPostgresEntity[];
+  users: UserPostgresEntity[];
 }

@@ -9,8 +9,8 @@ import { UserDomainEntity } from './user.domain-entity';
 
 export class BranchDomainEntity implements IBranchDomainEntity {
   id?: string | BranchIdValueObject;
-  product: ProductDomainEntity[];
-  user: UserDomainEntity[];
+  products: ProductDomainEntity[];
+  users: UserDomainEntity[];
   name: string | BranchNameValueObject;
   location: string | BranchLocationValueObject;
   constructor(data: IBranchDomainEntity) {

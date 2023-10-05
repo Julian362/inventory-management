@@ -25,8 +25,8 @@ export class RegisterBranchUseCase {
     const data: BranchDomainEntity = {
       name: new BranchNameValueObject(branch.name).valueOf(),
       location: location.valueOf().city + ', ' + location.valueOf().country,
-      user: [],
-      product: [],
+      users: [],
+      products: [],
       id: uuid(),
     };
     return this.eventService
@@ -35,11 +35,11 @@ export class RegisterBranchUseCase {
         switchMap((isValid) => {
           if (!isValid) {
             return this.eventService
-              .create(data, TypeNamesEnum.registeredBranch)
+              .create(data, TypeNamesEnum.RegisteredBranch)
               .pipe(
                 tap((event) => {
                   this.publisher.response = event;
-                  this.publisher.typeName = TypeNamesEnum.registeredBranch;
+                  this.publisher.typeName = TypeNamesEnum.RegisteredBranch;
                   this.publisher.publish();
                 }),
                 map(() => data),

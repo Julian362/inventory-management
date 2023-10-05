@@ -12,7 +12,8 @@ import {
 } from '@domain/value-objects';
 import { TypeNamesEnum } from '@enums';
 import { BadRequestException } from '@nestjs/common';
-import { Observable, map, switchMap, tap } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
+import { v4 as uuid } from 'uuid';
 
 export class RegisterProductUseCase {
   constructor(
@@ -21,6 +22,7 @@ export class RegisterProductUseCase {
   ) {}
   execute(product: IProductCommand): Observable<ProductDomainEntity> {
     const data: ProductDomainEntity = {
+      id: uuid(),
       name: new ProductNameValueObject(product.name).valueOf(),
       category: new ProductCategoryValueObject(product.category).valueOf(),
       price: new ProductPriceValueObject(product.price).valueOf(),
@@ -42,14 +44,29 @@ export class RegisterProductUseCase {
         switchMap((isValid) => {
           if (!isValid) {
             return this.eventService
-              .create(data, TypeNamesEnum.RegisteredProduct)
+              .isExist(data.branchId.valueOf(), [
+                TypeNamesEnum.RegisteredBranch,
+              ])
               .pipe(
-                tap((event) => {
-                  this.publisher.response = event;
-                  this.publisher.typeName = TypeNamesEnum.RegisteredProduct;
-                  this.publisher.publish();
+                switchMap((isExist) => {
+                  if (isExist) {
+                    return this.eventService
+                      .create(data, TypeNamesEnum.RegisteredProduct)
+                      .pipe(
+                        map((event) => {
+                          this.publisher.response = event;
+                          this.publisher.typeName =
+                            TypeNamesEnum.RegisteredProduct;
+                          this.publisher.publish();
+                          return data;
+                        }),
+                      );
+                  } else {
+                    throw new BadRequestException(
+                      'La sucursal no existe o no esta activa',
+                    );
+                  }
                 }),
-                map(() => data),
               );
           } else {
             throw new BadRequestException('El nombre del producto ya existe');

@@ -27,7 +27,7 @@ export class ProductPostgresEntity {
   @Column('int', { name: 'quantity' })
   quantity: number;
 
-  @ManyToOne(() => BranchPostgresEntity, (branch) => branch.product, {
+  @ManyToOne(() => BranchPostgresEntity, (branch) => branch.products, {
     cascade: ['insert'],
   })
   branch: BranchPostgresEntity;

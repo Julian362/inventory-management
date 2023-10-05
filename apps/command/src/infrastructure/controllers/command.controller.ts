@@ -1,9 +1,8 @@
 import {
   ModifyQuantityProductUseCase,
   RegisterBranchUseCase,
-  RegisterCustomerSaleUseCase,
   RegisterProductUseCase,
-  RegisterSellerSaleUseCase,
+  RegisterSaleUseCase,
   RegisterUserUseCase,
 } from '@applications-command/use-cases';
 import {
@@ -11,6 +10,8 @@ import {
   ProductDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
+import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
+import { SaleCommand } from '@infrastructure-command/command/sale.command';
 import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import {
@@ -24,8 +25,7 @@ import {
 export class CommandController {
   constructor(
     private readonly registerUseCase: RegisterProductUseCase,
-    private readonly sellerSaleUseCase: RegisterSellerSaleUseCase,
-    private readonly customerSaleUseCase: RegisterCustomerSaleUseCase,
+    private readonly saleUseCase: RegisterSaleUseCase,
     private readonly purchaseUseCase: ModifyQuantityProductUseCase,
     private readonly registerUserUseCase: RegisterUserUseCase,
     private readonly registerBranchUseCase: RegisterBranchUseCase,
@@ -49,19 +49,13 @@ export class CommandController {
   }
 
   @Patch('product/seller-sale/:id')
-  toSellerSale(
-    @Param('id') id: string,
-    @Body() quantity: UpdateQuantityCommand,
-  ): Observable<ProductDomainEntity> {
-    return this.sellerSaleUseCase.execute(id, quantity.quantity);
+  toSellerSale(@Body() data: SaleCommand): Observable<SaleDomainEntity> {
+    return this.saleUseCase.execute(data, 10);
   }
 
-  @Patch('product/customer-sale/:id')
-  toCustomerSale(
-    @Param('id') id: string,
-    @Body() quantity: UpdateQuantityCommand,
-  ): Observable<ProductDomainEntity> {
-    return this.customerSaleUseCase.execute(id, quantity.quantity);
+  @Patch('product/customer-sale')
+  toCustomerSale(@Body() data: SaleCommand): Observable<SaleDomainEntity> {
+    return this.saleUseCase.execute(data);
   }
 
   //Branch

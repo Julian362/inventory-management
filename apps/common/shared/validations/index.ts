@@ -1,3 +1,4 @@
+export * from './date-actual';
 export * from './enum-contain';
 export * from './is-boolean';
 export * from './is-email';

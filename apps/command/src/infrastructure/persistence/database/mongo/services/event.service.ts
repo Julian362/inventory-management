@@ -8,13 +8,55 @@ import {
 } from '@domain/entities';
 import { EventModel } from '@domain/utils/models';
 import { TypeNamesEnum } from '@enums';
-import { Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Observable, forkJoin, map } from 'rxjs';
 import { EventRepository } from '../repositories';
 
 @Injectable()
 export class EventMongoService implements IEventService {
   constructor(private readonly eventRepository: EventRepository) {}
+  isExist(id: string, typeName: TypeNamesEnum[]): Observable<boolean> {
+    return this.eventRepository.findByEntityId(id, typeName).pipe(
+      map((event) => {
+        if (event) return true;
+        return false;
+      }),
+    );
+  }
+
+  isExistArray(ids: string[]): Observable<boolean> {
+    const observableArray = ids.map((id) =>
+      this.isExist(id, [
+        TypeNamesEnum.RegisteredProductQuantity,
+        TypeNamesEnum.RegisteredProduct,
+        TypeNamesEnum.RegisteredCustomerSale,
+        TypeNamesEnum.RegisteredSellerSale,
+      ]).pipe(
+        map((exist) => {
+          if (exist) return true;
+          return false;
+        }),
+      ),
+    );
+    return forkJoin(observableArray).pipe(
+      map((array) => {
+        const notFoundIds = [];
+
+        for (let i = 0; i < array.length; i++) {
+          if (!array[i]) {
+            notFoundIds.push(ids[i]);
+          }
+        }
+        if (notFoundIds.length === 0) {
+          return true;
+        } else {
+          throw new BadRequestException(
+            `los siguientes ids no fueron encontrados ${notFoundIds}`,
+          );
+        }
+      }),
+    );
+  }
   validateUnique(
     field: { name: string; value: string },
     aggregateRootId?: string,

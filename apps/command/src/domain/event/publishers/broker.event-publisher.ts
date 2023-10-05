@@ -8,6 +8,10 @@ export abstract class EventPublisher<
 > extends EventPublisherBase<Response> {
   typeName: TypeNamesEnum;
   publish<Result = string>(): Observable<Result> {
+    console.log(
+      'EventPublisherBase -> publish -> this.typeName',
+      this.typeName,
+    );
     return this.emit('inventory_exchange', this.typeName, this.response);
   }
 }

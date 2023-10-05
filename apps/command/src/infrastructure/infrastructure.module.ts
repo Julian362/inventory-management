@@ -1,9 +1,8 @@
 import {
   ModifyQuantityProductUseCase,
   RegisterBranchUseCase,
-  RegisterCustomerSaleUseCase,
   RegisterProductUseCase,
-  RegisterSellerSaleUseCase,
+  RegisterSaleUseCase,
   RegisterUserUseCase,
 } from '@applications-command/use-cases';
 import { MessagingModule } from '@infrastructure-command/messaging';
@@ -28,22 +27,12 @@ import { EventService } from './services';
       inject: [EventService, RabbitPublisher],
     },
     {
-      provide: RegisterSellerSaleUseCase,
+      provide: RegisterSaleUseCase,
       useFactory: (
         eventService: EventService,
         brokerPublisher: RabbitPublisher,
       ) => {
-        return new RegisterSellerSaleUseCase(eventService, brokerPublisher);
-      },
-      inject: [EventService, RabbitPublisher],
-    },
-    {
-      provide: RegisterCustomerSaleUseCase,
-      useFactory: (
-        eventService: EventService,
-        brokerPublisher: RabbitPublisher,
-      ) => {
-        return new RegisterCustomerSaleUseCase(eventService, brokerPublisher);
+        return new RegisterSaleUseCase(eventService, brokerPublisher);
       },
       inject: [EventService, RabbitPublisher],
     },

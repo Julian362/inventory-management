@@ -8,8 +8,8 @@ import { IUserDomainEntity } from './user.domain-entity.interface';
 
 export interface IBranchDomainEntity {
   id?: string | BranchIdValueObject;
-  product: IProductDomainEntity[];
-  user: IUserDomainEntity[];
+  products: IProductDomainEntity[];
+  users: IUserDomainEntity[];
   name: string | BranchNameValueObject;
   location: string | BranchLocationValueObject;
 }

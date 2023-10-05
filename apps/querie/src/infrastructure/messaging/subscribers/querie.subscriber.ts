@@ -11,7 +11,7 @@ import {
   UserDomainEntity,
 } from '@domain/entities';
 import { TypeNamesEnum } from '@enums';
-import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
+import { RabbitRPC, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import {
   BranchCommandQuerie,
   ProductCommand,
@@ -32,7 +32,7 @@ export class QuerieSubscriber {
 
   //Product
 
-  @RabbitSubscribe({
+  @RabbitRPC({
     exchange: 'inventory_exchange',
     routingKey: TypeNamesEnum.RegisteredProduct,
     queue: 'product_queue',
@@ -42,22 +42,23 @@ export class QuerieSubscriber {
     const product: ProductCommand = event.eventBody as ProductCommand;
     console.log('creando producto');
     return this.registerUseCase.execute({
-      id: product.id.valueOf(),
-      name: product.name.valueOf(),
-      price: product.price.valueOf(),
-      quantity: product.quantity.valueOf(),
-      category: product.category.valueOf(),
-      description: product.description.valueOf(),
-      branchId: product.branchId.valueOf(),
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: product.quantity,
+      category: product.category,
+      description: product.description,
+      branchId: product.branchId,
     });
   }
 
   @RabbitSubscribe({
     exchange: 'inventory_exchange',
     routingKey: 'registered.product.quantity.#',
-    queue: 'product_queue',
+    queue: 'product_update_queue',
   })
   toUpdateQuantity(data: object): Observable<ProductDomainEntity> {
+    console.log('actualizando cantidad');
     const event: IEventModel = data as IEventModel;
     const product: ProductDomainEntity = event.eventBody as ProductDomainEntity;
     return this.updateUseCase.execute(
@@ -68,9 +69,9 @@ export class QuerieSubscriber {
 
   //Branch
 
-  @RabbitSubscribe({
+  @RabbitRPC({
     exchange: 'inventory_exchange',
-    routingKey: TypeNamesEnum.registeredBranch,
+    routingKey: TypeNamesEnum.RegisteredBranch,
     queue: 'branch_queue',
   })
   registerBranch(data: object): Observable<BranchDomainEntity> {
@@ -90,7 +91,7 @@ export class QuerieSubscriber {
 
   //User
 
-  @RabbitSubscribe({
+  @RabbitRPC({
     exchange: 'inventory_exchange',
     routingKey: TypeNamesEnum.RegisteredUser,
     queue: 'user_queue',
