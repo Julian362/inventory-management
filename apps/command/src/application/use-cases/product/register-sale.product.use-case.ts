@@ -7,7 +7,6 @@ import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
 import { UserIdValueObject } from '@domain/value-objects';
 import {
   SaleDateValueObject,
-  SaleNumberValueObject,
   SaleTotalValueObject,
 } from '@domain/value-objects/sales';
 import { TypeNamesEnum } from '@enums';
@@ -23,11 +22,11 @@ export class RegisterSaleUseCase {
   ) {}
 
   execute(sale: ISaleCommand, discount?: number): Observable<SaleDomainEntity> {
-    discount = discount ? discount : 100;
+    discount = discount || 100;
     const data = {
       id: uuid(),
       branchId: new UserIdValueObject(sale.branchId).valueOf(),
-      number: new SaleNumberValueObject(1).valueOf(),
+      number: 0,
       total: new SaleTotalValueObject(0).valueOf(),
       date: new SaleDateValueObject(new Date(Date.now())).valueOf(),
     };
@@ -96,11 +95,18 @@ export class RegisterSaleUseCase {
 
                     products.forEach((product) => {
                       this.eventService
-                        .create(product, TypeNamesEnum.RegisteredCustomerSale)
+                        .create(
+                          product,
+                          discount == 100
+                            ? TypeNamesEnum.RegisteredSellerSale
+                            : TypeNamesEnum.RegisteredCustomerSale,
+                        )
                         .subscribe((event) => {
                           this.publisher.response = event;
                           this.publisher.typeName =
-                            TypeNamesEnum.RegisteredCustomerSale;
+                            discount == 100
+                              ? TypeNamesEnum.RegisteredSellerSale
+                              : TypeNamesEnum.RegisteredCustomerSale;
                           this.publisher.publish();
                         });
                       productsSale.push({
@@ -110,7 +116,9 @@ export class RegisterSaleUseCase {
                           .quantity,
                       });
                     });
-
+                    this.eventService.calculateTotal().subscribe((total) => {
+                      data.total = total;
+                    });
                     const eventData: SaleDomainEntity = {
                       id: data.id,
                       number: data.number,

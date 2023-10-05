@@ -35,4 +35,6 @@ export interface IEventService {
 
   findById(id: string): Observable<IEventModel>;
   isExist(id: string, typeName: TypeNamesEnum[]): Observable<boolean>;
+
+  calculateTotal(): Observable<number>;
 }

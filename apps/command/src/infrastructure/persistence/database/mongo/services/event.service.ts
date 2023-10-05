@@ -95,4 +95,8 @@ export class EventMongoService implements IEventService {
   ): Observable<boolean> {
     return this.eventRepository.validateUnique(field, aggregateRootId);
   }
+
+  calculateTotal(): Observable<number> {
+    return this.eventRepository.calculateTotal();
+  }
 }

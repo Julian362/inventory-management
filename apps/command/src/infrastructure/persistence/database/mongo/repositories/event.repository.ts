@@ -2,7 +2,7 @@ import { TypeNamesEnum } from '@enums';
 import { BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Observable, catchError, from, map } from 'rxjs';
+import { Observable, catchError, from, map, of, switchMap } from 'rxjs';
 import { EventDocument, EventMongo } from '../schemas';
 import { IBaseRepository } from './Interface';
 
@@ -55,6 +55,25 @@ export class EventRepository implements IBaseRepository<EventMongo> {
       map((event: EventMongo) => {
         if (event && event !== null) return true;
         return false;
+      }),
+    );
+  }
+
+  //calcule total is a function, calculate a total of sale and return a number
+  calculateTotal(): Observable<number> {
+    return from(
+      this.repository
+        .find({
+          typeName: TypeNamesEnum.RegisteredSale,
+        })
+        .exec(),
+    ).pipe(
+      switchMap((events: EventMongo[]) => {
+        let total = 0;
+        events.forEach(() => {
+          total++;
+        });
+        return of(total);
       }),
     );
   }

@@ -1,6 +1,7 @@
 import {
   RegisterBranchUseCase,
   RegisterProductUseCase,
+  RegisterSaleUseCase,
   RegisterUserUseCase,
   UpdateQuantityProductUseCase,
 } from '@applications-querie-/use-cases';
@@ -10,6 +11,7 @@ import {
   ProductDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
+import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
 import { TypeNamesEnum } from '@enums';
 import { RabbitRPC, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import {
@@ -28,6 +30,7 @@ export class QuerieSubscriber {
     private readonly updateUseCase: UpdateQuantityProductUseCase,
     private readonly registerUserUseCase: RegisterUserUseCase,
     private readonly registerBranchUseCase: RegisterBranchUseCase,
+    private readonly registerSaleUseCase: RegisterSaleUseCase,
   ) {}
 
   //Product
@@ -107,6 +110,27 @@ export class QuerieSubscriber {
       password: user.password,
       role: user.role,
       branchId: user.branchId,
+    });
+  }
+
+  //Sale
+
+  @RabbitRPC({
+    exchange: 'inventory_exchange',
+    routingKey: TypeNamesEnum.RegisteredSale,
+    queue: 'sale_queue',
+  })
+  registerSale(data: object): Observable<unknown> {
+    console.log('creando venta');
+    const event: IEventModel = data as IEventModel;
+    const sale: SaleDomainEntity = event.eventBody as SaleDomainEntity;
+    return this.registerSaleUseCase.execute({
+      id: sale.id.valueOf(),
+      number: sale.number.valueOf(),
+      date: new Date(sale.date.valueOf()),
+      branchId: sale.branchId.valueOf(),
+      products: sale.products,
+      total: sale.total.valueOf(),
     });
   }
 }

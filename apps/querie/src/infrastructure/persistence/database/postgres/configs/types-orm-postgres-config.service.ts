@@ -4,6 +4,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import {
   BranchPostgresEntity,
   ProductPostgresEntity,
+  SalePostgresEntity,
   UserPostgresEntity,
 } from '../entities';
 
@@ -23,6 +24,7 @@ export class TypesOrmPostgresConfigService implements TypeOrmOptionsFactory {
         ProductPostgresEntity,
         UserPostgresEntity,
         BranchPostgresEntity,
+        SalePostgresEntity,
       ],
       synchronize: true,
       // logging: true,

@@ -1,6 +1,7 @@
 import { BranchIdValueObject } from '@domain/value-objects';
 import {
   SaleDateValueObject,
+  SaleIdValueObject,
   SaleNumberValueObject,
   SaleProductsValueObject,
   SaleTotalValueObject,
@@ -9,7 +10,7 @@ import { ProductsType } from '@types';
 import { ISalesDomainEntity } from './interfaces';
 
 export class SaleDomainEntity implements ISalesDomainEntity {
-  id: string | SaleDateValueObject;
+  id: string | SaleIdValueObject;
   number: number | SaleNumberValueObject;
   branchId: string | BranchIdValueObject;
   products: ProductsType[] | SaleProductsValueObject[];

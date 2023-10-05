@@ -7,6 +7,7 @@ import {
   GetUserUseCase,
   RegisterBranchUseCase,
   RegisterProductUseCase,
+  RegisterSaleUseCase,
   RegisterUserUseCase,
   UpdateQuantityProductUseCase,
 } from '@applications-querie-/use-cases';
@@ -15,6 +16,7 @@ import { Module } from '@nestjs/common';
 import { QuerieController } from './controllers/querie.controller';
 import { PersistenceModule } from './persistence';
 import { BranchService, ProductService, UserService } from './services';
+import { SaleService } from './services/sale.service ';
 
 @Module({
   imports: [PersistenceModule],
@@ -97,6 +99,13 @@ import { BranchService, ProductService, UserService } from './services';
         return new RegisterBranchUseCase(service);
       },
       inject: [BranchService],
+    },
+    {
+      provide: RegisterSaleUseCase,
+      useFactory: (serviceSale: SaleService, branchService: BranchService) => {
+        return new RegisterSaleUseCase(serviceSale, branchService);
+      },
+      inject: [SaleService, BranchService],
     },
   ],
   exports: [],
