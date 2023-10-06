@@ -1,10 +1,8 @@
 version: "3"
 services:
   command-app:
+    image: julian362/command-app:latest
     container_name: command-app
-    build:
-      context: ./
-      dockerfile: command.dockerfile
     ports:
       - 3000:3000
     environment:
@@ -22,10 +20,8 @@ services:
       - inventory-app:/command/app
 
   querie-app:
+    image: julian362/querie-app:latest
     container_name: querie-app
-    build:
-      context: ./
-      dockerfile: querie.dockerfile
     ports:
       - 3001:3001
     environment:
@@ -42,10 +38,8 @@ services:
       - inventory-app:/querie/app
 
   proxy-app:
+    image: julian362/proxy-app:latest
     container_name: proxy-app
-    build:
-      context: ./
-      dockerfile: proxy.dockerfile
     ports:
       - 3002:3002
       - 81:81
@@ -54,7 +48,7 @@ services:
     links:
       - rabbitmq
     volumes:
-      - inventory-app:/command/app
+      - inventory-app:/proxy/app
 
   mongo:
     image: mongo:latest
@@ -70,6 +64,7 @@ services:
 
   postgres:
     image: postgres:14.4
+    container_name: postgres
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
@@ -93,6 +88,24 @@ services:
     volumes:
       - ./docker-data/data-rabbitmq:/var/lib/rabbitmq
 
+  angular:
+    image: "julian362/inventory-front:latest"
+    container_name: angular
+    restart: always
+    ports:
+      - 4200:4200
+    environment:
+      HOST_3000: http://command-app:3000
+      HOST_3001: http://querie:3001
+      HOST_3002: http://proxy:3002
+      HOST_81: http://proxy:81
+    links:
+      - command-app
+      - querie-app
+      - proxy-app
+    volumes:
+      - angular-app:/usr/share/nginx/html
+
 volumes:
   data-postgres:
     name: data-postgres
@@ -105,4 +118,7 @@ volumes:
     driver: local
   inventory-app:
     name: inventory-app
+    driver: local
+  angular-app:
+    name: angular-app
     driver: local
