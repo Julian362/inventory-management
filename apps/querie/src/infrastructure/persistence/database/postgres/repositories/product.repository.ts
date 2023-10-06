@@ -29,7 +29,11 @@ export class ProductRepository implements IBase<ProductPostgresEntity> {
     );
   }
 
-  findAll(): Observable<ProductPostgresEntity[]> {
-    return from(this.productRepository.find());
+  findAll(id: string): Observable<ProductPostgresEntity[]> {
+    return from(
+      this.productRepository.find({
+        where: { branchId: id },
+      }),
+    );
   }
 }

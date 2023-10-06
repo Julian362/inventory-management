@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 export interface IProductDomainService {
   createProduct(product: ProductDomainEntity): Observable<IProductDomainEntity>;
   getProductById(id: string): Observable<IProductDomainEntity>;
-  getAllProducts(): Observable<IProductDomainEntity[]>;
+  getAllProducts(id: string): Observable<IProductDomainEntity[]>;
   modifyQuantity(
     id: string,
     quantity: number,

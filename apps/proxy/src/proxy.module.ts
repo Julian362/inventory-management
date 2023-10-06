@@ -1,8 +1,9 @@
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { join } from 'node:path';
-import { InfrastructureModule } from './infrastructure/infrastructure.module';
+import { join } from 'path';
+import { InventoryGateway } from './infrastructure/gateway/inventory.gateway';
+import { ProxyService } from './proxy.service';
 
 @Module({
   imports: [
@@ -14,13 +15,12 @@ import { InfrastructureModule } from './infrastructure/infrastructure.module';
         `.env.${process.env.SCOPE?.trimEnd()}`,
       ),
     }),
-    InfrastructureModule,
     RabbitMQModule.forRoot(RabbitMQModule, {
       uri: process.env.RABBITMQ_HOST || 'amqp://root:password@localhost:5672',
       connectionInitOptions: { wait: false },
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [ProxyService, InventoryGateway],
 })
-export class QuerieModule {}
+export class ProxyModule {}

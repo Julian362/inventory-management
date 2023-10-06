@@ -31,7 +31,7 @@ export class ProductCommand implements IProductCommand {
   description: string;
 
   @IsNumber()
-  @Min(0)
+  @IsNotEmpty()
   quantity: number;
 
   @IsString()

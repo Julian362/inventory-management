@@ -37,6 +37,7 @@ export class CommandController {
   toCreateProduct(
     @Body() product: ProductCommand,
   ): Observable<ProductDomainEntity> {
+    console.log(product);
     return this.registerUseCase.execute(product);
   }
 
@@ -48,7 +49,7 @@ export class CommandController {
     return this.purchaseUseCase.execute(id, quantity.quantity);
   }
 
-  @Patch('product/seller-sale/:id')
+  @Patch('product/seller-sale')
   toSellerSale(@Body() data: SaleCommand): Observable<SaleDomainEntity> {
     return this.saleUseCase.execute(data, 10);
   }

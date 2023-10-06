@@ -2,7 +2,6 @@ import {
   IProductTypeCommand,
   ISaleCommand,
 } from '@domain/command/sale.command';
-import { TypeNamesEnum } from '@enums';
 import {
   IsNotEmpty,
   IsNumber,
@@ -15,12 +14,6 @@ import {
 export class SaleCommand implements ISaleCommand {
   @ValidateNested({ each: true })
   products: ProductsTypeCommand[];
-
-  @IsNotEmpty()
-  @IsString()
-  type:
-    | TypeNamesEnum.RegisteredCustomerSale
-    | TypeNamesEnum.RegisteredSellerSale;
 
   @IsString()
   @IsUUID()

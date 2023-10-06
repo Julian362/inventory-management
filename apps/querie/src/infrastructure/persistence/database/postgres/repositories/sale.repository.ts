@@ -21,7 +21,7 @@ export class SaleRepository implements IBase<SalePostgresEntity> {
       }),
     );
   }
-  findAll(): Observable<SalePostgresEntity[]> {
-    return from(this.saleRepository.find());
+  findAll(id: string): Observable<SalePostgresEntity[]> {
+    return from(this.saleRepository.find({ where: { branchId: id } }));
   }
 }

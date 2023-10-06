@@ -15,8 +15,8 @@ export class ProductPostgresService implements IProductDomainService {
   getProductById(id: string): Observable<ProductPostgresEntity> {
     return this.productRepository.findById(id);
   }
-  getAllProducts(): Observable<ProductPostgresEntity[]> {
-    return this.productRepository.findAll();
+  getAllProducts(id: string): Observable<ProductPostgresEntity[]> {
+    return this.productRepository.findAll(id);
   }
   modifyQuantity(
     id: string,

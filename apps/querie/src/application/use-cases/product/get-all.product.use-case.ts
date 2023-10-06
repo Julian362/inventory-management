@@ -4,8 +4,8 @@ import { map } from 'rxjs';
 
 export class GetAllProductUseCase {
   constructor(private readonly productService: IProductDomainService) {}
-  execute() {
-    return this.productService.getAllProducts().pipe(
+  execute(id: string) {
+    return this.productService.getAllProducts(id).pipe(
       map((product: ProductDomainEntity[]) => {
         return product;
       }),

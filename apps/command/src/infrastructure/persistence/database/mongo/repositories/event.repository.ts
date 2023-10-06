@@ -73,6 +73,7 @@ export class EventRepository implements IBaseRepository<EventMongo> {
         events.forEach(() => {
           total++;
         });
+        total++;
         return of(total);
       }),
     );

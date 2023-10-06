@@ -1,19 +1,15 @@
-import { IUserCommand } from '@domain/command';
-import { FullNameType } from '@types';
 import {
   IsEmail,
   IsNotEmpty,
-  IsObject,
   IsString,
   IsUUID,
   Length,
   Matches,
 } from 'class-validator';
 
-export class UserCommand implements IUserCommand {
+export class UserCommandQuerie {
   id?: string;
-  @IsObject()
-  name: FullNameType;
+  name: string;
 
   @IsString()
   @IsNotEmpty()

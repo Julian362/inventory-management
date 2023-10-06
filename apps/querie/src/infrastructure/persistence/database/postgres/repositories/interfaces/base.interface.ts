@@ -5,5 +5,5 @@ export interface IBase<Entity> {
 
   findById(id: string): Observable<Entity>;
 
-  findAll(): Observable<Entity[]>;
+  findAll(id?: string): Observable<Entity[]>;
 }

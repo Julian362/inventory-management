@@ -34,6 +34,8 @@ export class RegisterSaleUseCase {
       .findByEntityId(sale.branchId.valueOf(), [TypeNamesEnum.RegisteredBranch])
       .pipe(
         switchMap((event: IEventModel) => {
+          if (!event)
+            throw new BadRequestException('el id de la sucursal no existe');
           const user = event.eventBody as BranchDomainEntity;
           const branchId = user.id;
           const productsIds = sale.products.map((product) => product.id);
@@ -84,7 +86,7 @@ export class RegisterSaleUseCase {
                       total +=
                         product.price.valueOf() *
                         (discount / 100) *
-                        product.quantity.valueOf();
+                        sale.products.find((p) => p.id === product.id).quantity;
 
                       if (product.quantity.valueOf() < 0) {
                         throw new BadRequestException(
@@ -116,9 +118,7 @@ export class RegisterSaleUseCase {
                           .quantity,
                       });
                     });
-                    this.eventService.calculateTotal().subscribe((total) => {
-                      data.total = total;
-                    });
+
                     const eventData: SaleDomainEntity = {
                       id: data.id,
                       number: data.number,
@@ -128,17 +128,22 @@ export class RegisterSaleUseCase {
                       products: productsSale,
                     };
 
-                    return this.eventService
-                      .create(eventData, TypeNamesEnum.RegisteredSale)
-                      .pipe(
-                        tap((event) => {
-                          this.publisher.response = event;
-                          this.publisher.typeName =
-                            TypeNamesEnum.RegisteredSale;
-                          this.publisher.publish();
-                        }),
-                        map(() => eventData),
-                      );
+                    return this.eventService.calculateTotal().pipe(
+                      switchMap((total) => {
+                        eventData.number = total;
+                        return this.eventService
+                          .create(eventData, TypeNamesEnum.RegisteredSale)
+                          .pipe(
+                            tap((event) => {
+                              this.publisher.response = event;
+                              this.publisher.typeName =
+                                TypeNamesEnum.RegisteredSale;
+                              this.publisher.publish();
+                            }),
+                            map(() => eventData),
+                          );
+                      }),
+                    );
                   }),
                 );
               }

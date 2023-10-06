@@ -1,6 +1,6 @@
+import { UserCommand } from '@infrastructure-command/command';
 import { Type } from 'class-transformer';
 import { ProductCommand } from './product.command';
-import { UserCommand } from './user.command';
 
 export class BranchCommandQuerie {
   id?: string;

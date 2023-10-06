@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { ProductPostgresEntity } from './product.postgres-entity';
+import { SalePostgresEntity } from './sale.postgres-entity';
 import { UserPostgresEntity } from './user.postgres-entity';
 
 @Entity('branch', {
@@ -23,4 +24,7 @@ export class BranchPostgresEntity {
 
   @OneToMany(() => UserPostgresEntity, (user) => user.branch)
   users: UserPostgresEntity[];
+
+  @OneToMany(() => SalePostgresEntity, (sale) => sale.branch)
+  sales: SalePostgresEntity[];
 }

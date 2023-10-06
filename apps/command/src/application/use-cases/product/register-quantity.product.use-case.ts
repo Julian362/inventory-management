@@ -7,6 +7,7 @@ import {
   ProductQuantityValueObject,
 } from '@domain/value-objects';
 import { TypeNamesEnum } from '@enums';
+import { BadRequestException } from '@nestjs/common';
 import { Observable, map, switchMap, tap } from 'rxjs';
 export class ModifyQuantityProductUseCase {
   constructor(
@@ -28,6 +29,7 @@ export class ModifyQuantityProductUseCase {
       ])
       .pipe(
         switchMap((event: IEventModel) => {
+          if (!event) throw new BadRequestException('el producto no existe');
           const product = event.eventBody as IProductDomainEntity;
           product.quantity =
             product.quantity.valueOf() + data.quantity.valueOf();

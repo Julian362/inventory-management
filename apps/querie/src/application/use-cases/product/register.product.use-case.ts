@@ -21,7 +21,7 @@ export class RegisterProductUseCase {
       description: new ProductDescriptionValueObject(
         product.description,
       ).valueOf(),
-      quantity: new ProductQuantityValueObject(product.quantity).valueOf(),
+      quantity: new ProductQuantityValueObject(product.quantity).valueOf() || 0,
       branchId: new ProductIdValueObject(product.branchId).valueOf(),
     };
     return this.productService.createProduct(data);

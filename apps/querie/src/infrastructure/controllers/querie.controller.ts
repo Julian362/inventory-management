@@ -7,6 +7,7 @@ import {
   GetUserUseCase,
 } from '@applications-querie-/use-cases';
 import { Controller, Get, Param } from '@nestjs/common';
+import { GetAllSaleUseCase } from '../../application/use-cases/sale/get-all.sale.use-case';
 @Controller('api/v1')
 export class QuerieController {
   constructor(
@@ -16,6 +17,7 @@ export class QuerieController {
     private readonly getAllProductUseCase: GetAllProductUseCase,
     private readonly getBranchUseCase: GetBranchUseCase,
     private readonly getAllBranchUseCase: GetAllBranchUseCase,
+    private readonly getAllSaleUseCase: GetAllSaleUseCase,
   ) {}
 
   //User
@@ -35,9 +37,9 @@ export class QuerieController {
     return this.getProductUseCase.execute(id);
   }
 
-  @Get('products')
-  toGetAllProduct() {
-    return this.getAllProductUseCase.execute();
+  @Get('products/:id')
+  toGetAllProduct(@Param('id') id: string) {
+    return this.getAllProductUseCase.execute(id);
   }
 
   //Branch
@@ -49,5 +51,11 @@ export class QuerieController {
   @Get('branches')
   toGetAllBranch() {
     return this.getAllBranchUseCase.execute();
+  }
+
+  //Sale
+  @Get('sales/:id')
+  toGetAllSale(@Param('id') id: string) {
+    return this.getAllSaleUseCase.execute(id);
   }
 }

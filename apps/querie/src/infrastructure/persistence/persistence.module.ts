@@ -3,7 +3,7 @@ import {
   ProductService,
   UserService,
 } from '@infrastructure-querie/services';
-import { SaleService } from '@infrastructure-querie/services/sale.service ';
+import { SaleService } from '@infrastructure-querie/services/sale.service';
 import { Module } from '@nestjs/common';
 import { PostgresModule } from './database/postgres';
 

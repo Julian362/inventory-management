@@ -15,7 +15,7 @@ export class SalePostgresService implements ISaleDomainService {
     return this.saleRepository.findById(id);
   }
 
-  getAllSale(): Observable<SaleDomainEntity[]> {
-    return this.saleRepository.findAll();
+  getAllSale(id: string): Observable<SaleDomainEntity[]> {
+    return this.saleRepository.findAll(id);
   }
 }

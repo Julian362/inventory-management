@@ -17,7 +17,7 @@ import { RabbitRPC, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import {
   BranchCommandQuerie,
   ProductCommand,
-  UserCommand,
+  UserCommandQuerie,
 } from '@infrastructure-querie/command';
 import { Controller } from '@nestjs/common';
 import { LocationType } from '@types';
@@ -102,10 +102,14 @@ export class QuerieSubscriber {
   registerUser(data: object): Observable<UserDomainEntity> {
     console.log('creando usuario');
     const event: IEventModel = data as IEventModel;
-    const user: UserCommand = event.eventBody as unknown as UserCommand;
+    const user: UserCommandQuerie =
+      event.eventBody as unknown as UserCommandQuerie;
     return this.registerUserUseCase.execute({
       id: user.id,
-      name: user.name,
+      name: {
+        firstName: user.name.split(' ')[0],
+        lastName: user.name.split(' ')[1],
+      },
       email: user.email,
       password: user.password,
       role: user.role,
@@ -115,12 +119,12 @@ export class QuerieSubscriber {
 
   //Sale
 
-  @RabbitRPC({
+  @RabbitSubscribe({
     exchange: 'inventory_exchange',
     routingKey: TypeNamesEnum.RegisteredSale,
     queue: 'sale_queue',
   })
-  registerSale(data: object): Observable<unknown> {
+  registerSale(data: object): Observable<SaleDomainEntity> {
     console.log('creando venta');
     const event: IEventModel = data as IEventModel;
     const sale: SaleDomainEntity = event.eventBody as SaleDomainEntity;

@@ -17,7 +17,7 @@
       "type": "node-terminal"
     },
     {
-      "command": "npm run start-gama:dev",
+      "command": "npm run start-proxy:dev",
       "name": "run proxy",
       "request": "launch",
       "type": "node-terminal"

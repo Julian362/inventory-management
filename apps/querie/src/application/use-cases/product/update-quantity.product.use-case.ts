@@ -15,7 +15,7 @@ export class UpdateQuantityProductUseCase {
     };
     return this.productService.getProductById(data.id.valueOf()).pipe(
       switchMap((product: ProductDomainEntity) => {
-        product.quantity = data.quantity.valueOf();
+        product.quantity = quantity;
         return this.productService.modifyQuantity(
           data.id.valueOf(),
           product.quantity.valueOf(),

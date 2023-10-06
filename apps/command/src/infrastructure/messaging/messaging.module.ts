@@ -13,7 +13,7 @@ import { RabbitPublisher } from './publishers';
           createExchangeIfNotExists: true,
         },
       ],
-      uri: 'amqp://root:password@localhost:5672',
+      uri: process.env.RABBITMQ_HOST || 'amqp://root:password@localhost:5672',
       connectionInitOptions: { wait: false },
     }),
   ],

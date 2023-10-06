@@ -28,13 +28,13 @@
         "tsConfigPath": "apps/querie/tsconfig.app.json"
       }
     },
-    "gama": {
+    "proxy": {
       "type": "application",
-      "root": "apps/gama",
+      "root": "apps/proxy",
       "entryFile": "main",
-      "sourceRoot": "apps/gama/src",
+      "sourceRoot": "apps/proxy/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/gama/tsconfig.app.json"
+        "tsConfigPath": "apps/proxy/tsconfig.app.json"
       }
     }
   }

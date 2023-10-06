@@ -1,6 +1,10 @@
 import { ProductsType } from '@types';
-import { Column } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { BranchPostgresEntity } from './branch.postgres-entity';
 
+@Entity('sale', {
+  schema: 'public',
+})
 export class SalePostgresEntity {
   @Column('uuid', {
     primary: true,
@@ -27,4 +31,9 @@ export class SalePostgresEntity {
 
   @Column('timestamp', { name: 'date' })
   date: Date;
+
+  @ManyToOne(() => BranchPostgresEntity, (branch) => branch.sales, {
+    cascade: ['insert'],
+  })
+  branch: BranchPostgresEntity;
 }
