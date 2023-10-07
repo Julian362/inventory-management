@@ -16,14 +16,14 @@ export class BranchRepository implements IBase<BranchPostgresEntity> {
     return from(
       this.branchRepository.findOne({
         where: { id },
-        relations: ['products', 'users'],
+        relations: ['products', 'users', 'sales'],
       }),
     );
   }
   findAll(): Observable<BranchPostgresEntity[]> {
     return from(
       this.branchRepository.find({
-        relations: ['products', 'users'],
+        relations: ['products', 'users', 'sales'],
       }),
     );
   }

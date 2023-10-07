@@ -1,6 +1,5 @@
 import { EventPublisher } from '@domain-command/event';
 import { IEventService } from '@domain-command/services';
-import { IEventModel } from '@domain-command/utils/models/interfaces';
 import { ISaleCommand } from '@domain/command/sale.command';
 import {
   BranchDomainEntity,
@@ -8,6 +7,7 @@ import {
   ProductDomainEntity,
 } from '@domain/entities';
 import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
+import { IEventModel } from '@domain/utils/models';
 import { UserIdValueObject } from '@domain/value-objects';
 import {
   SaleDateValueObject,

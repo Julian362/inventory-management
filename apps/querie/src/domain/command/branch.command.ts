@@ -2,7 +2,7 @@ import { IProductCommand } from './product.command';
 import { IUserCommand } from './user.command';
 
 export interface IBranchCommand {
-  id?: string;
+  id: string;
   name: string;
   product: IProductCommand[];
   user: IUserCommand[];

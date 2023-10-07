@@ -5,14 +5,14 @@ import {
   RegisterUserUseCase,
   UpdateQuantityProductUseCase,
 } from '@applications-querie-/use-cases';
-import { IEventModel } from '@domain-command/utils/models/interfaces';
 import {
   BranchDomainEntity,
   ProductDomainEntity,
+  SaleDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
-import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
-import { TypeNamesEnum } from '@enums';
+import { IEventModel } from '@domain/utils/models';
+import { QueueEnum, TypeNamesEnum } from '@enums';
 import { RabbitRPC, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import {
   BranchCommandQuerie,
@@ -39,12 +39,11 @@ export class QuerieSubscriber {
   @RabbitRPC({
     exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredProduct,
-    queue: 'product_queue',
+    queue: QueueEnum.Product,
   })
-  toCreateProduct(data: object): Observable<ProductDomainEntity> {
-    const event: IEventModel = data as IEventModel;
+  toCreateProduct(event: IEventModel): Observable<ProductDomainEntity> {
     const product: ProductCommand = event.eventBody as ProductCommand;
-    console.log('creando producto');
+
     return this.registerUseCase.execute({
       id: product.id,
       name: product.name,
@@ -58,13 +57,12 @@ export class QuerieSubscriber {
 
   @RabbitSubscribe({
     exchange: EXCHANGE,
-    routingKey: 'registered.product.quantity.#',
-    queue: 'product_update_queue',
+    routingKey: TypeNamesEnum.ChangedProductQuantity,
+    queue: QueueEnum.ProductUpdate,
   })
-  toUpdateQuantity(data: object): Observable<ProductDomainEntity> {
-    console.log('actualizando cantidad');
-    const event: IEventModel = data as IEventModel;
+  toUpdateQuantity(event: IEventModel): Observable<ProductDomainEntity> {
     const product: ProductDomainEntity = event.eventBody as ProductDomainEntity;
+
     return this.updateUseCase.execute(
       product.id.valueOf(),
       product.quantity.valueOf(),
@@ -76,13 +74,12 @@ export class QuerieSubscriber {
   @RabbitRPC({
     exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredBranch,
-    queue: 'branch_queue',
+    queue: QueueEnum.Branch,
   })
-  registerBranch(data: object): Observable<BranchDomainEntity> {
-    console.log('creando sucursal');
-    const event: IEventModel = data as IEventModel;
+  registerBranch(event: IEventModel): Observable<BranchDomainEntity> {
     const branch: BranchCommandQuerie =
       event.eventBody as unknown as BranchCommandQuerie;
+
     return this.registerBranchUseCase.execute({
       id: branch.id.valueOf(),
       name: branch.name.valueOf(),
@@ -98,13 +95,12 @@ export class QuerieSubscriber {
   @RabbitRPC({
     exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredUser,
-    queue: 'user_queue',
+    queue: QueueEnum.User,
   })
-  registerUser(data: object): Observable<UserDomainEntity> {
-    console.log('creando usuario');
-    const event: IEventModel = data as IEventModel;
+  registerUser(event: IEventModel): Observable<UserDomainEntity> {
     const user: UserCommandQuerie =
       event.eventBody as unknown as UserCommandQuerie;
+
     return this.registerUserUseCase.execute({
       id: user.id,
       name: {
@@ -123,12 +119,11 @@ export class QuerieSubscriber {
   @RabbitSubscribe({
     exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredSale,
-    queue: 'sale_queue',
+    queue: QueueEnum.Sale,
   })
-  registerSale(data: object): Observable<SaleDomainEntity> {
-    console.log('creando venta');
-    const event: IEventModel = data as IEventModel;
+  registerSale(event: IEventModel): Observable<SaleDomainEntity> {
     const sale: SaleDomainEntity = event.eventBody as SaleDomainEntity;
+
     return this.registerSaleUseCase.execute({
       id: sale.id.valueOf(),
       number: sale.number.valueOf(),

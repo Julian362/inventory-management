@@ -15,6 +15,7 @@ export class RegisterBranchUseCase {
       city: branch.location.city,
       country: branch.location.country,
     } as LocationType);
+
     const data: BranchDomainEntity = {
       id: branch.id,
       name: new BranchNameValueObject(branch.name).valueOf(),

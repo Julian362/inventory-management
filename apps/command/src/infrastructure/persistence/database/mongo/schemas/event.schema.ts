@@ -1,10 +1,10 @@
-import { IEventModel } from '@domain-command/utils/models/interfaces';
 import {
   BranchDomainEntity,
   ProductDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
 import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
+import { IEventModel } from '@domain/utils/models';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 

@@ -5,4 +5,9 @@ export enum QueueEnum {
   User = 'user_queue',
   Sale = 'sale_queue',
   SaleUpdate = 'sale_update_queue',
+  ProductProxy = 'product_queue_proxy',
+  ProductUpdateProxy = 'product_update_queue_proxy',
+  BranchProxy = 'branch_queue_proxy',
+  UserProxy = 'user_queue_proxy',
+  SaleProxy = 'sale_queue_proxy',
 }

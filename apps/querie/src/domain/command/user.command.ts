@@ -1,5 +1,5 @@
 export interface IUserCommand {
-  id?: string;
+  id: string;
   name: {
     firstName: string;
     lastName: string;
@@ -7,5 +7,5 @@ export interface IUserCommand {
   password: string;
   email: string;
   role: string;
-  branchId?: string;
+  branchId: string;
 }

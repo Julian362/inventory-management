@@ -1,12 +1,10 @@
 import { IEventService } from '@domain-command/services';
-import { EventModelDomain } from '@domain-command/utils/models/event.model';
-import { IEventModel } from '@domain-command/utils/models/interfaces';
 import {
   BranchDomainEntity,
   ProductDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
-import { EventModel } from '@domain/utils/models';
+import { EventModelDomain, IEventModel } from '@domain/utils';
 import { TypeNamesEnum } from '@enums';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Observable, forkJoin, map } from 'rxjs';
@@ -82,7 +80,7 @@ export class EventMongoService implements IEventService {
   findByEntityId(
     id: string,
     typesNames: TypeNamesEnum[],
-  ): Observable<EventModel> {
+  ): Observable<IEventModel> {
     return this.eventRepository.findByEntityId(id, typesNames);
   }
 

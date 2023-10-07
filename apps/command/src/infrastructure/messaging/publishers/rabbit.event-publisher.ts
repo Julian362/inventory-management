@@ -1,5 +1,5 @@
 import { EventPublisher } from '@domain-command/event';
-import { IEventModel } from '@domain-command/utils/models/interfaces';
+import { IEventModel } from '@domain/utils/models';
 import { TypeNamesEnum } from '@enums';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { Injectable } from '@nestjs/common';
@@ -17,7 +17,6 @@ export class RabbitPublisher extends EventPublisher {
     pattern: TypeNamesEnum,
     data: Input,
   ): Observable<Result> {
-    console.log();
     return from(this.proxy.publish(exchange, pattern, data));
   }
 }

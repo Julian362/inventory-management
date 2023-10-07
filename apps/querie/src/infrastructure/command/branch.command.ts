@@ -1,15 +1,5 @@
-import { UserCommand } from '@infrastructure-command/command';
-import { Type } from 'class-transformer';
-import { ProductCommand } from './product.command';
-
 export class BranchCommandQuerie {
-  id?: string;
-
-  @Type(() => ProductCommand)
-  product: ProductCommand[];
-
-  @Type(() => UserCommand)
-  user: UserCommand[];
+  id: string;
 
   name: string;
 

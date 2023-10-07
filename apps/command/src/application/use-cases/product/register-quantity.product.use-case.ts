@@ -1,7 +1,7 @@
 import { EventPublisher } from '@domain-command/event';
 import { IEventService } from '@domain-command/services';
-import { IEventModel } from '@domain-command/utils/models/interfaces';
 import { IProductDomainEntity } from '@domain/entities';
+import { IEventModel } from '@domain/utils/models';
 import {
   ProductIdValueObject,
   ProductQuantityValueObject,
@@ -41,7 +41,6 @@ export class ModifyQuantityProductUseCase {
                 this.publisher.response = event;
                 this.publisher.typeName =
                   TypeNamesEnum.RegisteredProductQuantity;
-                console.log('publicando evento');
                 this.publisher.publish();
               }),
               map(() => product),

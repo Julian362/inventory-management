@@ -1,13 +1,14 @@
 import {
   GetAllBranchUseCase,
   GetAllProductUseCase,
+  GetAllSaleUseCase,
   GetAllUserUseCase,
   GetBranchUseCase,
   GetProductUseCase,
   GetUserUseCase,
 } from '@applications-querie-/use-cases';
 import { Controller, Get, Param } from '@nestjs/common';
-import { GetAllSaleUseCase } from '../../application/use-cases/sale/get-all.sale.use-case';
+
 @Controller('api/v1')
 export class QuerieController {
   constructor(

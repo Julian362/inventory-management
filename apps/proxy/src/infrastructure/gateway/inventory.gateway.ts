@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { IEventModel } from '@domain-command/utils/models/interfaces';
 import { ProductDomainEntity } from '@domain/entities';
 import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
-import { ProxyEnumEvents, TypeNamesEnum } from '@enums';
+import { IEventModel } from '@domain/utils/models';
+import { ProxyEnumEvents, QueueEnum, TypeNamesEnum } from '@enums';
 import { RabbitRPC, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { ProductCommand } from '@infrastructure-command/command';
 import {
@@ -46,11 +46,11 @@ export class InventoryGateway
     client.join(`branch.sale.${branch}`);
   }
 
-  @SubscribeMessage('event.inventory')
+  @SubscribeMessage(ProxyEnumEvents.EventInventory)
   handleIncomingInventory(client: Socket, product: ProductDomainEntity) {
     this.server
       .to(`branch.${product.branchId.valueOf()}`)
-      .emit('product.change', product);
+      .emit(ProxyEnumEvents.ProductChange, product);
   }
 
   @SubscribeMessage(ProxyEnumEvents.LeaveInventory)
@@ -63,7 +63,7 @@ export class InventoryGateway
   @RabbitRPC({
     exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredProduct,
-    queue: 'product_queue_proxy',
+    queue: QueueEnum.ProductProxy,
   })
   toCreateProduct(data: object) {
     const event: IEventModel = data as IEventModel;
@@ -79,12 +79,10 @@ export class InventoryGateway
 
   @RabbitSubscribe({
     exchange: EXCHANGE,
-    routingKey: 'registered.product.quantity.#',
-    queue: 'product_update_queue_proxy',
+    routingKey: TypeNamesEnum.ChangedProductQuantity,
+    queue: QueueEnum.ProductUpdateProxy,
   })
-  toUpdateQuantity(data: object) {
-    console.log('actualizando cantidad');
-    const event: IEventModel = data as IEventModel;
+  toUpdateQuantity(event: IEventModel) {
     const product: ProductDomainEntity = event.eventBody as ProductDomainEntity;
     try {
       this.server
@@ -102,14 +100,11 @@ export class InventoryGateway
   @RabbitRPC({
     exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredSale,
-    queue: 'sale_queue_proxy',
+    queue: QueueEnum.SaleProxy,
   })
-  registerSale(data: object) {
-    console.log('creando venta');
-    const event: IEventModel = data as IEventModel;
+  registerSale(event: IEventModel) {
     const sale: SaleDomainEntity = event.eventBody as SaleDomainEntity;
     try {
-      console.log(sale);
       this.server
         .to(`branch.sale.${sale.branchId.valueOf()}`)
         .emit(ProxyEnumEvents.SaleCreate, sale);
