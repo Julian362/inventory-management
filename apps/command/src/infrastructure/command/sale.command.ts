@@ -2,7 +2,10 @@ import {
   IProductTypeCommand,
   ISaleCommand,
 } from '@domain/command/sale.command';
+import { Type } from 'class-transformer';
 import {
+  IsArray,
+  IsDefined,
   IsNotEmpty,
   IsNumber,
   IsString,
@@ -12,7 +15,10 @@ import {
 } from 'class-validator';
 
 export class SaleCommand implements ISaleCommand {
+  @IsDefined()
+  @IsArray()
   @ValidateNested({ each: true })
+  @Type(() => ProductsTypeCommand)
   products: ProductsTypeCommand[];
 
   @IsString()

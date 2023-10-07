@@ -45,7 +45,7 @@ export class RegisterBranchUseCase {
                 map(() => data),
               );
           } else {
-            throw new BadRequestException('El nombre de la branch ya existe');
+            throw new BadRequestException('El nombre de la sucursal ya existe');
           }
         }),
       );

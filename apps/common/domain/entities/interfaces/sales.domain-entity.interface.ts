@@ -8,7 +8,7 @@ import {
 } from '@domain/value-objects/sales';
 import { ProductsType } from '@types';
 
-export interface ISalesDomainEntity {
+export interface ISaleDomainEntity {
   id: string | SaleIdValueObject;
   number: number | SaleNumberValueObject;
   branchId: string | BranchIdValueObject;

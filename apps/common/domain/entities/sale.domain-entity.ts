@@ -7,9 +7,9 @@ import {
   SaleTotalValueObject,
 } from '@domain/value-objects/sales';
 import { ProductsType } from '@types';
-import { ISalesDomainEntity } from './interfaces';
+import { ISaleDomainEntity } from './interfaces';
 
-export class SaleDomainEntity implements ISalesDomainEntity {
+export class SaleDomainEntity implements ISaleDomainEntity {
   id: string | SaleIdValueObject;
   number: number | SaleNumberValueObject;
   branchId: string | BranchIdValueObject;
@@ -17,7 +17,7 @@ export class SaleDomainEntity implements ISalesDomainEntity {
   total: number | SaleTotalValueObject;
   date: SaleDateValueObject | Date;
 
-  constructor(data: ISalesDomainEntity) {
+  constructor(data: ISaleDomainEntity) {
     this.number = data.number;
     this.branchId = data.branchId;
     this.products = data.products;

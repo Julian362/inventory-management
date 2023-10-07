@@ -1,19 +1,36 @@
 import { IUserCommand } from '@domain/command';
-import { FullNameType } from '@types';
+import { Type } from 'class-transformer';
 import {
+  IsDefined,
   IsEmail,
+  IsIn,
   IsNotEmpty,
+  IsNotEmptyObject,
   IsObject,
   IsString,
   IsUUID,
   Length,
   Matches,
+  ValidateNested,
 } from 'class-validator';
+class Name {
+  @IsString()
+  @IsNotEmpty()
+  @Length(3, 30)
+  firstName: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @Length(3, 30)
+  lastName: string;
+}
 export class UserCommand implements IUserCommand {
-  id?: string;
+  @IsDefined()
+  @IsNotEmptyObject()
   @IsObject()
-  name: FullNameType;
+  @ValidateNested({ each: true })
+  @Type(() => Name)
+  name: Name;
 
   @IsString()
   @IsNotEmpty()
@@ -31,7 +48,7 @@ export class UserCommand implements IUserCommand {
 
   @IsString()
   @IsNotEmpty()
-  @Length(3, 30)
+  @IsIn(['admin', 'employee', 'superAdmin'])
   role: string;
 
   @IsString()

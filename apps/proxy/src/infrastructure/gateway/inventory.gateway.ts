@@ -13,6 +13,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { EXCHANGE } from '@shared/const';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway(81, {
@@ -60,7 +61,7 @@ export class InventoryGateway
   //Product
 
   @RabbitRPC({
-    exchange: 'inventory_exchange',
+    exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredProduct,
     queue: 'product_queue_proxy',
   })
@@ -77,7 +78,7 @@ export class InventoryGateway
   }
 
   @RabbitSubscribe({
-    exchange: 'inventory_exchange',
+    exchange: EXCHANGE,
     routingKey: 'registered.product.quantity.#',
     queue: 'product_update_queue_proxy',
   })
@@ -99,7 +100,7 @@ export class InventoryGateway
   //Sale
 
   @RabbitRPC({
-    exchange: 'inventory_exchange',
+    exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredSale,
     queue: 'sale_queue_proxy',
   })

@@ -1,5 +1,6 @@
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
+import { EXCHANGE } from '@shared/const';
 import { RabbitPublisher } from './publishers';
 
 @Module({
@@ -8,7 +9,7 @@ import { RabbitPublisher } from './publishers';
       name: 'RABBITMQ_CONNECTION',
       exchanges: [
         {
-          name: 'inventory_exchange',
+          name: EXCHANGE,
           type: 'topic',
           createExchangeIfNotExists: true,
         },

@@ -1,4 +1,4 @@
-import { ISalesDomainEntity } from '@domain/entities';
+import { ISaleDomainEntity } from '@domain/entities';
 import { IBranchDomainService } from '@domain/services';
 import { ISaleDomainService } from '@domain/services/sale.service';
 import { Observable, switchMap } from 'rxjs';
@@ -8,7 +8,7 @@ export class RegisterSaleUseCase {
     private readonly saleService: ISaleDomainService,
     private readonly branchService: IBranchDomainService,
   ) {}
-  execute(sale: ISalesDomainEntity): Observable<ISalesDomainEntity> {
+  execute(sale: ISaleDomainEntity): Observable<ISaleDomainEntity> {
     return this.branchService.getBranchById(sale.branchId.valueOf()).pipe(
       switchMap((branch) => {
         if (branch) {

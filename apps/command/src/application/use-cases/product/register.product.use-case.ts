@@ -20,6 +20,7 @@ export class RegisterProductUseCase {
     private readonly eventService: IEventService,
     private readonly publisher: EventPublisher,
   ) {}
+
   execute(product: IProductCommand): Observable<ProductDomainEntity> {
     const data: ProductDomainEntity = {
       id: uuid(),
@@ -29,9 +30,10 @@ export class RegisterProductUseCase {
       description: new ProductDescriptionValueObject(
         product.description,
       ).valueOf(),
-      quantity: new ProductQuantityValueObject(product.quantity) || 0,
+      quantity: new ProductQuantityValueObject(product.quantity).valueOf() || 0,
       branchId: new ProductIdValueObject(product.branchId).valueOf(),
     };
+
     return this.eventService
       .validateUnique(
         {
@@ -62,9 +64,7 @@ export class RegisterProductUseCase {
                         }),
                       );
                   } else {
-                    throw new BadRequestException(
-                      'La sucursal no existe o no esta activa',
-                    );
+                    throw new BadRequestException('La sucursal no existe');
                   }
                 }),
               );

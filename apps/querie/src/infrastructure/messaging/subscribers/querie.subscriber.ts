@@ -20,6 +20,7 @@ import {
   UserCommandQuerie,
 } from '@infrastructure-querie/command';
 import { Controller } from '@nestjs/common';
+import { EXCHANGE } from '@shared/const';
 import { LocationType } from '@types';
 import { Observable } from 'rxjs';
 
@@ -36,7 +37,7 @@ export class QuerieSubscriber {
   //Product
 
   @RabbitRPC({
-    exchange: 'inventory_exchange',
+    exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredProduct,
     queue: 'product_queue',
   })
@@ -56,7 +57,7 @@ export class QuerieSubscriber {
   }
 
   @RabbitSubscribe({
-    exchange: 'inventory_exchange',
+    exchange: EXCHANGE,
     routingKey: 'registered.product.quantity.#',
     queue: 'product_update_queue',
   })
@@ -73,7 +74,7 @@ export class QuerieSubscriber {
   //Branch
 
   @RabbitRPC({
-    exchange: 'inventory_exchange',
+    exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredBranch,
     queue: 'branch_queue',
   })
@@ -95,7 +96,7 @@ export class QuerieSubscriber {
   //User
 
   @RabbitRPC({
-    exchange: 'inventory_exchange',
+    exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredUser,
     queue: 'user_queue',
   })
@@ -120,7 +121,7 @@ export class QuerieSubscriber {
   //Sale
 
   @RabbitSubscribe({
-    exchange: 'inventory_exchange',
+    exchange: EXCHANGE,
     routingKey: TypeNamesEnum.RegisteredSale,
     queue: 'sale_queue',
   })

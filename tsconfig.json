@@ -29,7 +29,8 @@
       "@ValueObjectBase": ["./apps/common/shared/domain/value-object"],
       "@sofka": ["./apps/common/shared/sofka"],
       "@enums": ["./apps/common/shared/enums"],
-      "@types": ["./apps/common/shared/types"]
+      "@types": ["./apps/common/shared/types"],
+      "@shared/*": ["./apps/common/shared/*"]
     }
   }
 }

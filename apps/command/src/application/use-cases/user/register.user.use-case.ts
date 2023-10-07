@@ -32,6 +32,7 @@ export class RegisterUserUseCase {
       role: new UserRolValueObject(user.role).valueOf(),
       branchId: new BranchIdValueObject(user.branchId).valueOf(),
     };
+
     return this.eventService
       .validaUnique(
         { name: 'email', value: data.email.valueOf() },
@@ -59,9 +60,7 @@ export class RegisterUserUseCase {
                         }),
                       );
                   } else {
-                    throw new BadRequestException(
-                      'La sucursal no existe o no esta registrada',
-                    );
+                    throw new BadRequestException('La sucursal no existe');
                   }
                 }),
               );

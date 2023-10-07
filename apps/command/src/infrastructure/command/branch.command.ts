@@ -1,20 +1,33 @@
 import { Type } from 'class-transformer';
-import { ProductCommand } from './product.command';
-import { UserCommand } from './user.command';
-
+import {
+  IsDefined,
+  IsNotEmpty,
+  IsNotEmptyObject,
+  IsObject,
+  IsString,
+  Length,
+  ValidateNested,
+} from 'class-validator';
+class Location {
+  @Length(3, 30)
+  @IsNotEmpty()
+  @IsString()
+  city: string;
+  @Length(3, 30)
+  @IsNotEmpty()
+  @IsString()
+  country: string;
+}
 export class BranchCommand {
-  id?: string;
-
-  @Type(() => ProductCommand)
-  product: ProductCommand[];
-
-  @Type(() => UserCommand)
-  user: UserCommand[];
-
+  @Length(3, 30)
+  @IsNotEmpty()
+  @IsString()
   name: string;
 
-  location: {
-    city: string;
-    country: string;
-  };
+  @IsDefined()
+  @IsNotEmptyObject()
+  @IsObject()
+  @ValidateNested({ each: true })
+  @Type(() => Location)
+  location: Location;
 }

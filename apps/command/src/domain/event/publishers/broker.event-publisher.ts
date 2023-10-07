@@ -1,5 +1,6 @@
 import { IEventModel } from '@domain-command/utils/models/interfaces';
 import { TypeNamesEnum } from '@enums';
+import { EXCHANGE } from '@shared/const';
 import { EventPublisherBase } from '@sofka';
 import { Observable } from 'rxjs';
 
@@ -8,10 +9,6 @@ export abstract class EventPublisher<
 > extends EventPublisherBase<Response> {
   typeName: TypeNamesEnum;
   publish<Result = string>(): Observable<Result> {
-    console.log(
-      'EventPublisherBase -> publish -> this.typeName',
-      this.typeName,
-    );
-    return this.emit('inventory_exchange', this.typeName, this.response);
+    return this.emit(EXCHANGE, this.typeName, this.response);
   }
 }

@@ -20,6 +20,7 @@ export class ModifyQuantityProductUseCase {
       id: new ProductIdValueObject(id),
       quantity: new ProductQuantityValueObject(quantity),
     };
+
     return this.eventService
       .findByEntityId(data.id.valueOf(), [
         TypeNamesEnum.RegisteredProduct,

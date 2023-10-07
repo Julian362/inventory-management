@@ -37,7 +37,6 @@ export class CommandController {
   toCreateProduct(
     @Body() product: ProductCommand,
   ): Observable<ProductDomainEntity> {
-    console.log(product);
     return this.registerUseCase.execute(product);
   }
 

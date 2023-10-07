@@ -59,7 +59,6 @@ export class EventRepository implements IBaseRepository<EventMongo> {
     );
   }
 
-  //calcule total is a function, calculate a total of sale and return a number
   calculateTotal(): Observable<number> {
     return from(
       this.repository

@@ -51,7 +51,7 @@ export class EventMongoService implements IEventService {
           return true;
         } else {
           throw new BadRequestException(
-            `los siguientes ids no fueron encontrados ${notFoundIds}`,
+            `los siguientes productos no existen: ${notFoundIds}`,
           );
         }
       }),

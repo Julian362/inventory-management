@@ -2,7 +2,11 @@ import { EventPublisher } from '@domain-command/event';
 import { IEventService } from '@domain-command/services';
 import { IEventModel } from '@domain-command/utils/models/interfaces';
 import { ISaleCommand } from '@domain/command/sale.command';
-import { BranchDomainEntity, ProductDomainEntity } from '@domain/entities';
+import {
+  BranchDomainEntity,
+  ISaleDomainEntity,
+  ProductDomainEntity,
+} from '@domain/entities';
 import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
 import { UserIdValueObject } from '@domain/value-objects';
 import {
@@ -30,12 +34,14 @@ export class RegisterSaleUseCase {
       total: new SaleTotalValueObject(0).valueOf(),
       date: new SaleDateValueObject(new Date(Date.now())).valueOf(),
     };
+
     return this.eventService
       .findByEntityId(sale.branchId.valueOf(), [TypeNamesEnum.RegisteredBranch])
       .pipe(
         switchMap((event: IEventModel) => {
           if (!event)
             throw new BadRequestException('el id de la sucursal no existe');
+
           const user = event.eventBody as BranchDomainEntity;
           const branchId = user.id;
           const productsIds = sale.products.map((product) => product.id);
@@ -53,22 +59,7 @@ export class RegisterSaleUseCase {
                 );
               } else {
                 productsIds.forEach((id) => {
-                  productsObservable.push(
-                    this.eventService
-                      .findByEntityId(id, [
-                        TypeNamesEnum.RegisteredProduct,
-                        TypeNamesEnum.RegisteredProductQuantity,
-                        TypeNamesEnum.RegisteredSellerSale,
-                        TypeNamesEnum.RegisteredCustomerSale,
-                      ])
-                      .pipe(
-                        map((event) => {
-                          const product =
-                            event.eventBody as ProductDomainEntity;
-                          return product;
-                        }),
-                      ),
-                  );
+                  productsObservable.push(this.findByProductId(id));
                 });
 
                 return forkJoin(productsObservable).pipe(
@@ -96,21 +87,13 @@ export class RegisterSaleUseCase {
                     });
 
                     products.forEach((product) => {
-                      this.eventService
-                        .create(
-                          product,
-                          discount == 100
-                            ? TypeNamesEnum.RegisteredSellerSale
-                            : TypeNamesEnum.RegisteredCustomerSale,
-                        )
-                        .subscribe((event) => {
-                          this.publisher.response = event;
-                          this.publisher.typeName =
-                            discount == 100
-                              ? TypeNamesEnum.RegisteredSellerSale
-                              : TypeNamesEnum.RegisteredCustomerSale;
-                          this.publisher.publish();
-                        });
+                      this.createEvent(
+                        product,
+                        discount == 100
+                          ? TypeNamesEnum.RegisteredSellerSale
+                          : TypeNamesEnum.RegisteredCustomerSale,
+                      ).subscribe();
+
                       productsSale.push({
                         name: product.name.valueOf(),
                         price: product.price.valueOf() * (discount / 100),
@@ -131,17 +114,14 @@ export class RegisterSaleUseCase {
                     return this.eventService.calculateTotal().pipe(
                       switchMap((total) => {
                         eventData.number = total;
-                        return this.eventService
-                          .create(eventData, TypeNamesEnum.RegisteredSale)
-                          .pipe(
-                            tap((event) => {
-                              this.publisher.response = event;
-                              this.publisher.typeName =
-                                TypeNamesEnum.RegisteredSale;
-                              this.publisher.publish();
-                            }),
-                            map(() => eventData),
-                          );
+                        return this.createEvent(
+                          eventData,
+                          TypeNamesEnum.RegisteredSale,
+                        ).pipe(
+                          map((data: ISaleDomainEntity) => {
+                            return data;
+                          }),
+                        );
                       }),
                     );
                   }),
@@ -149,6 +129,36 @@ export class RegisterSaleUseCase {
               }
             }),
           );
+        }),
+      );
+  }
+
+  private createEvent(
+    data: ProductDomainEntity | SaleDomainEntity,
+    types: TypeNamesEnum,
+  ): Observable<ProductDomainEntity | SaleDomainEntity> {
+    return this.eventService.create(data, types).pipe(
+      tap((event) => {
+        this.publisher.response = event;
+        this.publisher.typeName = types;
+        this.publisher.publish();
+      }),
+      map(() => data),
+    );
+  }
+
+  private findByProductId(id: string): Observable<ProductDomainEntity> {
+    return this.eventService
+      .findByEntityId(id, [
+        TypeNamesEnum.RegisteredProduct,
+        TypeNamesEnum.RegisteredProductQuantity,
+        TypeNamesEnum.RegisteredSellerSale,
+        TypeNamesEnum.RegisteredCustomerSale,
+      ])
+      .pipe(
+        map((event) => {
+          const product = event.eventBody as ProductDomainEntity;
+          return product;
         }),
       );
   }

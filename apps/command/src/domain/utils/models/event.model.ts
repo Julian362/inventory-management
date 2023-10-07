@@ -3,6 +3,7 @@ import {
   ProductDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
+import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
 import { IEventModel } from './interfaces';
 
 export class EventModelDomain implements IEventModel {
@@ -10,7 +11,11 @@ export class EventModelDomain implements IEventModel {
 
   aggregateRootId: string;
 
-  eventBody: ProductDomainEntity | UserDomainEntity | BranchDomainEntity;
+  eventBody:
+    | ProductDomainEntity
+    | UserDomainEntity
+    | BranchDomainEntity
+    | SaleDomainEntity;
 
   occurredOn: Date;
 
