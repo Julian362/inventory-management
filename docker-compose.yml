@@ -1,7 +1,46 @@
 version: "3"
 services:
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - data-mongo:/data/mongo
+
+  postgres:
+    image: postgres:14.4
+    container_name: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ddd_inventory
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - data-postgres:/data/postgres
+
+  rabbitmq:
+    image: "rabbitmq:management"
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: password
+    volumes:
+      - data-rabbitmq:/var/lib/rabbitmq
+
   command-app:
-    image: julian362/command-app:latest
+    image: julian362/command-app:v4
     container_name: command-app
     ports:
       - 3000:3000
@@ -16,11 +55,14 @@ services:
     links:
       - mongo
       - rabbitmq
+    depends_on:
+      - mongo
+      - rabbitmq
     volumes:
       - inventory-app:/command/app
 
   querie-app:
-    image: julian362/querie-app:latest
+    image: julian362/querie-app:v4
     container_name: querie-app
     ports:
       - 3001:3001
@@ -34,11 +76,15 @@ services:
     links:
       - postgres
       - rabbitmq
+    depends_on:
+      - postgres
+      - rabbitmq
+      - command-app
     volumes:
       - inventory-app:/querie/app
 
   proxy-app:
-    image: julian362/proxy-app:latest
+    image: julian362/proxy-app:v4
     container_name: proxy-app
     ports:
       - 3002:3002
@@ -47,64 +93,24 @@ services:
       RABBITMQ_HOST: amqp://root:password@rabbitmq:5672
     links:
       - rabbitmq
+    depends_on:
+      - rabbitmq
+      - command-app
     volumes:
       - inventory-app:/proxy/app
 
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    restart: always
-    ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-    volumes:
-      - ./docker-data/data-mongo:/data/db
-
-  postgres:
-    image: postgres:14.4
-    container_name: postgres
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: ddd_inventory
-    ports:
-      - "5432:5432"
-    restart: always
-    volumes:
-      - data-postgres:/data/db
-
-  rabbitmq:
-    image: "rabbitmq:management"
-    container_name: rabbitmq
-    restart: always
-    ports:
-      - 5672:5672
-      - 15672:15672
-    environment:
-      RABBITMQ_DEFAULT_USER: root
-      RABBITMQ_DEFAULT_PASS: password
-    volumes:
-      - ./docker-data/data-rabbitmq:/var/lib/rabbitmq
-
-  angular:
+  front-app:
     image: "julian362/inventory-front:latest"
-    container_name: angular
+    container_name: front-app
     restart: always
     ports:
       - 4200:4200
-    environment:
-      HOST_3000: http://command-app:3000
-      HOST_3001: http://querie:3001
-      HOST_3002: http://proxy:3002
-      HOST_81: http://proxy:81
-    links:
+    depends_on:
       - command-app
       - querie-app
       - proxy-app
     volumes:
-      - angular-app:/usr/share/nginx/html
+      - front-app:/usr/share/nginx/html
 
 volumes:
   data-postgres:
@@ -119,6 +125,6 @@ volumes:
   inventory-app:
     name: inventory-app
     driver: local
-  angular-app:
-    name: angular-app
+  front-app:
+    name: front-app
     driver: local

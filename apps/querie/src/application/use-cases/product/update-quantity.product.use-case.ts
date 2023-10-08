@@ -18,7 +18,7 @@ export class UpdateQuantityProductUseCase {
         product.quantity = quantity;
         return this.productService.modifyQuantity(
           data.id.valueOf(),
-          product.quantity.valueOf(),
+          product.quantity,
         );
       }),
     );
