@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { InventoryGateway } from './infrastructure/gateway/inventory.gateway';
-import { ProxyService } from './proxy.service';
 
 @Module({
   imports: [
@@ -21,6 +20,6 @@ import { ProxyService } from './proxy.service';
     }),
   ],
   controllers: [],
-  providers: [ProxyService, InventoryGateway],
+  providers: [InventoryGateway],
 })
 export class ProxyModule {}
