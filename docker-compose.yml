@@ -23,7 +23,7 @@ services:
       - '5432:5432'
     restart: always
     volumes:
-      - data-postgres:/data/postgres
+      - data-postgres:/data/postgres-app
 
   rabbitmq:
     image: 'rabbitmq:management'
