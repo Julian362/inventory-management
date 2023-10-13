@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity, ManyToOne } from 'typeorm';
 import { BranchPostgresEntity } from './branch.postgres-entity';
 
 @Entity('user', {
@@ -31,4 +31,9 @@ export class UserPostgresEntity {
 
   @Column('uuid', { name: 'branchId' })
   branchId: string;
+
+  @BeforeInsert()
+  checkFieldsBeforeInsert() {
+    this.email = this.email.toLowerCase().trim();
+  }
 }

@@ -15,7 +15,7 @@ import { UserService } from './services';
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'secret',
-      signOptions: { expiresIn: '1m' },
+      signOptions: { expiresIn: '2h' },
     }),
     PersistenceModule,
   ],

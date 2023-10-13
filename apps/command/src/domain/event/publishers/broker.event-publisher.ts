@@ -1,4 +1,4 @@
-import { IEventModel } from '@domain/utils/models';
+import { IEventModel } from '@domain/utils/models/interfaces';
 import { TypeNamesEnum } from '@enums';
 import { EXCHANGE } from '@shared/const';
 import { EventPublisherBase } from '@sofka';

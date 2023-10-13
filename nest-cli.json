@@ -36,6 +36,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/proxy/tsconfig.app.json"
       }
+    },
+    "jwt": {
+      "type": "application",
+      "root": "apps/jwt",
+      "entryFile": "main",
+      "sourceRoot": "apps/jwt/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/jwt/tsconfig.app.json"
+      }
     }
   }
 }

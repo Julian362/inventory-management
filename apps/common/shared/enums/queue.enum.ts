@@ -3,6 +3,7 @@ export enum QueueEnum {
   ProductUpdate = 'product_update_queue',
   Branch = 'branch_queue',
   User = 'user_queue',
+  UserJWT = 'user_queue_jwt',
   Sale = 'sale_queue',
   SaleUpdate = 'sale_update_queue',
   ProductProxy = 'product_queue_proxy',

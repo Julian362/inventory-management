@@ -1,6 +1,6 @@
 import { UserDomainEntity } from '@domain/entities';
 import { IUserLoginService } from '@domain/services/login.service';
-import { ILoginResponse } from '@domain/utils';
+import { ILoginResponse } from '@domain/utils/models';
 import { JWTService } from '@infrastructure-jwt/utils/jtw.service';
 import { BadRequestException } from '@nestjs/common';
 import { Observable, switchMap } from 'rxjs';

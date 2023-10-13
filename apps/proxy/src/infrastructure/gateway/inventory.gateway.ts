@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ProductDomainEntity } from '@domain/entities';
 import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
-import { IEventModel } from '@domain/utils/models';
+import { IEventModel } from '@domain/utils/models/interfaces';
 import { ProxyEnumEvents, QueueEnum, TypeNamesEnum } from '@enums';
 import { RabbitRPC, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { ProductCommand } from '@infrastructure-command/command';

@@ -4,7 +4,7 @@ import {
   UserDomainEntity,
 } from '@domain/entities';
 import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
-import { IEventModel } from '@domain/utils/models';
+import { IEventModel } from '@domain/utils/models/interfaces';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 

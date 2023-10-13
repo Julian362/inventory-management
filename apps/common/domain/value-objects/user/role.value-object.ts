@@ -1,4 +1,4 @@
-import { RolesUser } from '@enums';
+import { RolesUserEnum } from '@enums';
 import { IErrorValueObject, ValueObjectBase } from '@sofka';
 import { EnumContains, IsEmpty } from '@validations';
 
@@ -11,10 +11,10 @@ export class UserRolValueObject extends ValueObjectBase<string> {
   }
 
   private containEnumRol(): void {
-    if (!EnumContains(this.value, RolesUser)) {
+    if (!EnumContains(this.value, RolesUserEnum)) {
       this.setError({
         field: 'rol del usuario',
-        message: `El campo rol del usuario no es un valor válido, los valores válidos son: ${RolesUser}`,
+        message: `El campo rol del usuario no es un valor válido, los valores válidos son: ${RolesUserEnum}`,
       } as IErrorValueObject);
     }
   }

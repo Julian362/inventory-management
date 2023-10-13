@@ -11,7 +11,7 @@ import {
   SaleDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
-import { IEventModel } from '@domain/utils/models';
+import { IEventModel } from '@domain/utils/models/interfaces';
 import { QueueEnum, TypeNamesEnum } from '@enums';
 import { RabbitRPC, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import {

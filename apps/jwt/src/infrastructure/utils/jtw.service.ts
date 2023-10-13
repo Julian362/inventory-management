@@ -1,6 +1,6 @@
 import { IUserDomainEntity } from '@domain/entities';
 import { IJWTService } from '@domain/services/jtw.service';
-import { ILoginResponse } from '@domain/utils';
+import { ILoginResponse } from '@domain/utils/models';
 import { Injectable } from '@nestjs/common';
 import { JwtService as Service } from '@nestjs/jwt';
 import { Observable, of } from 'rxjs';

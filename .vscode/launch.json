@@ -21,6 +21,12 @@
       "name": "run proxy",
       "request": "launch",
       "type": "node-terminal"
+    },
+    {
+      "command": "npm run start-jwt:dev",
+      "name": "run jwt",
+      "request": "launch",
+      "type": "node-terminal"
     }
   ]
 }

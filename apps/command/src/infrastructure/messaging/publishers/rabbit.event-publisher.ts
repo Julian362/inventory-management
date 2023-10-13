@@ -1,5 +1,5 @@
 import { EventPublisher } from '@domain-command/event';
-import { IEventModel } from '@domain/utils/models';
+import { IEventModel } from '@domain/utils/models/interfaces';
 import { TypeNamesEnum } from '@enums';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { Injectable } from '@nestjs/common';

@@ -1,7 +1,7 @@
 import { EventPublisher } from '@domain-command/event';
 import { IEventService } from '@domain-command/services';
 import { IProductDomainEntity } from '@domain/entities';
-import { IEventModel } from '@domain/utils/models';
+import { IEventModel } from '@domain/utils/models/interfaces';
 import {
   ProductIdValueObject,
   ProductQuantityValueObject,

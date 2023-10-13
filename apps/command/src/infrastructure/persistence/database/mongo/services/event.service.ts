@@ -4,7 +4,8 @@ import {
   ProductDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
-import { EventModelDomain, IEventModel } from '@domain/utils';
+import { IEventModel } from '@domain/utils';
+import { EventModelDomain } from '@domain/utils/models';
 import { TypeNamesEnum } from '@enums';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Observable, forkJoin, map } from 'rxjs';

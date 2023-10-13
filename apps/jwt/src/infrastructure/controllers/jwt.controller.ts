@@ -1,4 +1,4 @@
-import { ILoginResponse } from '@domain/utils';
+import { ILoginResponse } from '@domain/utils/models';
 import { LoginCommand } from '@infrastructure-jwt/command/login.command';
 import { TokenCommand } from '@infrastructure-jwt/command/token.command';
 import { Body, Controller, Get, Post } from '@nestjs/common';

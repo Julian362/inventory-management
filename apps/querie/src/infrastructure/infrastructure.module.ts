@@ -14,16 +14,28 @@ import {
 import { GetAllSaleUseCase } from '@applications-querie-/use-cases/sale/get-all.sale.use-case';
 import { QuerieSubscriber } from '@infrastructure-querie/messaging';
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { QuerieController } from './controllers/querie.controller';
 import { PersistenceModule } from './persistence';
 import { BranchService, ProductService, UserService } from './services';
 import { SaleService } from './services/sale.service';
+import { JwtStrategy } from './utils/strategies/jwt.strategy';
 
 @Module({
-  imports: [PersistenceModule],
+  imports: [
+    PersistenceModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '2h' },
+    }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule,
+  ],
   controllers: [QuerieSubscriber, QuerieController],
   providers: [
     QuerieSubscriber,
+    JwtStrategy,
     {
       provide: RegisterProductUseCase,
       useFactory: (productService: ProductService) => {
@@ -116,6 +128,6 @@ import { SaleService } from './services/sale.service';
       inject: [SaleService],
     },
   ],
-  exports: [],
+  exports: [JwtStrategy, PassportModule],
 })
 export class InfrastructureModule {}

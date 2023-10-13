@@ -7,7 +7,7 @@ import {
   ProductDomainEntity,
 } from '@domain/entities';
 import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
-import { IEventModel } from '@domain/utils/models';
+import { IEventModel } from '@domain/utils/models/interfaces';
 import { UserIdValueObject } from '@domain/value-objects';
 import {
   SaleDateValueObject,

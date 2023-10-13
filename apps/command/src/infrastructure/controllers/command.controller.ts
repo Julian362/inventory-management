@@ -11,7 +11,9 @@ import {
   UserDomainEntity,
 } from '@domain/entities';
 import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
+import { RolesUserEnum } from '@enums';
 import { SaleCommand } from '@infrastructure-command/command/sale.command';
+import { Auth } from '@infrastructure-command/utils/decorators/auth.decorator';
 import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import {
@@ -33,6 +35,7 @@ export class CommandController {
 
   //Product
 
+  @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Post('product/register')
   toCreateProduct(
     @Body() product: ProductCommand,
@@ -40,6 +43,7 @@ export class CommandController {
     return this.registerUseCase.execute(product);
   }
 
+  @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Patch('product/purchase/:id')
   toUpdateQuantity(
     @Param('id') id: string,
@@ -48,11 +52,13 @@ export class CommandController {
     return this.purchaseUseCase.execute(id, quantity.quantity);
   }
 
+  @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Patch('product/seller-sale')
   toSellerSale(@Body() data: SaleCommand): Observable<SaleDomainEntity> {
     return this.saleUseCase.execute(data, 10);
   }
 
+  @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Patch('product/customer-sale')
   toCustomerSale(@Body() data: SaleCommand): Observable<SaleDomainEntity> {
     return this.saleUseCase.execute(data);
@@ -60,6 +66,7 @@ export class CommandController {
 
   //Branch
 
+  @Auth(RolesUserEnum.SuperAdmin)
   @Post('branch/register')
   registerBranch(
     @Body() branch: BranchCommand,
@@ -69,6 +76,7 @@ export class CommandController {
 
   //User
 
+  @Auth(RolesUserEnum.SuperAdmin, RolesUserEnum.Admin)
   @Post('user/register')
   registerUser(@Body() user: UserCommand): Observable<UserDomainEntity> {
     return this.registerUserUseCase.execute(user);

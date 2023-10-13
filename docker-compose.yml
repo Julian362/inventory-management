@@ -1,6 +1,5 @@
-version: "3"
+version: '3'
 services:
-
   mongo:
     image: mongo:latest
     container_name: mongo
@@ -14,20 +13,20 @@ services:
       - data-mongo:/data/mongo
 
   postgres:
-    image: postgres:14.4
+    image: julian362/postgres-app:latest
     container_name: postgres
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: ddd_inventory
+      DB_NAMES: 'ddd_inventory,ddd_inventory_jwt'
     ports:
-      - "5432:5432"
+      - '5432:5432'
     restart: always
     volumes:
       - data-postgres:/data/postgres
 
   rabbitmq:
-    image: "rabbitmq:management"
+    image: 'rabbitmq:management'
     container_name: rabbitmq
     restart: always
     ports:
@@ -100,7 +99,7 @@ services:
       - inventory-app:/proxy/app
 
   front-app:
-    image: "julian362/inventory-front:latest"
+    image: 'julian362/inventory-front:latest'
     container_name: front-app
     restart: always
     ports:
@@ -109,6 +108,11 @@ services:
       - command-app
       - querie-app
       - proxy-app
+    environment:
+      HOST_3000: 'localhost:3000'
+      HOST_3001: 'localhost:3001'
+      HOST_3002: 'localhost:3002'
+      HOST_81: 'localhost:81'
     volumes:
       - front-app:/usr/share/nginx/html
 
