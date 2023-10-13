@@ -1,7 +1,7 @@
 version: '3'
 services:
   mongo:
-    image: mongo:latest
+    image: julian362/mongo-app:latest
     container_name: mongo
     restart: always
     ports:
@@ -39,7 +39,7 @@ services:
       - data-rabbitmq:/var/lib/rabbitmq
 
   command-app:
-    image: julian362/command-app:v4
+    image: julian362/command-app:latest
     container_name: command-app
     ports:
       - 3000:3000
@@ -61,7 +61,7 @@ services:
       - inventory-app:/command/app
 
   querie-app:
-    image: julian362/querie-app:v4
+    image: julian362/querie-app:latest
     container_name: querie-app
     ports:
       - 3001:3001
@@ -83,13 +83,34 @@ services:
       - inventory-app:/querie/app
 
   proxy-app:
-    image: julian362/proxy-app:v4
+    image: julian362/proxy-app:latest
     container_name: proxy-app
     ports:
       - 3002:3002
       - 81:81
     environment:
       RABBITMQ_HOST: amqp://root:password@rabbitmq:5672
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
+      - command-app
+    volumes:
+      - inventory-app:/proxy/app
+
+  jwt-app:
+    image: julian362/proxy-app:latest
+    container_name: proxy-app
+    ports:
+      - 3002:3002
+      - 81:81
+    environment:
+      RABBITMQ_HOST: amqp://root:password@rabbitmq:5672
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_NAME: ddd_inventory_jwt
     links:
       - rabbitmq
     depends_on:

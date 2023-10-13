@@ -1,0 +1,63 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-app
+  template:
+    metadata:
+      labels:
+        app: front-app
+    spec:
+      containers:
+        - name: front-app
+          image: julian362/inventory-front:latest
+          ports:
+            - containerPort: 4200
+          env:
+            - name: HOST_3000
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: COMMAND
+                  optional: true
+            - name: HOST_3001
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: QUERIE
+                  optional: true
+            - name: HOST_3002
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: HOST_3002
+                  optional: true
+            - name: HOST_81
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: PROXY
+                  optional: true
+            - name: HOST_3003
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: JWT
+                  optional: true
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: front-app
+  ports:
+    - port: 4200
+      targetPort: 4200

@@ -18,12 +18,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
   validate(payload: JwtPayload): Observable<JwtPayload> {
     const { userId } = payload;
-
     return this.userService
       .findByEntityId(userId, [TypeNamesEnum.RegisteredUser])
       .pipe(
         switchMap((event: EventModelDomain) => {
-          if (!event)
+          if (event.eventBody == null || !event.eventBody)
             throwError(() => new UnauthorizedException('Token no valido'));
           const user = event.eventBody as UserDomainEntity;
           return of({

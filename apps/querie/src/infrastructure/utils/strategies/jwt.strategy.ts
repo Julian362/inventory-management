@@ -24,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         return of({
           userId: user.id.valueOf(),
           role: user.role.valueOf(),
-          branchId: user.branchId.valueOf(),
+          branchId: user.branchId ? user.branchId.valueOf() : null,
         });
       }),
     );

@@ -1,0 +1,269 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: command-app
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: command-app
+  template:
+    metadata:
+      labels:
+        app: command-app
+    spec:
+      containers:
+        - name: command-app
+          image: julian362/command-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: MONGO_USER
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: MONGO_HOST
+            - name: MONGO_PORT
+              value: "27017"
+            - name: MONGO_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: MONGO_PASS
+            - name: MONGO_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: MONGO_NAME
+            - name: RABBITMQ_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: RABBITMQ_HOST
+            - name: MONGO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: MONGO_URL
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: JWT_SECRET
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: querie-app
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: querie-app
+  template:
+    metadata:
+      labels:
+        app: querie-app
+    spec:
+      containers:
+        - name: querie-app
+          image: julian362/querie-app:latest
+          ports:
+            - containerPort: 3001
+          env:
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: POSTGRES_USER
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: POSTGRES_HOST
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: POSTGRES_PASS
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: POSTGRES_DATABASE_INVENTORY
+            - name: RABBITMQ_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: RABBITMQ_HOST
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: JWT_SECRET
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-app
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy-app
+  template:
+    metadata:
+      labels:
+        app: proxy-app
+    spec:
+      containers:
+        - name: proxy-app
+          image: julian362/proxy-app:latest
+          ports:
+            - containerPort: 3002
+            - containerPort: 81
+          env:
+            - name: RABBITMQ_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: RABBITMQ_HOST
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jwt-app
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jwt-app
+  template:
+    metadata:
+      labels:
+        app: jwt-app
+    spec:
+      containers:
+        - name: jwt-app
+          image: julian362/jwt-app:latest
+          ports:
+            - containerPort: 3002
+            - containerPort: 81
+          env:
+            - name: RABBITMQ_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: RABBITMQ_HOST
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: POSTGRES_USER
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: POSTGRES_HOST
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: POSTGRES_PASS
+            - name: DB_NAME_JWT
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: POSTGRES_DATABASE_INVENTORY_JWT
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: JWT_SECRET
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: command-service
+
+spec:
+  type: NodePort
+  selector:
+    app: command-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: querie-service
+
+spec:
+  type: NodePort
+  selector:
+    app: querie-app
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001
+      nodePort: 30001
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-service
+
+spec:
+  type: NodePort
+  selector:
+    app: proxy-app
+  ports:
+    - protocol: TCP
+      port: 3002
+      targetPort: 3002
+      nodePort: 30002
+      name: proxy
+    - protocol: TCP
+      port: 81
+      targetPort: 81
+      nodePort: 30081
+      name: web-socket
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jwt-service
+
+spec:
+  type: NodePort
+  selector:
+    app: jwt-app
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3003
+      nodePort: 30003

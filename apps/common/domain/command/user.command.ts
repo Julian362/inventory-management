@@ -2,7 +2,7 @@ import { FullNameType } from '@types';
 
 export interface IUserCommand {
   id?: string;
-  name: FullNameType;
+  fullName: FullNameType;
   password: string;
   email: string;
   role: string;

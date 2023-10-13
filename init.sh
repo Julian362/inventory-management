@@ -1,10 +1,7 @@
 ﻿#!/bin/bash
 
-
-# Separar los nombres de bases de datos en elementos individuales
 IFS=',' read -ra DB_NAMES <<< "$DB_NAMES"
 
-# Crear las bases de datos
 for DB_NAME in "${DB_NAMES[@]}"; do
     echo "Creando base de datos: $DB_NAME"
     psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
@@ -12,10 +9,10 @@ for DB_NAME in "${DB_NAMES[@]}"; do
 EOSQL
 done
 
-# Conectarse a la segunda base de datos y ejecutar comandos SQL
-SECOND_DB="${DB_NAMES[-1]}"  # Tomar el segundo nombre de la lista
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$SECOND_DB" <<-EOSQL
-    CREATE TABLE public.user (
+for DB_NAME in "${DB_NAMES[@]}"; do
+    echo "Configurando base de datos: $DB_NAME"
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$DB_NAME" <<-EOSQL
+        CREATE TABLE public.user (
         "userId" uuid PRIMARY KEY,
         name varchar(30),
         email varchar(50) UNIQUE,
@@ -44,3 +41,4 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$SECOND_DB" <<-EOS
         FROM public.user
     );
 EOSQL
+done

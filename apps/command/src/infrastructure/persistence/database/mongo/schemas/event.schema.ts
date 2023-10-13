@@ -9,7 +9,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 
 @Schema({
-  collection: 'events',
+  collection: 'event',
   versionKey: false,
   strict: false,
 })

@@ -30,14 +30,12 @@ export class UserCommand implements IUserCommand {
   @IsObject()
   @ValidateNested({ each: true })
   @Type(() => Name)
-  name: Name;
+  fullName: Name;
 
   @IsString()
   @IsNotEmpty()
   @Length(8, 20)
-  @Matches(
-    /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/,
-  )
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/)
   password: string;
 
   @IsString()

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-urls
+
+data:
+  MONGO_USER: root
+  MONGO_PASS: password
+  MONGO_URL: mongodb://root:password@mongo-service:27017/ddd_inventory?authSource=admin
+  RABBITMQ_HOST: amqp://root:password@rabbit-service:5672/
+  MONGO_HOST: "mongo-service"
+  RABBITMQ_USER: root
+  RABBITMQ_PASS: password
+  MONGO_DATABASE: ddd_inventory
+  POSTGRES_USER: root
+  POSTGRES_PASS: password
+  POSTGRES_DATABASES: "ddd_inventory,ddd_inventory_jwt"
+  POSTGRES_DATABASE_INVENTORY: ddd_inventory
+  POSTGRES_DATABASE_INVENTORY_JWT: ddd_inventory_jwt
+  POSTGRES_HOST: "postgres-service"
+  JWT_SECRET: "secret"
+  MONGO_NAME: ddd_inventory
+  COMMAND: 172.23.246.88:30000
+  QUERIE: 172.23.246.88:30001
+  PROXY: 172.23.246.88:30081
+  JWT: 172.23.246.88:30003
+  # COMMAND: command.app
+  # QUERIE: querie.app
+  # PROXY: proxy.app
+  # JWT: jwt.app

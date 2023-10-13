@@ -29,7 +29,7 @@ export class UserPostgresEntity {
   })
   branch: BranchPostgresEntity;
 
-  @Column('uuid', { name: 'branchId' })
+  @Column('uuid', { name: 'branchId', nullable: true })
   branchId: string;
 
   @BeforeInsert()
