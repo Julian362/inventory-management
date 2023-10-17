@@ -32,6 +32,9 @@ export class SalePostgresEntity {
   @Column('timestamp', { name: 'date' })
   date: Date;
 
+  @Column('varchar', { name: 'type' })
+  type: string;
+
   @ManyToOne(() => BranchPostgresEntity, (branch) => branch.sales, {
     cascade: ['insert'],
   })

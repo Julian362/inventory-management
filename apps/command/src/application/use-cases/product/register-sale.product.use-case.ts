@@ -15,6 +15,7 @@ import {
 } from '@domain/value-objects/sales';
 import { TypeNamesEnum } from '@enums';
 import { BadRequestException } from '@nestjs/common';
+import { SaleEnum } from '@shared/enums/sale.enum';
 import { ProductsType } from '@types';
 import { Observable, forkJoin, map, switchMap, tap, throwError } from 'rxjs';
 import { v4 as uuid } from 'uuid';
@@ -109,6 +110,10 @@ export class RegisterSaleUseCase {
                       total: total,
                       date: new Date(Date.now()),
                       products: productsSale,
+                      type:
+                        discount == 100
+                          ? SaleEnum.SellerSale
+                          : SaleEnum.CustomerSale,
                     };
 
                     return this.eventService.calculateTotal().pipe(

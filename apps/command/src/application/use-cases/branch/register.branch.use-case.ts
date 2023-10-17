@@ -30,7 +30,9 @@ export class RegisterBranchUseCase {
       id: uuid(),
     };
     return this.eventService
-      .validateUnique({ name: 'name', value: data.name.valueOf() })
+      .validateUnique({ name: 'name', value: data.name.valueOf() }, [
+        TypeNamesEnum.RegisteredBranch,
+      ])
       .pipe(
         switchMap((isValid) => {
           if (!isValid) {

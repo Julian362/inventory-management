@@ -40,6 +40,7 @@ export class RegisterProductUseCase {
           name: 'name',
           value: data.name.valueOf(),
         },
+        [TypeNamesEnum.RegisteredProduct],
         data.branchId.valueOf(),
       )
       .pipe(

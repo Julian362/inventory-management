@@ -58,6 +58,7 @@ export class EventMongoService implements IEventService {
   }
   validateUnique(
     field: { name: string; value: string },
+    typesNames: TypeNamesEnum[],
     aggregateRootId?: string,
   ): Observable<boolean> {
     return this.eventRepository.validateUnique(field, aggregateRootId);

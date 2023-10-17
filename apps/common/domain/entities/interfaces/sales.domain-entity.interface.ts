@@ -5,6 +5,7 @@ import {
   SaleNumberValueObject,
   SaleProductsValueObject,
   SaleTotalValueObject,
+  SaleTypeValueObject,
 } from '@domain/value-objects/sales';
 import { ProductsType } from '@types';
 
@@ -15,4 +16,6 @@ export interface ISaleDomainEntity {
   products: ProductsType[] | SaleProductsValueObject[];
   total: number | SaleTotalValueObject;
   date: Date | SaleDateValueObject;
+
+  type: string | SaleTypeValueObject;
 }

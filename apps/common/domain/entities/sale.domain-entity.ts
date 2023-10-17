@@ -5,6 +5,7 @@ import {
   SaleNumberValueObject,
   SaleProductsValueObject,
   SaleTotalValueObject,
+  SaleTypeValueObject,
 } from '@domain/value-objects/sales';
 import { ProductsType } from '@types';
 import { ISaleDomainEntity } from './interfaces';
@@ -17,11 +18,14 @@ export class SaleDomainEntity implements ISaleDomainEntity {
   total: number | SaleTotalValueObject;
   date: SaleDateValueObject | Date;
 
+  type: string | SaleTypeValueObject;
+
   constructor(data: ISaleDomainEntity) {
     this.number = data.number;
     this.branchId = data.branchId;
     this.products = data.products;
     this.total = data.total;
     this.date = data.date;
+    this.type = data.type;
   }
 }

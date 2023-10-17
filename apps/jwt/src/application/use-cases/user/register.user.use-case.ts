@@ -14,8 +14,8 @@ export class RegisterUserUseCase {
   constructor(private readonly userService: IUserDomainService) {}
   execute(user: IUserCommand): Observable<UserDomainEntity> {
     const name = new UserNameValueObject({
-      firstName: user.name.firstName,
-      lastName: user.name.lastName,
+      firstName: user.fullName.firstName,
+      lastName: user.fullName.lastName,
     } as FullNameType);
     const data: UserDomainEntity = {
       id: user.id,

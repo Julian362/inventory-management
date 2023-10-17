@@ -23,6 +23,7 @@ export interface IEventService {
       name: string;
       value: string;
     },
+    TypesNames: TypeNamesEnum[],
     aggregateRootId?: string,
   ): Observable<boolean>;
 
