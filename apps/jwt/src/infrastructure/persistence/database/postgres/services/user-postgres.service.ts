@@ -22,4 +22,8 @@ export class UserPostgresService implements IUserDomainService {
   login(email: string, password: string): Observable<UserDomainEntity> {
     return this.userRepository.Login(email, password);
   }
+
+  getAllAdmins(branchId: string): Observable<UserDomainEntity[]> {
+    return this.userRepository.getAllAdmins(branchId);
+  }
 }

@@ -26,9 +26,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             throwError(() => new UnauthorizedException('Token no valido'));
           const user = event.eventBody as UserDomainEntity;
           return of({
-            userId: user.id.valueOf(),
-            role: user.role.valueOf(),
-            branchId: user.branchId.valueOf(),
+            userId: user.id,
+            role: user.role,
+            branchId: user.branchId,
           });
         }),
       );

@@ -63,10 +63,7 @@ export class QuerieSubscriber {
   toUpdateQuantity(event: IEventModel): Observable<ProductDomainEntity> {
     const product: ProductDomainEntity = event.eventBody as ProductDomainEntity;
 
-    return this.updateUseCase.execute(
-      product.id.valueOf(),
-      product.quantity.valueOf(),
-    );
+    return this.updateUseCase.execute(product.id, product.quantity);
   }
 
   //Branch
@@ -81,8 +78,8 @@ export class QuerieSubscriber {
       event.eventBody as unknown as BranchCommandQuerie;
 
     return this.registerBranchUseCase.execute({
-      id: branch.id.valueOf(),
-      name: branch.name.valueOf(),
+      id: branch.id,
+      name: branch.name,
       location: {
         city: branch.location.split(',')[0],
         country: branch.location.split(',')[1],
@@ -103,9 +100,9 @@ export class QuerieSubscriber {
 
     return this.registerUserUseCase.execute({
       id: user.id,
-      name: {
-        firstName: user.name.split(' ')[0],
-        lastName: user.name.split(' ')[1],
+      fullName: {
+        firstName: user.fullName.split(' ')[0],
+        lastName: user.fullName.split(' ')[1],
       },
       email: user.email,
       password: user.password,
@@ -125,12 +122,13 @@ export class QuerieSubscriber {
     const sale: SaleDomainEntity = event.eventBody as SaleDomainEntity;
 
     return this.registerSaleUseCase.execute({
-      id: sale.id.valueOf(),
-      number: sale.number.valueOf(),
-      date: new Date(sale.date.valueOf()),
-      branchId: sale.branchId.valueOf(),
+      id: sale.id,
+      number: sale.number,
+      date: new Date(sale.date),
+      branchId: sale.branchId,
       products: sale.products,
-      total: sale.total.valueOf(),
+      total: sale.total,
+      type: sale.type,
     });
   }
 }

@@ -1,31 +1,31 @@
 import { BranchIdValueObject } from '@domain/value-objects';
 import {
   SaleDateValueObject,
-  SaleIdValueObject,
   SaleNumberValueObject,
   SaleProductsValueObject,
   SaleTotalValueObject,
   SaleTypeValueObject,
 } from '@domain/value-objects/sales';
 import { ProductsType } from '@types';
-import { ISaleDomainEntity } from './interfaces';
 
-export class SaleDomainEntity implements ISaleDomainEntity {
-  id: string | SaleIdValueObject;
-  number: number | SaleNumberValueObject;
-  branchId: string | BranchIdValueObject;
-  products: ProductsType[] | SaleProductsValueObject[];
-  total: number | SaleTotalValueObject;
-  date: SaleDateValueObject | Date;
+export class SaleDomainEntity {
+  id?: string;
+  number: number;
+  branchId: string;
+  products: ProductsType[];
+  total: number;
+  date: Date;
+  type: string;
 
-  type: string | SaleTypeValueObject;
-
-  constructor(data: ISaleDomainEntity) {
-    this.number = data.number;
-    this.branchId = data.branchId;
+  constructor(data: SaleDomainEntity) {
+    this.number = new SaleNumberValueObject(data.number).valueOf();
+    this.branchId = new BranchIdValueObject(data.branchId).valueOf();
+    data.products.map(
+      (product: ProductsType) => new SaleProductsValueObject(product),
+    );
     this.products = data.products;
-    this.total = data.total;
-    this.date = data.date;
-    this.type = data.type;
+    this.total = new SaleTotalValueObject(data.total).valueOf();
+    this.date = new SaleDateValueObject(data.date).valueOf();
+    this.type = new SaleTypeValueObject(data.type).valueOf();
   }
 }

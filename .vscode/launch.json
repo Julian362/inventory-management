@@ -5,25 +5,25 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "npm run start-command:dev",
+      "command": "npm run start-command:debug",
       "name": "run command",
       "request": "launch",
       "type": "node-terminal"
     },
     {
-      "command": "npm run start-querie:dev",
+      "command": "npm run start-querie:debug",
       "name": "run querie",
       "request": "launch",
       "type": "node-terminal"
     },
     {
-      "command": "npm run start-proxy:dev",
+      "command": "npm run start-proxy:debug",
       "name": "run proxy",
       "request": "launch",
       "type": "node-terminal"
     },
     {
-      "command": "npm run start-jwt:dev",
+      "command": "npm run start-jwt:debug",
       "name": "run jwt",
       "request": "launch",
       "type": "node-terminal"

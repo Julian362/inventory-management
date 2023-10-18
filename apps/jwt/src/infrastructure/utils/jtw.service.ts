@@ -1,4 +1,4 @@
-import { IUserDomainEntity } from '@domain/entities';
+import { UserDomainEntity } from '@domain/entities';
 import { IJWTService } from '@domain/services/jtw.service';
 import { ILoginResponse } from '@domain/utils/models';
 import { Injectable } from '@nestjs/common';
@@ -8,11 +8,11 @@ import { Observable, of } from 'rxjs';
 @Injectable()
 export class JWTService implements IJWTService {
   constructor(private readonly jwtService: Service) {}
-  generateToken(user: IUserDomainEntity): Observable<ILoginResponse> {
+  generateToken(user: UserDomainEntity): Observable<ILoginResponse> {
     const data = {
-      userId: user.id.valueOf(),
-      role: user.role.valueOf(),
-      branchId: user.branchId ? user.branchId.valueOf() : '1',
+      userId: user.id,
+      role: user.role,
+      branchId: user.branchId ? user.branchId : '1',
     };
 
     const token = this.jwtService.sign(data);

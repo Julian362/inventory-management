@@ -1,4 +1,4 @@
-import { IProductDomainEntity, ProductDomainEntity } from '@domain/entities';
+import { ProductDomainEntity } from '@domain/entities';
 import { IProductDomainService } from '@domain/services';
 import {
   ProductIdValueObject,
@@ -8,18 +8,15 @@ import { Observable, switchMap } from 'rxjs';
 export class UpdateQuantityProductUseCase {
   constructor(private readonly productService: IProductDomainService) {}
 
-  execute(id: string, quantity: number): Observable<IProductDomainEntity> {
+  execute(id: string, quantity: number): Observable<ProductDomainEntity> {
     const data = {
-      id: new ProductIdValueObject(id),
-      quantity: new ProductQuantityValueObject(quantity),
+      id: new ProductIdValueObject(id).valueOf(),
+      quantity: new ProductQuantityValueObject(quantity).valueOf(),
     };
-    return this.productService.getProductById(data.id.valueOf()).pipe(
+    return this.productService.getProductById(data.id).pipe(
       switchMap((product: ProductDomainEntity) => {
         product.quantity = quantity;
-        return this.productService.modifyQuantity(
-          data.id.valueOf(),
-          product.quantity,
-        );
+        return this.productService.modifyQuantity(data.id, product.quantity);
       }),
     );
   }

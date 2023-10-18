@@ -1,6 +1,6 @@
 import { EventPublisher } from '@domain-command/event';
 import { IEventService } from '@domain-command/services';
-import { IProductDomainEntity } from '@domain/entities';
+import { ProductDomainEntity } from '@domain/entities';
 import { IEventModel } from '@domain/utils/models/interfaces';
 import {
   ProductIdValueObject,
@@ -15,14 +15,14 @@ export class ModifyQuantityProductUseCase {
     private readonly publisher: EventPublisher,
   ) {}
 
-  execute(id: string, quantity: number): Observable<IProductDomainEntity> {
+  execute(id: string, quantity: number): Observable<ProductDomainEntity> {
     const data = {
-      id: new ProductIdValueObject(id),
-      quantity: new ProductQuantityValueObject(quantity),
+      id: new ProductIdValueObject(id).valueOf(),
+      quantity: new ProductQuantityValueObject(quantity).valueOf(),
     };
 
     return this.eventService
-      .findByEntityId(data.id.valueOf(), [
+      .findByEntityId(data.id, [
         TypeNamesEnum.RegisteredProduct,
         TypeNamesEnum.RegisteredProductQuantity,
         TypeNamesEnum.RegisteredCustomerSale,
@@ -31,9 +31,8 @@ export class ModifyQuantityProductUseCase {
       .pipe(
         switchMap((event: IEventModel) => {
           if (!event) throw new BadRequestException('el producto no existe');
-          const product = event.eventBody as IProductDomainEntity;
-          product.quantity =
-            product.quantity.valueOf() + data.quantity.valueOf();
+          const product = event.eventBody as ProductDomainEntity;
+          product.quantity = product.quantity + data.quantity;
           return this.eventService
             .create(product, TypeNamesEnum.RegisteredProductQuantity)
             .pipe(

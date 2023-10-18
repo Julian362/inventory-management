@@ -18,4 +18,8 @@ export class UserPostgresService implements IUserDomainService {
   getAllUsers(): Observable<UserDomainEntity[]> {
     return this.userRepository.findAll();
   }
+
+  getAllAdmins(id: string): Observable<UserDomainEntity[]> {
+    return this.userRepository.findAllAdmins(id);
+  }
 }

@@ -22,9 +22,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         if (!user)
           throwError(() => new UnauthorizedException('Token no valido'));
         return of({
-          userId: user.id.valueOf(),
-          role: user.role.valueOf(),
-          branchId: user.branchId ? user.branchId.valueOf() : null,
+          userId: user.id,
+          role: user.role,
+          branchId: user.branchId ? user.branchId : null,
         });
       }),
     );

@@ -68,8 +68,7 @@ export class EventMongoService implements IEventService {
     typeName: TypeNamesEnum,
   ): Observable<IEventModel> {
     const event = new EventModelDomain();
-    event.aggregateRootId =
-      'branchId' in data ? data.branchId.valueOf() : data.id.valueOf();
+    event.aggregateRootId = 'branchId' in data ? data.branchId : data.id;
     event.eventBody = data;
     event.occurredOn = new Date();
     event.typeName = typeName;

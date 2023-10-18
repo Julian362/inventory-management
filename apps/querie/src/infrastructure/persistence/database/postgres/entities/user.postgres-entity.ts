@@ -12,8 +12,8 @@ export class UserPostgresEntity {
   })
   id: string;
 
-  @Column('varchar', { length: 30, name: 'name' })
-  name: string;
+  @Column('varchar', { length: 30, name: 'fullname' })
+  fullName: string;
 
   @Column('varchar', { length: 50, name: 'email', unique: true })
   email: string;

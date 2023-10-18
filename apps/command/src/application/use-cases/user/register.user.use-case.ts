@@ -26,7 +26,7 @@ export class RegisterUserUseCase {
     } as FullNameType);
     const data: UserDomainEntity = {
       id: uuid(),
-      name: name.valueOf().firstName + ' ' + name.valueOf().lastName,
+      fullName: name.valueOf().firstName + ' ' + name.valueOf().lastName,
       email: new UserEmailValueObject(user.email).valueOf(),
       password: new UserPasswordValueObject(user.password).valueOf(),
       role: new UserRolValueObject(user.role).valueOf(),
@@ -34,17 +34,12 @@ export class RegisterUserUseCase {
     };
 
     return this.eventService
-      .validaUnique(
-        { name: 'email', value: data.email.valueOf() },
-        data.branchId.valueOf(),
-      )
+      .validaUnique({ name: 'email', value: data.email }, data.branchId)
       .pipe(
         switchMap((isValid) => {
           if (!isValid) {
             return this.eventService
-              .isExist(data.branchId.valueOf(), [
-                TypeNamesEnum.RegisteredBranch,
-              ])
+              .isExist(data.branchId, [TypeNamesEnum.RegisteredBranch])
               .pipe(
                 switchMap((isExist) => {
                   if (isExist) {

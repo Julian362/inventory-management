@@ -1,7 +1,7 @@
 export class UserCommandJWT {
   id: string;
 
-  name: string;
+  fullName: string;
 
   password: string;
 

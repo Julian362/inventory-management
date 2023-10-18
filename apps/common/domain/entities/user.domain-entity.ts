@@ -1,26 +1,28 @@
 import {
-  BranchIdValueObject,
   UserEmailValueObject,
-  UserIdValueObject,
   UserNameValueObject,
   UserPasswordValueObject,
   UserRolValueObject,
 } from '@domain/value-objects';
-import { IUserDomainEntity } from './interfaces';
 
-export class UserDomainEntity implements IUserDomainEntity {
-  id?: string | UserIdValueObject;
-  name: string | UserNameValueObject;
-  password: string | UserPasswordValueObject;
-  email: string | UserEmailValueObject;
-  role: string | UserRolValueObject;
+export class UserDomainEntity {
+  id?: string;
+  fullName: string;
+  password: string;
+  email: string;
+  role: string;
+  branchId: string;
 
-  branchId: string | BranchIdValueObject;
-
-  constructor(data: IUserDomainEntity) {
-    this.name = data.name;
-    this.password = data.password;
-    this.email = data.email;
-    this.role = data.role;
+  constructor(data: UserDomainEntity) {
+    const firstName = this.fullName.split(' ')[0];
+    const lastName = this.fullName.split(' ')[1];
+    new UserNameValueObject({
+      firstName,
+      lastName,
+    }).valueOf();
+    this.fullName = data.fullName;
+    this.password = new UserPasswordValueObject(data.password).valueOf();
+    this.email = new UserEmailValueObject(data.email).valueOf();
+    this.role = new UserRolValueObject(data.role).valueOf();
   }
 }

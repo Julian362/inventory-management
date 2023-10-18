@@ -24,4 +24,12 @@ export class UserRepository implements IBase<UserPostgresEntity> {
   findAll(): Observable<UserPostgresEntity[]> {
     return from(this.userRepository.find());
   }
+
+  findAllAdmins(id: string): Observable<UserPostgresEntity[]> {
+    return from(
+      this.userRepository.find({
+        where: { branchId: id, role: 'admin' },
+      }),
+    );
+  }
 }

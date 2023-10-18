@@ -1,8 +1,9 @@
-import { IUserDomainEntity, UserDomainEntity } from '@domain/entities';
+import { UserDomainEntity } from '@domain/entities';
 import { Observable } from 'rxjs';
 
 export interface IUserDomainService {
-  createUser(user: UserDomainEntity): Observable<IUserDomainEntity>;
-  getUserById(id: string): Observable<IUserDomainEntity>;
-  getAllUsers(): Observable<IUserDomainEntity[]>;
+  createUser(user: UserDomainEntity): Observable<UserDomainEntity>;
+  getUserById(id: string): Observable<UserDomainEntity>;
+  getAllUsers(): Observable<UserDomainEntity[]>;
+  getAllAdmins(id: string): Observable<UserDomainEntity[]>;
 }

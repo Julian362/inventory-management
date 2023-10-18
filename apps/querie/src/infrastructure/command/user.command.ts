@@ -1,7 +1,7 @@
 export class UserCommandQuerie {
   id: string;
 
-  name: string;
+  fullName: string;
 
   password: string;
 

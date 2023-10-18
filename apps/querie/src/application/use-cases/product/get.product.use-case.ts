@@ -7,9 +7,9 @@ export class GetProductUseCase {
   constructor(private readonly productService: IProductDomainService) {}
   execute(id: string) {
     const data = {
-      id: new ProductIdValueObject(id),
+      id: new ProductIdValueObject(id).valueOf(),
     };
-    return this.productService.getProductById(data.id.valueOf()).pipe(
+    return this.productService.getProductById(data.id).pipe(
       map((product: ProductDomainEntity) => {
         return product;
       }),

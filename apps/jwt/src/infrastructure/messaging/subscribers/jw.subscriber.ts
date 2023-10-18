@@ -22,9 +22,9 @@ export class JWTSubscriber {
     const user: UserCommandJWT = event.eventBody as UserCommandJWT;
     return this.registerUserUseCase.execute({
       id: user.id,
-      name: {
-        firstName: user.name.split(' ')[0],
-        lastName: user.name.split(' ')[1],
+      fullName: {
+        firstName: user.fullName.split(' ')[0],
+        lastName: user.fullName.split(' ')[1],
       },
       email: user.email,
       password: user.password,

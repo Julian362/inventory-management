@@ -38,18 +38,16 @@ export class RegisterProductUseCase {
       .validateUnique(
         {
           name: 'name',
-          value: data.name.valueOf(),
+          value: data.name,
         },
         [TypeNamesEnum.RegisteredProduct],
-        data.branchId.valueOf(),
+        data.branchId,
       )
       .pipe(
         switchMap((isValid) => {
           if (!isValid) {
             return this.eventService
-              .isExist(data.branchId.valueOf(), [
-                TypeNamesEnum.RegisteredBranch,
-              ])
+              .isExist(data.branchId, [TypeNamesEnum.RegisteredBranch])
               .pipe(
                 switchMap((isExist) => {
                   if (isExist) {

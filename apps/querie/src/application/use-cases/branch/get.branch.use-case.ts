@@ -7,9 +7,9 @@ export class GetBranchUseCase {
   constructor(private readonly branchService: IBranchDomainService) {}
   execute(id: string) {
     const data = {
-      id: new BranchIdValueObject(id),
+      id: new BranchIdValueObject(id).valueOf(),
     };
-    return this.branchService.getBranchById(data.id.valueOf()).pipe(
+    return this.branchService.getBranchById(data.id).pipe(
       map((branch: BranchDomainEntity) => {
         return branch;
       }),

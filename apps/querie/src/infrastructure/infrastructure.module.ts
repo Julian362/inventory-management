@@ -16,6 +16,7 @@ import { QuerieSubscriber } from '@infrastructure-querie/messaging';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { EmailService } from '@shared/services/email.service';
 import { QuerieController } from './controllers/querie.controller';
 import { PersistenceModule } from './persistence';
 import { BranchService, ProductService, UserService } from './services';
@@ -115,10 +116,28 @@ import { JwtStrategy } from './utils/strategies/jwt.strategy';
     },
     {
       provide: RegisterSaleUseCase,
-      useFactory: (serviceSale: SaleService, branchService: BranchService) => {
-        return new RegisterSaleUseCase(serviceSale, branchService);
+      useFactory: (
+        serviceSale: SaleService,
+        branchService: BranchService,
+        productService: ProductService,
+        userService: UserService,
+        emailService: EmailService,
+      ) => {
+        return new RegisterSaleUseCase(
+          serviceSale,
+          branchService,
+          productService,
+          userService,
+          emailService,
+        );
       },
-      inject: [SaleService, BranchService],
+      inject: [
+        SaleService,
+        BranchService,
+        ProductService,
+        UserService,
+        EmailService,
+      ],
     },
     {
       provide: GetAllSaleUseCase,

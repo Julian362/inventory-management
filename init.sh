@@ -14,7 +14,7 @@ for DB_NAME in "${DB_NAMES[@]}"; do
     psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$DB_NAME" <<-EOSQL
         CREATE TABLE public.user (
         "userId" uuid PRIMARY KEY,
-        name varchar(30),
+        fullName varchar(30),
         email varchar(50) UNIQUE,
         password varchar(20),
         role varchar(30),
@@ -23,7 +23,7 @@ for DB_NAME in "${DB_NAMES[@]}"; do
 
     INSERT INTO public.user (
         "userId",
-        name,
+        fullName,
         email,
         password,
         role,

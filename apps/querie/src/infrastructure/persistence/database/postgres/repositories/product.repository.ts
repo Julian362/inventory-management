@@ -36,4 +36,12 @@ export class ProductRepository implements IBase<ProductPostgresEntity> {
       }),
     );
   }
+
+  getByName(name: string): Observable<ProductPostgresEntity> {
+    return from(
+      this.productRepository.findOne({
+        where: { name },
+      }),
+    );
+  }
 }

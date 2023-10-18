@@ -32,4 +32,12 @@ export class UserRepository implements IBase<UserPostgresEntity> {
       }),
     );
   }
+
+  getAllAdmins(branchId: string): Observable<UserPostgresEntity[]> {
+    return from(
+      this.userRepository.find({
+        where: { branchId, role: 'ADMIN' },
+      }),
+    );
+  }
 }

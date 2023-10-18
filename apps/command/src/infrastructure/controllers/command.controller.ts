@@ -1,4 +1,5 @@
 import {
+  EmailSendUseCase,
   ModifyQuantityProductUseCase,
   RegisterBranchUseCase,
   RegisterProductUseCase,
@@ -15,7 +16,7 @@ import { RolesUserEnum } from '@enums';
 import { SaleCommand } from '@infrastructure-command/command/sale.command';
 import { Auth } from '@infrastructure-command/utils/decorators/auth.decorator';
 import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import {
   BranchCommand,
   ProductCommand,
@@ -31,6 +32,7 @@ export class CommandController {
     private readonly purchaseUseCase: ModifyQuantityProductUseCase,
     private readonly registerUserUseCase: RegisterUserUseCase,
     private readonly registerBranchUseCase: RegisterBranchUseCase,
+    private readonly emailSendUseCase: EmailSendUseCase,
   ) {}
 
   //Product
@@ -55,13 +57,35 @@ export class CommandController {
   @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Patch('product/seller-sale')
   toSellerSale(@Body() data: SaleCommand): Observable<SaleDomainEntity> {
-    return this.saleUseCase.execute(data, 10);
+    return this.saleUseCase.execute(data, 10).pipe(
+      switchMap((sale) => {
+        return this.emailSendUseCase
+          .execute(
+            'tooltraxpro@juliangarcia.tech',
+            [data.email],
+            `Venta realizada ${sale.number}`,
+            sale,
+          )
+          .pipe(map(() => sale));
+      }),
+    );
   }
 
   @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Patch('product/customer-sale')
   toCustomerSale(@Body() data: SaleCommand): Observable<SaleDomainEntity> {
-    return this.saleUseCase.execute(data);
+    return this.saleUseCase.execute(data).pipe(
+      switchMap((sale) => {
+        return this.emailSendUseCase
+          .execute(
+            'tooltraxpro@juliangarcia.tech',
+            [data.email],
+            `Venta realizada ${sale.number}`,
+            sale,
+          )
+          .pipe(map(() => sale));
+      }),
+    );
   }
 
   //Branch

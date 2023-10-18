@@ -24,4 +24,7 @@ export class ProductPostgresService implements IProductDomainService {
   ): Observable<ProductPostgresEntity> {
     return this.productRepository.update(id, quantity);
   }
+  getByName(name: string): Observable<ProductPostgresEntity> {
+    return this.productRepository.getByName(name);
+  }
 }

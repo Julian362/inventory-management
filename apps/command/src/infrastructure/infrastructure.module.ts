@@ -1,4 +1,5 @@
 import {
+  EmailSendUseCase,
   ModifyQuantityProductUseCase,
   RegisterBranchUseCase,
   RegisterProductUseCase,
@@ -9,6 +10,7 @@ import { MessagingModule } from '@infrastructure-command/messaging';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { EmailService } from '@shared/services/email.service';
 import { CommandController } from './controllers';
 import { RabbitPublisher } from './messaging';
 import { PersistenceModule } from './persistence';
@@ -29,6 +31,14 @@ import { JwtStrategy } from './strategies/jwt.strategy';
   controllers: [CommandController],
   providers: [
     JwtStrategy,
+    EmailService,
+    {
+      provide: EmailSendUseCase,
+      useFactory: (emailService: EmailService) => {
+        return new EmailSendUseCase(emailService);
+      },
+      inject: [EmailService],
+    },
     {
       provide: RegisterProductUseCase,
       useFactory: (

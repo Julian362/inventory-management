@@ -1,11 +1,7 @@
 import { EventPublisher } from '@domain-command/event';
 import { IEventService } from '@domain-command/services';
 import { ISaleCommand } from '@domain/command/sale.command';
-import {
-  BranchDomainEntity,
-  ISaleDomainEntity,
-  ProductDomainEntity,
-} from '@domain/entities';
+import { BranchDomainEntity, ProductDomainEntity } from '@domain/entities';
 import { SaleDomainEntity } from '@domain/entities/sale.domain-entity';
 import { IEventModel } from '@domain/utils/models/interfaces';
 import { UserIdValueObject } from '@domain/value-objects';
@@ -27,7 +23,7 @@ export class RegisterSaleUseCase {
   ) {}
 
   execute(sale: ISaleCommand, discount?: number): Observable<SaleDomainEntity> {
-    discount = discount || 100;
+    console.log('sale', discount);
     const data = {
       id: uuid(),
       branchId: new UserIdValueObject(sale.branchId).valueOf(),
@@ -37,7 +33,7 @@ export class RegisterSaleUseCase {
     };
 
     return this.eventService
-      .findByEntityId(sale.branchId.valueOf(), [TypeNamesEnum.RegisteredBranch])
+      .findByEntityId(sale.branchId, [TypeNamesEnum.RegisteredBranch])
       .pipe(
         switchMap((event: IEventModel) => {
           if (!event)
@@ -67,22 +63,21 @@ export class RegisterSaleUseCase {
                   switchMap((products) => {
                     let total = 0;
                     products.forEach((product) => {
-                      if (product.branchId.valueOf() !== branchId.valueOf()) {
+                      if (product.branchId !== branchId) {
                         throw new BadRequestException(
-                          `el producto ${product.name.valueOf()} no pertenece a la sucursal`,
+                          `el producto ${product.name} no pertenece a la sucursal`,
                         );
                       }
                       product.quantity =
-                        product.quantity.valueOf() -
+                        product.quantity -
                         sale.products.find((p) => p.id === product.id).quantity;
                       total +=
-                        product.price.valueOf() *
-                        (discount / 100) *
-                        sale.products.find((p) => p.id === product.id).quantity;
+                        product.price * (discount ? 1 - discount / 100 : 1);
+                      sale.products.find((p) => p.id === product.id).quantity;
 
-                      if (product.quantity.valueOf() < 0) {
+                      if (product.quantity < 0) {
                         throw new BadRequestException(
-                          `producto ${product.name.valueOf()} sin cantidad necesaria para la venta`,
+                          `producto ${product.name} sin cantidad necesaria para la venta`,
                         );
                       }
                     });
@@ -90,14 +85,18 @@ export class RegisterSaleUseCase {
                     products.forEach((product) => {
                       this.createEvent(
                         product,
-                        discount == 100
+                        discount
                           ? TypeNamesEnum.RegisteredSellerSale
                           : TypeNamesEnum.RegisteredCustomerSale,
                       ).subscribe();
 
                       productsSale.push({
-                        name: product.name.valueOf(),
-                        price: product.price.valueOf() * (discount / 100),
+                        name: product.name,
+                        price: parseFloat(
+                          (
+                            product.price * (discount ? 1 - discount / 100 : 1)
+                          ).toFixed(2),
+                        ),
                         quantity: sale.products.find((p) => p.id === product.id)
                           .quantity,
                       });
@@ -107,7 +106,7 @@ export class RegisterSaleUseCase {
                       id: data.id,
                       number: data.number,
                       branchId: data.branchId,
-                      total: total,
+                      total: parseFloat(total.toFixed(2)),
                       date: new Date(Date.now()),
                       products: productsSale,
                       type:
@@ -118,12 +117,15 @@ export class RegisterSaleUseCase {
 
                     return this.eventService.calculateTotal().pipe(
                       switchMap((total) => {
+                        eventData.type = discount
+                          ? SaleEnum.SellerSale
+                          : SaleEnum.CustomerSale;
                         eventData.number = total;
                         return this.createEvent(
                           eventData,
                           TypeNamesEnum.RegisteredSale,
                         ).pipe(
-                          map((data: ISaleDomainEntity) => {
+                          map((data: SaleDomainEntity) => {
                             return data;
                           }),
                         );

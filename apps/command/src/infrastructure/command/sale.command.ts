@@ -35,6 +35,14 @@ export class SaleCommand implements ISaleCommand {
     message: 'El id de la sucursal es requerido',
   })
   branchId: string;
+
+  @IsString({
+    message: 'El email del usuario debe ser una cadena de caracteres',
+  })
+  @IsNotEmpty({
+    message: 'El email del usuario es requerido',
+  })
+  email: string;
 }
 
 class ProductsTypeCommand implements IProductTypeCommand {

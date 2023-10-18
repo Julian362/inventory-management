@@ -49,7 +49,7 @@ export class InventoryGateway
   @SubscribeMessage(ProxyEnumEvents.EventInventory)
   handleIncomingInventory(client: Socket, product: ProductDomainEntity) {
     this.server
-      .to(`branch.${product.branchId.valueOf()}`)
+      .to(`branch.${product.branchId}`)
       .emit(ProxyEnumEvents.ProductChange, product);
   }
 
@@ -86,7 +86,7 @@ export class InventoryGateway
     const product: ProductDomainEntity = event.eventBody as ProductDomainEntity;
     try {
       this.server
-        .to(`branch.${product.branchId.valueOf()}`)
+        .to(`branch.${product.branchId}`)
         .emit(ProxyEnumEvents.ProductChange, product);
     } catch (error) {
       console.log(`Error: ${error}`);
@@ -106,7 +106,7 @@ export class InventoryGateway
     const sale: SaleDomainEntity = event.eventBody as SaleDomainEntity;
     try {
       this.server
-        .to(`branch.sale.${sale.branchId.valueOf()}`)
+        .to(`branch.sale.${sale.branchId}`)
         .emit(ProxyEnumEvents.SaleCreate, sale);
     } catch (error) {
       console.log(`Error: ${error}`);
