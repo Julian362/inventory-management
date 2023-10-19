@@ -1,13 +1,13 @@
+import {
+  GetUserUseCase,
+  RefreshTokenUseCase,
+  RegisterUserUseCase,
+} from '@applications-jwt/use-cases';
 import { JWTService } from '@infrastructure-jwt/utils/jtw.service';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import {
-  GetUserUseCase,
-  RegisterUserUseCase,
-} from 'applications-jwt/use-cases';
-import { RefreshTokenUseCase } from 'applications-jwt/use-cases/user/refresh.use-case';
 import { JWTController } from './controllers';
-import { JWTSubscriber } from './messaging';
+import { JWTSubscriber } from './messaging/subscribers/jwt.subscriber';
 import { PersistenceModule } from './persistence';
 import { UserService } from './services';
 

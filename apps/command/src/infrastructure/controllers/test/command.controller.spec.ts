@@ -8,6 +8,8 @@ import {
 } from '@applications-command/use-cases';
 import { ProductDomainEntity } from '@domain/entities';
 import { ProductCategory } from '@enums';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 import { CommandController } from '../command.controller';
@@ -23,6 +25,15 @@ describe('CommandController', () => {
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
+      imports: [
+        PassportModule.register({ defaultStrategy: 'jwt', session: false }),
+        JwtModule.register({
+          secretOrPrivateKey: 'secretKey',
+          signOptions: {
+            expiresIn: 3600,
+          },
+        }),
+      ],
       controllers: [CommandController],
       providers: [
         {

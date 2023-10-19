@@ -1,6 +1,10 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { ITokenCommand } from '../../domain/command/';
 export class TokenCommand implements ITokenCommand {
+  @ApiProperty({
+    description: 'Id del usuario',
+  })
   @IsString({
     message: 'El id debe ser una cadena de caracteres',
   })
@@ -12,6 +16,9 @@ export class TokenCommand implements ITokenCommand {
   })
   id: string;
 
+  @ApiProperty({
+    description: 'Token de acceso',
+  })
   @IsNotEmpty({
     message: 'El token es requerido',
   })

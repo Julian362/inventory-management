@@ -1,1 +1,1 @@
-export * from './jw.subscriber';
+export * from './jwt.subscriber';

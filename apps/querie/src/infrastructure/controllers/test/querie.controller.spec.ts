@@ -7,6 +7,8 @@ import {
   GetProductUseCase,
   GetUserUseCase,
 } from '@applications-querie-/use-cases';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { Test } from '@nestjs/testing';
 import { of } from 'rxjs';
 import { QuerieController } from '../querie.controller';
@@ -23,6 +25,15 @@ describe('QuerieController', () => {
 
   beforeEach(async () => {
     const app = await Test.createTestingModule({
+      imports: [
+        PassportModule.register({ defaultStrategy: 'jwt', session: false }),
+        JwtModule.register({
+          secretOrPrivateKey: 'secretKey',
+          signOptions: {
+            expiresIn: 3600,
+          },
+        }),
+      ],
       controllers: [QuerieController],
       providers: [
         {

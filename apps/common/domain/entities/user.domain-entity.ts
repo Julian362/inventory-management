@@ -4,13 +4,39 @@ import {
   UserPasswordValueObject,
   UserRolValueObject,
 } from '@domain/value-objects';
+import { RolesUserEnum } from '@enums';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDomainEntity {
+  @ApiProperty({
+    description: 'id del usuario',
+    example: 'fdca7a8e-9585-4890-9d57-84a88820ae52',
+  })
   id?: string;
+  @ApiProperty({
+    description: 'Nombre completo del usuario',
+    example: 'Juan Perez',
+  })
   fullName: string;
+  @ApiProperty({
+    description: 'Contraseña del usuario',
+    example: 'Esnayo17',
+  })
   password: string;
+  @ApiProperty({
+    description: 'Email del usuario',
+    example: 'email@email.com',
+  })
   email: string;
+  @ApiProperty({
+    description: 'Rol del usuario',
+    example: RolesUserEnum.Admin,
+  })
   role: string;
+  @ApiProperty({
+    description: 'Id de la sucursal del usuario',
+    example: 'fdca7a8e-9585-4890-9d57-84a88820ae52',
+  })
   branchId: string;
 
   constructor(data: UserDomainEntity) {

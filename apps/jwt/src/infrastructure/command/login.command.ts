@@ -1,6 +1,11 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class LoginCommand {
+  @ApiProperty({
+    description: 'Email del usuario',
+    example: 'email@email.com',
+  })
   @IsEmail(
     {},
     {
@@ -15,6 +20,9 @@ export class LoginCommand {
   })
   email: string;
 
+  @ApiProperty({
+    description: 'Contraseña del usuario',
+  })
   @IsString({
     message: 'La contraseña debe ser una cadena de caracteres',
   })

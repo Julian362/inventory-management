@@ -1,4 +1,6 @@
 import { IProductCommand } from '@domain/command';
+import { ProductCategory } from '@enums';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsNumber,
@@ -11,6 +13,10 @@ import {
 export class ProductCommand implements IProductCommand {
   id?: string;
 
+  @ApiProperty({
+    description: 'Nombre del producto',
+    example: 'Producto 1',
+  })
   @IsString({
     message: 'El nombre del producto debe ser una cadena de caracteres',
   })
@@ -22,6 +28,10 @@ export class ProductCommand implements IProductCommand {
   })
   name: string;
 
+  @ApiProperty({
+    description: 'Categoría del producto',
+    example: ProductCategory.ConstructionHardware,
+  })
   @IsString({
     message: 'La categoría del producto debe ser una cadena de caracteres',
   })
@@ -33,6 +43,10 @@ export class ProductCommand implements IProductCommand {
   })
   category: string;
 
+  @ApiProperty({
+    description: 'Precio del producto',
+    example: 100,
+  })
   @IsNumber(
     {},
     {
@@ -44,6 +58,10 @@ export class ProductCommand implements IProductCommand {
   })
   price: number;
 
+  @ApiProperty({
+    description: 'Descripción del producto',
+    example: 'Descripción del producto',
+  })
   @IsString({
     message: 'La descripción del producto debe ser una cadena de caracteres',
   })
@@ -55,6 +73,10 @@ export class ProductCommand implements IProductCommand {
   })
   description: string;
 
+  @ApiProperty({
+    description: 'Cantidad del producto',
+    example: 10,
+  })
   @IsNumber(
     {},
     {
@@ -66,6 +88,10 @@ export class ProductCommand implements IProductCommand {
   })
   quantity: number;
 
+  @ApiProperty({
+    description: 'Id de la sucursal',
+    example: 'fdca7a8e-9585-4890-9d57-84a88820ae52',
+  })
   @IsString({
     message: 'El id de la sucursal debe ser una cadena de caracteres',
   })

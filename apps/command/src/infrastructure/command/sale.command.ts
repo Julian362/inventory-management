@@ -2,6 +2,7 @@ import {
   IProductTypeCommand,
   ISaleCommand,
 } from '@domain/command/sale.command';
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -15,6 +16,15 @@ import {
 } from 'class-validator';
 
 export class SaleCommand implements ISaleCommand {
+  @ApiProperty({
+    description: 'Productos de la venta',
+    example: [
+      {
+        id: 'fdca7a8e-9585-4890-9d57-84a88820ae52',
+        quantity: 1,
+      },
+    ],
+  })
   @IsDefined({
     message: 'Los productos son requeridos',
   })
@@ -25,6 +35,10 @@ export class SaleCommand implements ISaleCommand {
   @Type(() => ProductsTypeCommand)
   products: ProductsTypeCommand[];
 
+  @ApiProperty({
+    description: 'Id de la sucursal',
+    example: 'fdca7a8e-9585-4890-9d57-84a88820ae52',
+  })
   @IsString({
     message: 'El id de la sucursal debe ser una cadena de caracteres',
   })
@@ -36,6 +50,10 @@ export class SaleCommand implements ISaleCommand {
   })
   branchId: string;
 
+  @ApiProperty({
+    description: 'email del usuario',
+    example: 'email@email.com',
+  })
   @IsString({
     message: 'El email del usuario debe ser una cadena de caracteres',
   })

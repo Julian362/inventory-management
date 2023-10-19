@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsDefined,
@@ -27,6 +28,10 @@ class Location {
   country: string;
 }
 export class BranchCommand {
+  @ApiProperty({
+    description: 'Id de la sucursal',
+    example: 'fdca7a8e-9585-4890-9d57-84a88820ae52',
+  })
   @Length(3, 30, {
     message: 'El nombre de la sucursal debe tener entre 3 y 30 caracteres',
   })
@@ -38,6 +43,13 @@ export class BranchCommand {
   })
   name: string;
 
+  @ApiProperty({
+    description: 'Ubicación de la sucursal',
+    example: {
+      city: 'Medellin',
+      country: 'Colombia',
+    },
+  })
   @IsDefined({
     message: 'La ubicación de la sucursal es requerida',
   })

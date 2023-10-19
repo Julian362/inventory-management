@@ -16,6 +16,12 @@ import { RolesUserEnum } from '@enums';
 import { SaleCommand } from '@infrastructure-command/command/sale.command';
 import { Auth } from '@infrastructure-command/utils/decorators/auth.decorator';
 import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Observable, map, switchMap } from 'rxjs';
 import {
   BranchCommand,
@@ -24,6 +30,8 @@ import {
   UserCommand,
 } from '../command';
 
+@ApiBearerAuth('JWT')
+@ApiTags('Command')
 @Controller('api/v1')
 export class CommandController {
   constructor(
@@ -37,6 +45,12 @@ export class CommandController {
 
   //Product
 
+  @ApiOperation({ summary: 'Registrar Producto' })
+  @ApiResponse({
+    status: 200,
+    description: 'Producto registrado',
+    type: ProductDomainEntity,
+  })
   @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Post('product/register')
   toCreateProduct(
@@ -45,6 +59,12 @@ export class CommandController {
     return this.registerUseCase.execute(product);
   }
 
+  @ApiOperation({ summary: 'Registrar Compra' })
+  @ApiResponse({
+    status: 200,
+    description: 'Compra registrada',
+    type: ProductDomainEntity,
+  })
   @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Patch('product/purchase/:id')
   toUpdateQuantity(
@@ -54,6 +74,13 @@ export class CommandController {
     return this.purchaseUseCase.execute(id, quantity.quantity);
   }
 
+  //Sale
+  @ApiOperation({ summary: 'Registrar Venta' })
+  @ApiResponse({
+    status: 200,
+    description: 'Venta registrada',
+    type: SaleDomainEntity,
+  })
   @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Patch('product/seller-sale')
   toSellerSale(@Body() data: SaleCommand): Observable<SaleDomainEntity> {
@@ -71,6 +98,12 @@ export class CommandController {
     );
   }
 
+  @ApiOperation({ summary: 'Registrar Venta' })
+  @ApiResponse({
+    status: 200,
+    description: 'Venta registrada',
+    type: SaleDomainEntity,
+  })
   @Auth(RolesUserEnum.Admin, RolesUserEnum.SuperAdmin, RolesUserEnum.employee)
   @Patch('product/customer-sale')
   toCustomerSale(@Body() data: SaleCommand): Observable<SaleDomainEntity> {
@@ -90,6 +123,12 @@ export class CommandController {
 
   //Branch
 
+  @ApiOperation({ summary: 'Registrar Sucursal' })
+  @ApiResponse({
+    status: 200,
+    description: 'Sucursal registrada',
+    type: BranchDomainEntity,
+  })
   @Auth(RolesUserEnum.SuperAdmin)
   @Post('branch/register')
   registerBranch(
@@ -100,6 +139,12 @@ export class CommandController {
 
   //User
 
+  @ApiOperation({ summary: 'Registrar Usuario' })
+  @ApiResponse({
+    status: 200,
+    description: 'Usuario registrado',
+    type: UserDomainEntity,
+  })
   @Auth(RolesUserEnum.SuperAdmin, RolesUserEnum.Admin)
   @Post('user/register')
   registerUser(@Body() user: UserCommand): Observable<UserDomainEntity> {

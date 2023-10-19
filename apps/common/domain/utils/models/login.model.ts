@@ -1,4 +1,4 @@
-import { JwtPayload } from './interfaces/JwtPayload.interface';
+import { JwtPayload } from './interfaces';
 
 export interface ILoginResponse {
   token: string;

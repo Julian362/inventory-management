@@ -1,4 +1,6 @@
 import { IUserCommand } from '@domain/command';
+import { RolesUserEnum } from '@enums';
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsDefined,
@@ -37,6 +39,13 @@ class Name {
   lastName: string;
 }
 export class UserCommand implements IUserCommand {
+  @ApiProperty({
+    description: 'nombre del usuario',
+    example: {
+      firstName: 'Juan',
+      lastName: 'Perez',
+    },
+  })
   @IsDefined({
     message: 'El nombre es requerido',
   })
@@ -48,6 +57,10 @@ export class UserCommand implements IUserCommand {
   @Type(() => Name)
   fullName: Name;
 
+  @ApiProperty({
+    description: 'Contraseña del usuario',
+    example: 'Password123',
+  })
   @IsString({
     message: 'La contraseña debe ser una cadena de caracteres',
   })
@@ -63,6 +76,10 @@ export class UserCommand implements IUserCommand {
   })
   password: string;
 
+  @ApiProperty({
+    description: 'Correo electrónico del usuario',
+    example: 'email@email.com',
+  })
   @IsString({
     message: 'El correo electrónico debe ser una cadena de caracteres',
   })
@@ -80,6 +97,10 @@ export class UserCommand implements IUserCommand {
   })
   email: string;
 
+  @ApiProperty({
+    description: 'Rol del usuario',
+    example: RolesUserEnum.Admin,
+  })
   @IsString({
     message: 'El rol debe ser una cadena de caracteres',
   })
@@ -91,6 +112,10 @@ export class UserCommand implements IUserCommand {
   })
   role: string;
 
+  @ApiProperty({
+    description: 'Id de la sucursal',
+    example: 'fdca7a8e-9585-4890-9d57-84a88820ae52',
+  })
   @IsString({
     message: 'El id de la sucursal debe ser una cadena de caracteres',
   })
