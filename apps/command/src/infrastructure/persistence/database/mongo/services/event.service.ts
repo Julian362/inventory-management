@@ -2,6 +2,7 @@ import { IEventService } from '@domain-command/services';
 import {
   BranchDomainEntity,
   ProductDomainEntity,
+  SaleDomainEntity,
   UserDomainEntity,
 } from '@domain/entities';
 import { IEventModel } from '@domain/utils';
@@ -64,7 +65,11 @@ export class EventMongoService implements IEventService {
     return this.eventRepository.validateUnique(field, aggregateRootId);
   }
   create(
-    data: UserDomainEntity | ProductDomainEntity | BranchDomainEntity,
+    data:
+      | UserDomainEntity
+      | ProductDomainEntity
+      | BranchDomainEntity
+      | SaleDomainEntity,
     typeName: TypeNamesEnum,
   ): Observable<IEventModel> {
     const event = new EventModelDomain();

@@ -3,8 +3,8 @@ import { IsEmail, IsEmpty, StringMaxLength } from '@validations';
 
 export class UserEmailValueObject extends ValueObjectBase<string> {
   validateData(): void {
+    this.isEmpty();
     if (this.value) {
-      this.isEmpty();
       this.ValidateStructure();
       this.maxLength();
     }

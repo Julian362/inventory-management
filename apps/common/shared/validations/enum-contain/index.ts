@@ -1,1 +1,1 @@
-export * from './enum-contain.valdiation';
+export * from './enum-contain.validation';

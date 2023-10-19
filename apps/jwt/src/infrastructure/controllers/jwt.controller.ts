@@ -2,9 +2,9 @@ import { ILoginResponse } from '@domain/utils/models';
 import { LoginCommand } from '@infrastructure-jwt/command/login.command';
 import { TokenCommand } from '@infrastructure-jwt/command/token.command';
 import { Body, Controller, Post } from '@nestjs/common';
-import { GetUserUseCase } from 'applications-jwt/use-cases/user';
-import { RefreshTokenUseCase } from 'applications-jwt/use-cases/user/refresh.use-case';
 import { Observable, map } from 'rxjs';
+import { GetUserUseCase } from '../../application/use-cases/user/get.user.use-case';
+import { RefreshTokenUseCase } from '../../application/use-cases/user/refresh.use-case';
 
 @Controller('api/v1')
 export class JWTController {

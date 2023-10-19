@@ -1,2 +1,1 @@
-
-export * from './is-grather-0.validation';
+export * from './is-greater-0.validation';

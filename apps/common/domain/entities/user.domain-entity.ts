@@ -14,8 +14,8 @@ export class UserDomainEntity {
   branchId: string;
 
   constructor(data: UserDomainEntity) {
-    const firstName = this.fullName.split(' ')[0];
-    const lastName = this.fullName.split(' ')[1];
+    const firstName = data.fullName.split(' ')[0];
+    const lastName = data.fullName.split(' ')[1];
     new UserNameValueObject({
       firstName,
       lastName,

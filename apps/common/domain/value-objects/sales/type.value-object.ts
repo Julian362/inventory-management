@@ -4,9 +4,9 @@ import { EnumContains, IsEmpty } from '@validations';
 
 export class SaleTypeValueObject extends ValueObjectBase<string> {
   validateData(): void {
+    this.isEmpty();
     if (this.value) {
       this.containEnumCategory();
-      this.isEmpty();
     }
   }
 

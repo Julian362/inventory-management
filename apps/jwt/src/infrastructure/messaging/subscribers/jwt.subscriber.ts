@@ -1,3 +1,4 @@
+import { RegisterUserUseCase } from '@applications-jwt/use-cases';
 import { UserDomainEntity } from '@domain/entities';
 import { IEventModel } from '@domain/utils';
 import { QueueEnum, TypeNamesEnum } from '@enums';
@@ -5,7 +6,6 @@ import { RabbitRPC } from '@golevelup/nestjs-rabbitmq';
 import { UserCommandJWT } from '@infrastructure-jwt/command';
 import { Controller } from '@nestjs/common';
 import { EXCHANGE } from '@shared/const';
-import { RegisterUserUseCase } from 'applications-jwt/use-cases';
 import { Observable } from 'rxjs';
 
 @Controller()

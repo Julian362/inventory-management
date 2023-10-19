@@ -4,9 +4,9 @@ import { EnumContains, IsEmpty } from '@validations';
 
 export class UserRolValueObject extends ValueObjectBase<string> {
   validateData(): void {
+    this.isEmpty();
     if (this.value) {
       this.containEnumRol();
-      this.isEmpty();
     }
   }
 
@@ -14,7 +14,7 @@ export class UserRolValueObject extends ValueObjectBase<string> {
     if (!EnumContains(this.value, RolesUserEnum)) {
       this.setError({
         field: 'rol del usuario',
-        message: `El campo rol del usuario no es un valor válido, los valores válidos son: ${RolesUserEnum}`,
+        message: `El campo rol del usuario no es un valor válido, los valores válidos son: ${RolesUserEnum.Admin}, ${RolesUserEnum.employee}, ${RolesUserEnum.SuperAdmin}`,
       } as IErrorValueObject);
     }
   }

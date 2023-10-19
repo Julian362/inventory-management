@@ -7,6 +7,6 @@ export class SaleIdValueObject extends UUIDValueObjectBase {
   }
 
   getFieldName(): string {
-    return 'id de la venta ';
+    return 'id de la venta';
   }
 }

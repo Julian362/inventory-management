@@ -1,5 +1,6 @@
 import { ValueObjectBase } from '@sofka';
 import {
+  IsEmpty,
   IsPasswordValid,
   StringMaxLength,
   StringMinLength,
@@ -10,6 +11,7 @@ export class UserPasswordValueObject extends ValueObjectBase<string> {
     super(value);
   }
   validateData(): void {
+    this.isEmpty();
     if (this.value) {
       this.minLength();
       this.maxLength();
@@ -48,5 +50,16 @@ export class UserPasswordValueObject extends ValueObjectBase<string> {
         w3Unpo<code>t0d0`,
       });
     }
+  }
+
+  private isEmpty(): boolean {
+    if (IsEmpty(this.value)) {
+      this.setError({
+        field: 'contraseña del usuario',
+        message: `La contraseña del usuario no puede estar vacío`,
+      });
+      return true;
+    }
+    return false;
   }
 }

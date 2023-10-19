@@ -23,7 +23,6 @@ export class RegisterSaleUseCase {
   ) {}
 
   execute(sale: ISaleCommand, discount?: number): Observable<SaleDomainEntity> {
-    console.log('sale', discount);
     const data = {
       id: uuid(),
       branchId: new UserIdValueObject(sale.branchId).valueOf(),
@@ -31,7 +30,6 @@ export class RegisterSaleUseCase {
       total: new SaleTotalValueObject(0).valueOf(),
       date: new SaleDateValueObject(new Date(Date.now())).valueOf(),
     };
-
     return this.eventService
       .findByEntityId(sale.branchId, [TypeNamesEnum.RegisteredBranch])
       .pipe(
@@ -44,7 +42,6 @@ export class RegisterSaleUseCase {
           const productsIds = sale.products.map((product) => product.id);
           const productsObservable: Observable<ProductDomainEntity>[] = [];
           const productsSale: ProductsType[] = [];
-
           return this.eventService.isExistArray(productsIds).pipe(
             switchMap((exist) => {
               if (!exist) {
@@ -58,7 +55,6 @@ export class RegisterSaleUseCase {
                 productsIds.forEach((id) => {
                   productsObservable.push(this.findByProductId(id));
                 });
-
                 return forkJoin(productsObservable).pipe(
                   switchMap((products) => {
                     let total = 0;

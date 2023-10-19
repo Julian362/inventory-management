@@ -5,7 +5,11 @@ import { LocationType } from '@types';
 export class BranchLocationValueObject extends ValueObjectBase<LocationType> {
   city: City;
   country: Country;
-
+  constructor(value: LocationType) {
+    super(value);
+    this.value = value;
+    this.validateData();
+  }
   validateData(): void {
     this.city = new City(this.value.city);
     this.country = new Country(this.value.country);

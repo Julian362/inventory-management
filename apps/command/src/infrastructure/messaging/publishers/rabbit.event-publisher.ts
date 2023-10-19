@@ -1,10 +1,10 @@
-import { EventPublisher } from '@domain-command/event';
 import { IEventModel } from '@domain/utils/models/interfaces';
 import { TypeNamesEnum } from '@enums';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { Injectable } from '@nestjs/common';
 import { IEventPublisher } from '@sofka';
 import { Observable, from } from 'rxjs';
+import { EventPublisher } from '../../../domain/event/publishers/broker.event-publisher';
 
 @Injectable()
 export class RabbitPublisher extends EventPublisher {

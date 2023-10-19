@@ -16,8 +16,8 @@ export abstract class UUIDValueObjectBase extends ValueObjectBase<string> {
    * @memberof UUIDValueObjectBase
    */
   validateData(): void {
+    this.isEmpty();
     if (this.value) {
-      this.isEmpty();
       this.validateUUID();
     }
   }

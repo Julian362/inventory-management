@@ -18,7 +18,6 @@ export class UserRolGuard implements CanActivate {
       META_DATA_ROLES,
       context.getHandler(),
     );
-    console.log('validateRoles', validateRoles);
 
     if (!validateRoles) return of(false);
     if (validateRoles.length == 0) return of(false);

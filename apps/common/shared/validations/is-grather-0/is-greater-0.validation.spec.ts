@@ -1,13 +1,13 @@
-import { IsPositiveNumber } from './is-grather-0.validation';
+import { IsGreaterThanZero } from './is-greater-0.validation';
 
-describe('IsPositiveNumber', () => {
-  test('retorna false si el valor es 0', () => {
+describe('IsGreaterThanZero', () => {
+  test('retorna true si el valor es 0', () => {
     //Arrange
     const value = 0;
-    const expected = false;
+    const expected = true;
 
     //Act
-    const result = IsPositiveNumber(value);
+    const result = IsGreaterThanZero(value);
 
     //Assert
     expect(result).toBe(expected);
@@ -19,7 +19,7 @@ describe('IsPositiveNumber', () => {
     const expected = false;
 
     //Act
-    const result = IsPositiveNumber(value);
+    const result = IsGreaterThanZero(value);
 
     //Assert
     expect(result).toBe(expected);
@@ -31,7 +31,7 @@ describe('IsPositiveNumber', () => {
     const expected = true;
 
     //Act
-    const result = IsPositiveNumber(value);
+    const result = IsGreaterThanZero(value);
 
     //Assert
     expect(result).toBe(expected);

@@ -16,8 +16,8 @@ export abstract class StringValueObjectBase extends ValueObjectBase<string> {
    * @memberof StringValueObjectBase
    */
   validateData(): void {
+    this.isEmpty();
     if (this.value) {
-      this.isEmpty();
       this.MaxLength();
       this.MinLength();
     }
