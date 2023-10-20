@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: front-app
-          image: eduarandres/front-app:latest
+          image: julian362/inventory-front:latest
           ports:
             - containerPort: 4200
           env:

@@ -56,6 +56,11 @@ spec:
                 configMapKeyRef:
                   name: service-urls
                   key: JWT_SECRET
+            - name: API_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: API_EMAIL
 
 ---
 apiVersion: apps/v1
@@ -111,6 +116,11 @@ spec:
                 configMapKeyRef:
                   name: service-urls
                   key: JWT_SECRET
+            - name: API_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: service-urls
+                  key: API_EMAIL
 
 
 ---
