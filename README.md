@@ -21,6 +21,10 @@
 </p>
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Arquietecture
+![Animation](https://github.com/Julian362/inventory-management/assets/54406277/52fbb9f3-6b74-40d8-adc5-818156db8b00)
+![Animation](https://github.com/Julian362/inventory-management/assets/54406277/b25b2cb2-9dcf-4315-9b8b-970a7474cc9a)
+
 
 ## Description
 
